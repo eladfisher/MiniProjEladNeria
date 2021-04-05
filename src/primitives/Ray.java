@@ -42,4 +42,15 @@ public class Ray {
         return head.equals( ray.head) && direction.equals( ray.direction);
     }
 
+    /**
+     * to string function for debug use only
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Ray{" +
+                "head=" + head +
+                ", direction=" + direction +
+                '}';
+    }
 }

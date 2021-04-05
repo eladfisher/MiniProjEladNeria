@@ -3,7 +3,7 @@ package geometries;
 import primitives.Point3D;
 import primitives.Vector;
 
-public class Plane {
+public class Plane implements Geometry{
 
     Vector normal;
     Point3D planePoint;
@@ -14,7 +14,7 @@ public class Plane {
      * @param planePoint a point in the plane
      */
     public Plane(Vector normal, Point3D planePoint) {
-        this.normal = normal;
+        this.normal = normal.normalized();
         this.planePoint = planePoint;
     }
 
@@ -35,7 +35,26 @@ public class Plane {
      */
     public  Vector getNormal(Point3D point)
     {
-        return normal;
+        return getNormal();
     }
+
+    /**
+     * getter for the normal field
+     * @return
+     */
+    public  Vector getNormal(){return normal ;}
+
+    /**
+     * to string for debug use only
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Plane{" +
+                "normal=" + normal +
+                ", planePoint=" + planePoint +
+                '}';
+    }
+
 
 }

@@ -178,6 +178,14 @@ public class Vector {
         return v.normalize();
     }
 
-
-
+    /**
+     * to string for debug use only
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Vector{" +
+                "head=" + head +
+                '}';
+    }
 }

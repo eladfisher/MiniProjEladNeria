@@ -98,5 +98,16 @@ public class Point3D {
                 z.equals(point3D.z);
     }
 
-
+    /**
+     * to sring func for debug only
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Point3D{" +
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                '}';
+    }
 }
