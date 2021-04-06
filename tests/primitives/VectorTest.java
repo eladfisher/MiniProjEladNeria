@@ -12,7 +12,7 @@ import primitives.Vector;
 class VectorTest {
 
     /**
-     *
+     * Test method for {@link Vector#Vector(Point3D)} (primitives.Vector)}.
      */
     @Test
     void testConstructor() {
@@ -29,33 +29,81 @@ class VectorTest {
         assertThrows(IllegalArgumentException.class, () -> new Vector(0.0, 0.0, 0.0), "vector 0 is not allowed");
     }
 
+    /**
+     * Test method for {@link Vector#add(Vector)} (primitives.Vector)}.
+     */
     @Test
     void testAdd() {
         // ============ Equivalence Partitions Tests ==============
+        // TC01: Test add a vector to another vector
+        Vector v1 = new Vector(1,2,3);
+        Vector rv1 = new Vector(-1,-2,-3);
+        Vector v2 = new Vector(0,2,-1);
+        Vector v3 = new Vector(1,0,4);
+        assertTrue(v2.add(v3).equals(v1),"ERROR: add between vectors doesn't working");
 
         // =============== Boundary Values Tests ==================
+        // TC01: Test add a vector to another vector that create 0 vector
+        assertThrows(IllegalArgumentException.class,()->v1.add(rv1),"ERROR: vector 0 shouldn't be allowed");
 
     }
 
+    /**
+     * Test method for {@link Vector#subtract(Vector)} (primitives.Vector)}.
+     */
     @Test
     void testSubtract() {
         // ============ Equivalence Partitions Tests ==============
+        // TC01: Test subtract a vector to another vector
+        Vector v1 = new Vector(1,2,3);
+        Vector v2 = new Vector(0,2,-1);
+        Vector v3 = new Vector(1,0,4);
+        assertTrue(v1.subtract(v2).equals(v3),"ERROR: subtract between vectors doesn't working");
 
         // =============== Boundary Values Tests ==================
+        // TC01: Test subtract a vector to itself create 0 vector
+        assertThrows(IllegalArgumentException.class,()->v1.subtract(v1),"ERROR: vector 0 shouldn't be allowed");
+
     }
 
+    /**
+     * Test method for {@link Vector#scale(double)} (primitives.Vector)}.
+     */
     @Test
     void testScale() {
+
+        Vector v = new Vector(0,4,2);
         // ============ Equivalence Partitions Tests ==============
+        // TC01: Test a vector is scale by a number greater than 1
+        assertTrue(new Vector(0,8,4).equals(v.scale(2)) ,"ERROR: scale by a number greater than 1 doesn't working");
+
+        // TC02: Test a vector is scale by a number smaller than 1
+        assertTrue(new Vector(0,2,1).equals(v.scale(0.5)) ,"ERROR: scale by a number smaller than 1 doesn't working");
+
+        // TC03: Test a vector is scale by a negative number
+        assertTrue(new Vector(0,-2,-1).equals(v.scale(-0.5)) ,"ERROR: scale by a negative number doesn't working");
 
         // =============== Boundary Values Tests ==================
+        // TC01: Test a vector is scale by a 0
+        assertThrows(IllegalArgumentException.class,()->v.scale(0),"ERROR: scale by zero shouldn't be possible");
     }
 
+    /**
+     * Test method for {@link Vector#dotProduct(Vector)} (primitives.Vector)}.
+     */
     @Test
     void testDotProduct() {
-        // ============ Equivalence Partitions Tests ==============
 
-        // =============== Boundary Values Tests ==================
+        Vector v1 = new Vector(1, 2, 3);
+        Vector v2 = new Vector(-2, -4, -6);
+        Vector v3 = new Vector(0, 3, -2);
+
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: Test for orthogonal vectors
+        assertEquals(0,v1.dotProduct(v3),0.0001,"ERROR: dotProduct() for orthogonal vectors is not zero");
+
+        // TC01: Test for not-orthogonal vectors
+        assertEquals(-28.0,v1.dotProduct(v2),0.0001,"ERROR: dotProduct() wrong value");
     }
 
     /**
@@ -92,10 +140,10 @@ class VectorTest {
     @Test
     void testLengthSquared() {
         // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Test  a length squared of a regular vector
         Vector v1 = new Vector(1, 2, 3);
-
         assertEquals(14.0, v1.lengthSquared(), 0.00001, "ERROR: lengthSquared() wrong value");
-
 
     }
 
@@ -105,6 +153,7 @@ class VectorTest {
     @Test
     void testLength() {
         // ============ Equivalence Partitions Tests ==============
+        // TC01: Test  a length of a regular vector
         assertEquals(5.0, new Vector(0, 3, 4).length(), 0.00001, "length doesn't work");
     }
 
@@ -114,14 +163,31 @@ class VectorTest {
     @Test
     void testNormalize() {
         // ============ Equivalence Partitions Tests ==============
+        // TC01: Test  that a regular vector is normalize
+        Vector v = new Vector(1, 2, 3);
+        Vector vCopy = new Vector(v.getHead());
+        Vector vCopyNormalize = vCopy.normalize();
 
+        assertTrue(vCopy != vCopyNormalize,"ERROR: normalize() function creates a new vector");
 
+        assertEquals(1.0,vCopyNormalize.length(),"ERROR: normalize() result is not a unit vector");
+
+        Vector u = v.normalized();
+        assertTrue(u!=v,"ERROR: normalized() function does not create a new vector");
+
+        // =============== Boundary Values Tests ==================
+        // TC01: Test  that a vector with 0 field is normalize
     }
 
+    /**
+     * Test method for {@link Vector#normalized()} ()} (primitives.Vector)}.
+     */
     @Test
     void testNormalized() {
         // ============ Equivalence Partitions Tests ==============
+        // TC01: Test  that a regular vector is normalized
 
         // =============== Boundary Values Tests ==================
+        // TC01: Test  that a vector with 0 field is normalized
     }
 }
