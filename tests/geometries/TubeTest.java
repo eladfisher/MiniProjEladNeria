@@ -38,6 +38,18 @@ class TubeTest {
         // TC03: Test of a regular point out the tube
         assertThrows(IllegalArgumentException.class,()->tube.getNormal(pointOutTube),"point outside tube should throw an exception");
 
+        // TC04: Test of a regular point out the tube
+        p0 = new Point3D(1,1,1);
+        v = new Vector(1,1,0);
+        r = 3;
+        ray = new Ray(p0,v);
+        Tube tube1 = new Tube(ray,r);
+
+        p = new Point3D(6.84,4.62,3.55);
+        Vector u = new Vector(1.11,-1.11,2.55);
+
+        assertTrue(u.normalized().equals(tube1.getNormal(p)),"this test should test how much accurate is this test.");
+
         // =============== Boundary Values Tests ==================
         Point3D point0 = new Point3D(0,1,0);
         Point3D point = new Point3D(0,0,1);
