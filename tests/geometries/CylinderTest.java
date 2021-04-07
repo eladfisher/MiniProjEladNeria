@@ -45,7 +45,7 @@ class CylinderTest {
                    "ERROR: wrong normal vector when the point isn't on flat side");
 
         // =============== Boundary Values Tests ==================
-        // TC01: point is in the middle of the far flat side of the ray origin
+        // TC01: point is in the middle of the far flat side of  the ray origin
         Vector middleUpV = new Vector(0,0,1);
         Point3D middleUpP = new Point3D(0,0,8);
         assertTrue(cylinder.getNormal(middleUpP).equals(middleUpV),
