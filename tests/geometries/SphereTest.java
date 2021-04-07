@@ -21,7 +21,7 @@ class SphereTest {
         Vector normal = new Vector(1,0,0);
         Sphere sphere = new Sphere(p0,3);
 
-        assertTrue(sphere.getNormal(p).equals(normal));
+        assertTrue(sphere.getNormal(p).equals(normal),"ERROR: normal of sphere isn't working");
 
         // =============== Boundary Values Tests ==================
 
