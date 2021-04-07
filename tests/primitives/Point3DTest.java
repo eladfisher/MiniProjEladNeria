@@ -36,12 +36,8 @@ class Point3DTest {
         Point3D p1 = new Point3D(1, 2, 3);
 
         // ============ Equivalence Partitions Tests ==============
-        // TC01: Test  that a regular vector is normalized
+        // TC01: Test  that a subtract is working
         assertTrue(new Vector(1, 1, 1).equals(new Point3D(2, 3, 4).subtract(p1)),"ERROR: subtracting doesn't work");
-
-        // =============== Boundary Values Tests ==================
-
-
     }
 
     /**
@@ -50,10 +46,11 @@ class Point3DTest {
     @Test
     void testDistanceSquared() {
         // ============ Equivalence Partitions Tests ==============
-        // TC01: Test of a regular vector
+        // TC01: Test of a regular points
         Point3D p  = new Point3D(1,2,3);
         assertEquals(14.0,p.distanceSquared(Point3D.ZERO),"ERROR: point3D distance squared doesn't working");
         // =============== Boundary Values Tests ==================
+        // TC01: Test of a 0 length points
         assertEquals(0.0,p.distanceSquared(p),"ERROR: Point3D distance squared doesn't return 0 when the two points are the same");
     }
 
@@ -63,12 +60,13 @@ class Point3DTest {
     @Test
     void testDistance() {
         // ============ Equivalence Partitions Tests ==============
-        // TC01: Test of a regular vector
+        // TC01: Test of a regular points distance
 
         Point3D p = new Point3D(1, 2, 3);
         assertEquals(Math.sqrt(14), p.distance(Point3D.ZERO),0.00001, "ERROR: point3D distance squared doesn't working");
 
         // =============== Boundary Values Tests ==================
+        // TC01: Test of a 0 length points
         assertEquals(0.0, p.distanceSquared(p),0.00001,
                      "ERROR: Point3D distance squared doesn't return 0 when the two points are the same");
     }

@@ -13,7 +13,7 @@ class SphereTest {
     @Test
     void testGetNormal() {
         // ============ Equivalence Partitions Tests ==============
-        // TC01: Test  that a regular vector is normalized
+
         Point3D p = new  Point3D(4,1,1);
         Point3D pointOutSphere = new  Point3D(2,1,1);
         Point3D pointInSphere = new  Point3D(8,1,1);
@@ -21,9 +21,10 @@ class SphereTest {
         Vector normal = new Vector(1,0,0);
         Sphere sphere = new Sphere(p0,3);
 
+        // TC01: Test for regular point
         assertTrue(sphere.getNormal(p).equals(normal),"ERROR: normal of sphere isn't working");
 
-        // =============== Boundary Values Tests ==================
+
 
     }
 }

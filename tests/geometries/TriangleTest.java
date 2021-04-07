@@ -20,11 +20,11 @@ class TriangleTest {
         Vector normal = new Vector(-3, 6, -3).normalize();
         Vector rNormal = normal.scale(-1);
 
-        Plane plane = new Plane(p1, p2, p3);
-        Vector planeNormal = plane.getNormal(p1);
+        Triangle plane = new Triangle(p1, p2, p3);
+        Vector tNormal = plane.getNormal(p1);
 
-        // TC01: Test for a point on the plane to check if the normal is the right normal
-        assertTrue(planeNormal.equals(normal)||planeNormal.equals(rNormal), "ERROR: plane doesn't return the right normal");
+        // TC01: Test for a point on the triangle to check if the normal is the right normal
+        assertTrue(tNormal.equals(normal)||tNormal.equals(rNormal), "ERROR: triangle doesn't return the right normal");
     }
 
 }
