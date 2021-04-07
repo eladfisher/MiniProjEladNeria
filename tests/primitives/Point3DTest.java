@@ -66,7 +66,7 @@ class Point3DTest {
         // TC01: Test of a regular vector
 
         Point3D p = new Point3D(1, 2, 3);
-        assertEquals(Math.sqrt(14), p.distanceSquared(Point3D.ZERO),0.00001, "ERROR: point3D distance squared doesn't working");
+        assertEquals(Math.sqrt(14), p.distance(Point3D.ZERO),0.00001, "ERROR: point3D distance squared doesn't working");
 
         // =============== Boundary Values Tests ==================
         assertEquals(0.0, p.distanceSquared(p),0.00001,
