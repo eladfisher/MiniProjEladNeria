@@ -168,7 +168,7 @@ class VectorTest {
         Vector vCopyNormalize = vCopy.normalize();
 
         // TC01: Test  that a regular vector is normalize and not create new vector
-        assertTrue(vCopy != vCopyNormalize,"ERROR: normalize() function creates a new vector");
+        assertTrue(vCopy == vCopyNormalize,"ERROR: normalize() function creates a new vector");
 
         // TC02: Test  that a regular vector is normalize is with length of 1
         assertEquals(1.0,vCopyNormalize.length(),"ERROR: normalize() result is not a unit vector");
