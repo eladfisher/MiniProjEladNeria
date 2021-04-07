@@ -163,20 +163,17 @@ class VectorTest {
     @Test
     void testNormalize() {
         // ============ Equivalence Partitions Tests ==============
-        // TC01: Test  that a regular vector is normalize
         Vector v = new Vector(1, 2, 3);
         Vector vCopy = new Vector(v.getHead());
         Vector vCopyNormalize = vCopy.normalize();
 
+        // TC01: Test  that a regular vector is normalize and not create new vector
         assertTrue(vCopy != vCopyNormalize,"ERROR: normalize() function creates a new vector");
 
+        // TC02: Test  that a regular vector is normalize is with length of 1
         assertEquals(1.0,vCopyNormalize.length(),"ERROR: normalize() result is not a unit vector");
 
-        Vector u = v.normalized();
-        assertTrue(u!=v,"ERROR: normalized() function does not create a new vector");
 
-        // =============== Boundary Values Tests ==================
-        // TC01: Test  that a vector with 0 field is normalize
     }
 
     /**
@@ -184,10 +181,14 @@ class VectorTest {
      */
     @Test
     void testNormalized() {
-        // ============ Equivalence Partitions Tests ==============
-        // TC01: Test  that a regular vector is normalized
+        Vector v = new Vector(1, 2, 3);
 
-        // =============== Boundary Values Tests ==================
-        // TC01: Test  that a vector with 0 field is normalized
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: Test  that a regular vector is normalize is with length of 1
+        Vector u = v.normalized();
+        assertTrue(u!=v,"ERROR: normalized() function does not create a new vector");
+
+        // TC02: Test  that a regular vector is normalize is with length of 1
+        assertEquals(1.0,u.length(),"ERROR: normalized() result is not a unit vector");
     }
 }
