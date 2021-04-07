@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.Point3D;
 import primitives.Ray;
+import primitives.Util;
 import primitives.Vector;
 
 public class Tube implements Geometry {
@@ -36,6 +37,12 @@ public class Tube implements Geometry {
 
     @Override
     public Vector getNormal(Point3D point3D) {
-        return null;
+        double t = direction.getDirection().dotProduct(point3D.subtract(direction.getHead()));
+
+        if (Util.isZero(t))
+            return point3D.subtract(direction.getHead()).normalize();
+
+        Point3D o = direction.getHead().add(direction.getDirection().scale(t));
+        return point3D.subtract(o).normalize();
     }
 }
