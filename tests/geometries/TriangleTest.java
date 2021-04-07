@@ -6,15 +6,14 @@ import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PlaneTest {
+class TriangleTest {
 
     /**
-     * Test method for {@link Plane#getNormal(Point3D)}    (primitives.Plane)}.
+     * Test method for {@link Triangle#getNormal(Point3D)}    (primitives.Triangle)}.
      */
     @Test
-    void testGetNormal() {
+    void  getNormal(){
         // ============ Equivalence Partitions Tests ==============
-
         Point3D p1 = new Point3D(0, 1, 2);
         Point3D p2 = new Point3D(3, 2, 1);
         Point3D p3 = new Point3D(0, 0, 0);
@@ -26,6 +25,6 @@ class PlaneTest {
 
         // TC01: Test for a point on the plane to check if the normal is the right normal
         assertTrue(planeNormal.equals(normal)||planeNormal.equals(rNormal), "ERROR: plane doesn't return the right normal");
-
     }
+
 }
