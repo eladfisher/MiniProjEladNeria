@@ -2,6 +2,8 @@ package primitives;
 
 import java.util.Objects;
 
+import static primitives.Util.isZero;
+
 public class Ray {
 
     Point3D head;
@@ -52,5 +54,12 @@ public class Ray {
                 "head=" + head +
                 ", direction=" + direction +
                 '}';
+    }
+
+    public Point3D getPoint(double t) {
+        if(isZero(t))
+            return head;
+
+        return head.add(direction.scale(t));
     }
 }
