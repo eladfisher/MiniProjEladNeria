@@ -8,6 +8,9 @@ import java.util.List;
 
 import static primitives.Util.alignZero;
 
+/**
+ * a class of Plane for a 3D graphic model
+ */
 public class Plane implements Geometry{
 
     Vector normal;

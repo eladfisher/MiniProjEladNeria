@@ -4,6 +4,9 @@ import java.util.Objects;
 
 import static java.lang.Math.sqrt;
 
+/**
+ * a class of 3D point in the 3D dimensional for graphic scenes
+ */
 public class Point3D {
     Coordinate x, y, z;
     static public final Point3D ZERO = new Point3D(0, 0, 0);

@@ -7,6 +7,9 @@ import primitives.Vector;
 
 import java.util.List;
 
+/**
+ * a class of 3D Cylinder for a 3D graphic model
+ */
 public class Cylinder extends Tube {
     double height;
 

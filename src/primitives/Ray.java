@@ -4,6 +4,9 @@ import java.util.Objects;
 
 import static primitives.Util.isZero;
 
+/**
+ * a class of 3D Ray in the 3D dimensional for graphic scenes
+ */
 public class Ray {
 
     Point3D head;

@@ -9,6 +9,9 @@ import java.util.Objects;
 
 import static primitives.Util.alignZero;
 
+/**
+ * a class of 3D sphere for a 3D graphic model
+ */
 public class Sphere implements  Geometry{
 
     final Point3D p0;

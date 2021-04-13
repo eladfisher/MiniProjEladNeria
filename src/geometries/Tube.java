@@ -7,6 +7,9 @@ import primitives.Vector;
 
 import java.util.List;
 
+/**
+ * a class of Tube for a 3D graphic model
+ */
 public class Tube implements Geometry {
     Ray direction;
     double radius;

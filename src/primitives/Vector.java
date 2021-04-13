@@ -2,6 +2,9 @@ package primitives;
 
 import java.util.Objects;
 
+/**
+ * a class of 3D Vector in the 3D dimensional for graphic scenes
+ */
 public class Vector {
 
     Point3D head;
