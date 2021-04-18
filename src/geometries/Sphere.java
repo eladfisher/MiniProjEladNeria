@@ -78,7 +78,12 @@ public class Sphere implements  Geometry{
     public Vector getNormal(Point3D p) {
         return p.subtract(p0).normalize();
     }
-
+    
+    /**
+     * override for the findIntersections function of the geometry interface
+     * @param ray the ray that intersects with the sphere
+     * @return a list with the intersect points
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         Point3D p0 = ray.getHead();
@@ -92,9 +97,8 @@ public class Sphere implements  Geometry{
         double tm = v.dotProduct(U);
         double d = Math.sqrt(U.lengthSquared()-tm*tm);
         if(alignZero(d-radius)>=0)
-        {
             return null;
-        }
+        
 
         double th = Math.sqrt(radius*radius-d*d);
         double t1 = alignZero(tm-th);

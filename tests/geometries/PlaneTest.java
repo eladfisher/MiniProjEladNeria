@@ -80,7 +80,11 @@ class PlaneTest {
         // TC16: Test for A ray merges with a plane
         Ray r16 = new Ray(new Point3D(-0.7608207665156, -2.461905977296, 4.640959456948), new Vector(0.2795117804574, 1.335974021885, -0.9586549733090));
         assertNull(pl.findIntersections(r16), "ERROR: Test for A ray merges with a plane.");
-
-
+    
+        // TC17: Test for regular Ray start at the plane point.
+        Ray r17 = new Ray(pl.planePoint, new Vector(1.216571959839, 2.052835554495, 0.4469546644399));
+    
+        assertNull(pl.findIntersections(r11), "ERROR: Test for regular Ray start at the plane point.");
+    
     }
 }
