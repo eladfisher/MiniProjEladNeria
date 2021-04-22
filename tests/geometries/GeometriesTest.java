@@ -40,7 +40,7 @@ class GeometriesTest {
 		
 		geometries.add(new Plane(new Point3D(-4,1,0),
 								 new Point3D(-6.1416690438609,1.8140491195724,3.2309488252121),
-								 new Point3D(-5.5735072237192,5.4709453252502,0)));
+								 new Point3D(-5.5735072237192,5.4709453252502,0)) );
 		
 		assertNull(geometries.findIntersections(ray02), "ERROR: there are no intersection points");
 		
