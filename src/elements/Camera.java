@@ -164,12 +164,14 @@ public class Camera {
 		
 		Point3D Pij = pC;//.add(vRight.scale(xJ)).add(vUp.scale(yI))
 		
-		if (xJ != 0)
+		
+		//without this if statement an exception will be thrown
+		//because vector 0 will be created in case that either of xJ or yI will be 0
+		if (xJ != 0)// if there is a need to change the x axis point
 			Pij = Pij.add(vRight.scale(xJ));
 		
-		if (yI != 0)
+		if (yI != 0)// if there is a need to change the y axis point
 			Pij = Pij.add(vUp.scale(yI));
-		
 		
 		return new Ray(p0, Pij.subtract(p0));
 	}
