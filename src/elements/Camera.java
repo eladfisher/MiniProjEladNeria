@@ -145,8 +145,8 @@ public class Camera {
 	 *
 	 * @param nX the number of pixels in each column
 	 * @param nY the number of pixels in each row
-	 * @param j the x coordinate of the wanted pixel
-	 * @param i the y coordinate of the wanted pixel
+	 * @param j  the x coordinate of the wanted pixel
+	 * @param i  the y coordinate of the wanted pixel
 	 * @return a new ray from the center of the camera that go through the center of the param pixel.
 	 */
 	public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
@@ -162,9 +162,16 @@ public class Camera {
 		double nyI = (double) (nY - 1) / 2;
 		double yI = -(i - nyI) * ratioY;//the  coordinate of the pixel
 		
-		Point3D Pij = pC.add(vRight.scale(xJ)).add(vUp.scale(yI));
+		Point3D Pij = pC;//.add(vRight.scale(xJ)).add(vUp.scale(yI))
 		
-		return new Ray(pC,Pij.subtract(pC));
+		if (xJ != 0)
+			Pij = Pij.add(vRight.scale(xJ));
+		
+		if (yI != 0)
+			Pij = Pij.add(vUp.scale(yI));
+		
+		
+		return new Ray(p0, Pij.subtract(p0));
 	}
 	
 	
