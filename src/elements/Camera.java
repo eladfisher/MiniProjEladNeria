@@ -13,7 +13,7 @@ public class Camera {
 	
 	private final Vector vTo;
 	private final Vector vUp;
-	private final Vector vRight;
+	private final  Vector vRight;
 	
 	private double height;
 	private double width;
