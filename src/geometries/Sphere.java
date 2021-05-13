@@ -22,7 +22,7 @@ public class Sphere implements  Geometry{
      * @param p0 the point in the sphere
      * @param radius the sphere radius
      */
-    Sphere(Point3D p0, double radius)
+    public Sphere(Point3D p0, double radius)
     {
         this.p0 = p0;
         this.radius = radius;
