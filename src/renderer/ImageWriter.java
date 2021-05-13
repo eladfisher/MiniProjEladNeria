@@ -45,7 +45,7 @@ public class ImageWriter {
 
     // ***************** Getters/Setters ********************** //
     /**
-     * View Plane Y axis resolution
+     *  View Plane Y axis resolution
      *
      * @return the amount of vertical pixels
      */
