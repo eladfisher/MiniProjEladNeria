@@ -92,7 +92,7 @@ public class RenderTest {
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
 				.setCamera(camera) //
-				.setScene(scene)
+				//.setScene(scene)
 				.setRayTracer(new RayTracerBasic(scene));
 		
 		render.renderImage();

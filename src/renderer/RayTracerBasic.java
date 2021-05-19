@@ -1,9 +1,13 @@
 package renderer;
 
+
+import elements.LightSource;
+import geometries.Geometry;
 import jdk.jshell.spi.ExecutionControl;
 import primitives.Color;
 import primitives.Point3D;
 import primitives.Ray;
+import primitives.*;
 import scene.Scene;
 import geometries.Intersectable.GeoPoint;
 
@@ -35,16 +39,38 @@ public class RayTracerBasic extends RayTracerBase {
 		if (p == null)
 			return scene.background;
 		
-		return calcColor(p);
+		return calcColor(p,ray);
 	}
 	
 	/**
 	 *calc the color of a specific point
 	 * @param p the point
+	 * @param r the ray from the camera to the pixel
 	 * @return the color of p
 	 */
-	Color calcColor(GeoPoint p)
+	Color calcColor(GeoPoint geoPoint,Ray r)
 	{
-		return scene.ambientLight.getIntensity().add(p.geometry.getEmmission());
+		Geometry g = geoPoint.geometry;
+		Vector v = r.getDirection();
+		Point3D p = geoPoint.point;
+		
+		Color res = scene.ambientLight.getIntensity().add(g.getEmmission());
+		
+		
+		
+		//
+		for (LightSource l:scene.lights)
+		{
+			Vector specularV = l.getL(p).subtract(g.getNormal(p).scale(2*l.getL(p).dotProduct(g.getNormal(p))));
+			double vrShininess = Math.pow(v.scale(-1).dotProduct(specularV),g.getMaterial().nShininess);
+			
+			
+			Color diffuse = l.getIntensity(p).scale(g.getMaterial().Kd*Math.abs(l.getL(p).dotProduct(g.getNormal(p))));
+			Color specular = l.getIntensity(p).scale(g.getMaterial().Kd*vrShininess);
+			
+			res = res.add(diffuse).add(specular);
+		}
+		
+		return res;
 	}
 }

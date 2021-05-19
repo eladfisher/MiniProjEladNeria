@@ -5,7 +5,7 @@ package primitives;
  */
 public class Material {
 	public double Kd, Ks;
-	int nShininess;
+	public int nShininess;
 	
 	/**
 	 *

@@ -44,7 +44,7 @@ public class Render {
 	 * for now the method checks that all the fields are initialized
 	 */
 	public void renderImage() {
-		if (_imageWriter == null || _scene == null || _camera == null || _rayTracerBase == null)
+		if (_imageWriter == null  || _camera == null || _rayTracerBase == null)
 			throw new MissingResourceException("one of the fields isn't proper initialized", "Render", "0");
 		
 		

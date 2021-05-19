@@ -26,6 +26,7 @@ public class Scene {
 		lights = new LinkedList<LightSource>();
 		background = Color.BLACK;
 		geometries = new Geometries();
+		ambientLight = new AmbientLight(Color.BLACK,0);
 	}
 	
 	//region Chain Setters

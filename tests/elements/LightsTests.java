@@ -42,7 +42,8 @@ public class LightsTests {
 		Render render = new Render()//
 				.setImageWriter(imageWriter) //
 				.setCamera(camera1) //
-				.setRayTracer(new RayTracerBasic(scene1));
+				.setRayTracer(new RayTracerBasic(scene1))
+				.setScene(scene1);
 		render.renderImage();
 		render.writeToImage();
 	}
