@@ -2,7 +2,9 @@ package scene;
 
 import elements.*;
 import geometries.*;
-import primitives.*;
+import primitives.Color;
+
+import java.util.*;
 
 /**
  * full pdo object that represents a scene with geometries in the 3D world
@@ -12,6 +14,7 @@ public class Scene {
 	public Color background;
 	public AmbientLight ambientLight;
 	public Geometries geometries;
+	public List<LightSource> lights;
 	
 	/**
 	 * ctor that gets the name of the scene and initialized the scene
@@ -20,7 +23,7 @@ public class Scene {
 	 */
 	public Scene(String name) {
 		this.name = name;
-		
+		lights = new LinkedList<LightSource>();
 		background = Color.BLACK;
 		geometries = new Geometries();
 	}
@@ -56,6 +59,16 @@ public class Scene {
 	public Scene setGeometries(Geometries geometries) {
 		this.geometries = geometries;
 		
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param lights
+	 * @return
+	 */
+	public Scene setLights(List<LightSource> lights) {
+		this.lights = lights;
 		return this;
 	}
 	

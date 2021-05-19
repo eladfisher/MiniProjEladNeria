@@ -1,5 +1,7 @@
 package primitives;
 
+import geometries.Intersectable.*;
+
 import java.util.*;
 import java.util.Objects;
 
@@ -64,8 +66,10 @@ public class Ray {
 	}
 	
 	//region methods
+	
 	/**
 	 * get a point that is  with distance of t from the ray origin
+	 *
 	 * @param t the distance of the point from the ray origin
 	 * @return the point that on the ray and with distance of t from the ray origin
 	 */
@@ -91,18 +95,51 @@ public class Ray {
 		double d = res.distanceSquared(head);
 		
 		//find the closest point except the first one
-		for (Point3D p : points) {
+		for (Point3D p : points)
+		{
 			
 			double pD = p.distanceSquared(p0);
 			
-			if (pD<d)
+			if (pD < d)
 			{
 				res = p;
-				d=pD;
+				d = pD;
 			}
 		}
 		
 		return res;
+	}
+	
+	/**
+	 *
+	 * @param points
+	 * @return
+	 */
+	public GeoPoint findClosestGeoPoint(List<GeoPoint> points) {
+		
+		//if the list is null so there isn't closest point
+		if (points == null)
+			return null;
+		
+		Point3D p0 = head;
+		GeoPoint res = points.get(0);
+		double d = res.point.distanceSquared(head);
+		
+		//find the closest point except the first one
+		for (GeoPoint p : points)
+		{
+			
+			double pD = p.point.distanceSquared(p0);
+			
+			if (pD < d)
+			{
+				res = p;
+				d = pD;
+			}
+		}
+		
+		return res;
+		
 	}
 	//endregion
 }

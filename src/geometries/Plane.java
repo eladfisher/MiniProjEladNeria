@@ -12,7 +12,7 @@ import static primitives.Util.isZero;
 /**
  * a class of Plane for a 3D graphic model
  */
-public class Plane implements Geometry{
+public class Plane extends Geometry{
 
     Vector normal;
     Point3D planePoint;
@@ -76,31 +76,38 @@ public class Plane implements Geometry{
      * @param ray the ray that intersects with the plane
      * @return a list with the intersect point
      */
+    
+    
+    /**
+     *
+     * @param ray
+     * @return
+     */
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
-
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        
         Point3D p0 = ray.getHead();
         Vector v = ray.getDirection();
-
+    
         Vector n = normal;
-
+    
         //the ray start at the plane point
         if(p0.equals(planePoint))
             return null;
-
+    
         double nv = alignZero(n.dotProduct(v));
-
+    
         //ray inside or parallel to plane
         if (isZero(nv))
             return null;
-        
+    
         double nq = alignZero(n.dotProduct(planePoint.subtract(p0)));
         double t =nq/nv;
-        
+    
         //if there isn't points ahead of the ray
         if (t<=0)
             return null;
-        
-        return List.of(ray.getPoint(t));
+    
+        return List.of(new GeoPoint(this,ray.getPoint(t)));
     }
 }

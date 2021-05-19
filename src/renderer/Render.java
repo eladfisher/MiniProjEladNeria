@@ -7,6 +7,9 @@ import scene.Scene;
 import java.util.MissingFormatArgumentException;
 import java.util.MissingResourceException;
 
+/**
+ * renderer class that gets a scene and ray tracing object and the camera and render a image and write this to a file
+ */
 public class Render {
 	ImageWriter _imageWriter;
 	Scene _scene;

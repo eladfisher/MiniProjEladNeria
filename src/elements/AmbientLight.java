@@ -5,9 +5,7 @@ import primitives.*;
 /**
  * a class that represents an ambient light for a scene
  */
-public class AmbientLight {
-	Color iA;
-	double kA;
+public class AmbientLight extends Light {
 	
 	/**
 	 * ctor for the ambient light
@@ -15,15 +13,15 @@ public class AmbientLight {
 	 * @param kA
 	 */
 	public AmbientLight(Color iA, double kA) {
-		this.iA = iA;
-		this.kA = kA;
+		super(  iA.scale(kA));
 	}
 	
 	/**
-	 * the getter for the intencity of the ambient light
-	 * @return
+	 * default ctor that make the light black
 	 */
-	public Color getiA() {
-		return iA;
+	public AmbientLight() {
+		super(Color.BLACK);
 	}
+	
+	
 }

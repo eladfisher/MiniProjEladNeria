@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * a class of Tube for a 3D graphic model
  */
-public class Tube implements Geometry {
+public class Tube extends Geometry {
     Ray direction;
     double radius;
 
@@ -50,9 +50,24 @@ public class Tube implements Geometry {
         Point3D o = direction.getHead().add(direction.getDirection().scale(t));
         return point3D.subtract(o).normalize();
     }
-
+    
+    /**
+     *
+     * @param ray
+     * @return
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
+        return null;
+    }
+    
+    /**
+     *
+     * @param ray
+     * @return
+     */
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
         return null;
     }
 }

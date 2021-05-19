@@ -20,11 +20,7 @@ public class Triangle extends Polygon {
 	 * @param ray the ray that intersects with the triangle
 	 * @return a list with the intersect point
 	 */
-	@Override
-	public List<Point3D> findIntersections(Ray ray) {
-		return super.findIntersections(ray);
 	
-	}
 	
 	
 }

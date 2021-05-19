@@ -13,7 +13,7 @@ import static primitives.Util.*;
  *
  * @author Dan
  */
-public class Polygon implements Geometry {
+public class Polygon extends Geometry {
 	/**
 	 * List of polygon's vertices
 	 */
@@ -93,17 +93,21 @@ public class Polygon implements Geometry {
 		return plane.getNormal();
 	}
 	
+	/**
+	 *
+	 * @param ray
+	 * @return
+	 */
 	@Override
-	public List<Point3D> findIntersections(Ray ray) {
-		
+	public List<GeoPoint> findGeoIntersections(Ray ray) {
 		//the intersection points will be get by the super function.
-		List<Point3D> intersectionList = plane.findIntersections(ray);
+		List<GeoPoint> intersectionList = plane.findGeoIntersections(ray);
 		
 		//if there aren't intersection points null will be return
 		if (intersectionList == null)
 			return null;
 		
-		//here we decide whether the point is on the triangle or not
+		//here we decide whether the point is on the polygon or not
 		List<Vector> vectors = new ArrayList<Vector>(vertices.size());
 		
 		Point3D p0 = ray.getHead();
@@ -143,6 +147,8 @@ public class Polygon implements Geometry {
 				return null;
 		}
 		
+		//update that the geometry is the polygon and not the plain
+		intersectionList.get(0).geometry=this;
 		return intersectionList;
 	}
 }

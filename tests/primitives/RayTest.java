@@ -1,5 +1,7 @@
 package primitives;
 
+import geometries.Intersectable.*;
+import geometries.Sphere;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -59,5 +61,45 @@ class RayTest {
 		
 		//test case 03 the points list is in null
 		assertNull( r.findClosestPoint(null), "ERROR: null list");
+	}
+	
+	/**
+	 *
+	 */
+	@Test
+	void testFindClosestGeoPoint() {
+		
+		//================EPA==============
+		//test case 00 the point is in the middle of the points
+		
+		Ray r = new Ray(new Point3D(3,7,3),new Vector(1,4,5));
+		List<GeoPoint> l00 =List.of(new GeoPoint(new Sphere(new Point3D(1,2,3),12), r.getPoint(6)),
+												  new GeoPoint(new Sphere(new Point3D(1,2,3),11), r.getPoint(7)),
+												  new GeoPoint(new Sphere(new Point3D(1,2,3),1), r.getPoint(3)),
+												  new GeoPoint(new Sphere(new Point3D(1,2,3),1.43), r.getPoint(9)));
+		
+		assertEquals(l00.get(2), r.findClosestGeoPoint(l00), "ERROR: point is in the middle");
+		
+		//================BVA==============
+		//test case 01 the point is in the start of the list
+		List<GeoPoint> l01 =List.of(new GeoPoint(new Sphere(new Point3D(1,2,3),12), r.getPoint(3)),
+									new GeoPoint(new Sphere(new Point3D(1,2,3),11), r.getPoint(7)),
+									new GeoPoint(new Sphere(new Point3D(1,2,3),1), r.getPoint(5)),
+									new GeoPoint(new Sphere(new Point3D(1,2,3),1.43), r.getPoint(9)));
+		
+		
+		assertEquals(l01.get(0), r.findClosestGeoPoint(l01), "ERROR: point is in the start");
+		
+		//test case 02 the point is in the end of the list
+		List<GeoPoint> l02 =List.of(new GeoPoint(new Sphere(new Point3D(1,2,3),12), r.getPoint(3)),
+									new GeoPoint(new Sphere(new Point3D(1,2,3),11), r.getPoint(7)),
+									new GeoPoint(new Sphere(new Point3D(1,2,3),1), r.getPoint(5)),
+									new GeoPoint(new Sphere(new Point3D(1,2,3),1.43), r.getPoint(2)));
+		
+		assertEquals(l02.get(3), r.findClosestGeoPoint(l02), "ERROR: point is in the end");
+		
+		//test case 03 the points list is in null
+		assertNull( r.findClosestGeoPoint(null), "ERROR: null list");
+		
 	}
 }
