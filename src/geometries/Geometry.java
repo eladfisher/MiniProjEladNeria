@@ -18,17 +18,17 @@ public abstract class Geometry implements Intersectable {
 	}
 	
 	/**
-	 *
-	 * @return
+	 * the getter for the material field
+	 * @return the material field
 	 */
 	public Material getMaterial() {
 		return material;
 	}
 	
 	/**
-	 *
-	 * @param material
-	 * @return
+	 * setter for the material
+	 * @param material the new material
+	 * @return the geometry for chaining method
 	 */
 	public Geometry setMaterial(Material material) {
 		this.material = material;
@@ -36,15 +36,17 @@ public abstract class Geometry implements Intersectable {
 	}
 	
 	/**
-	 * @return
+	 * getter for the emission light
+	 * @return the emmision color
 	 */
 	public Color getEmmission() {
 		return emmission;
 	}
 	
 	/**
-	 * @param emmission
-	 * @return
+	 * setter for the emission field
+	 * @param emmission the new emmision
+	 * @return the same instance for chaining method
 	 */
 	public Geometry setEmission(Color emmission) {
 		this.emmission = emmission;

@@ -5,7 +5,7 @@ import primitives.Point3D;
 import primitives.Vector;
 
 /**
- * Spot light source:
+ * point light source:
  *   - Multi-directional light source modeling (like a light bulb)
  *   - Power (I0)
  *   - A specific position in a scene at a point (pz, py, px).
@@ -51,7 +51,7 @@ public class PointLight extends Light implements LightSource {
 	
 	/**
 	 * setter for the l attenuation factor, that depend a little on the distance.
-	 * @param kl Kl
+	 * @param kl Kl attenuation factor
 	 * @return this LightPoint.
 	 */
 	public PointLight setKl(double kl) {
@@ -61,7 +61,7 @@ public class PointLight extends Light implements LightSource {
 	
 	/**
 	 * setter for the quad attenuation factor, that doesn't depend the distance.
-	 * @param kq Kq
+	 * @param kq Kq attenuation factor
 	 * @return this LightPoint.
 	 */
 	public PointLight setKq(double kq) {
@@ -71,8 +71,9 @@ public class PointLight extends Light implements LightSource {
 	//endregion
 	
 	/**
-	 * @param p
-	 * @return
+	 * setter for the quad attenuation factor, that doesn't depend the distance.
+	 * @param p the wanted point to calc intensity
+	 * @return the intensity of the color in the param point
 	 */
 	@Override
 	public Color getIntensity(Point3D p) {
@@ -87,8 +88,9 @@ public class PointLight extends Light implements LightSource {
 	}
 	
 	/**
-	 * @param p
-	 * @return
+	 * getter for the vector of the light direction
+	 * @param p the point that intersect and wanted the light ray to it
+	 * @return normalized vector with the light ray
 	 */
 	@Override
 	public Vector getL(Point3D p) {

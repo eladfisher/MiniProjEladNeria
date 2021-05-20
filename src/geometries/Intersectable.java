@@ -46,9 +46,9 @@ public interface Intersectable {
     }
     
     /**
-     *
-     * @param ray
-     * @return
+     * a default implemetion for the find intersection method using find geo intersection
+     * @param ray the intersect ray
+     * @return a list with al the intersection points
      */
     default List<Point3D> findIntersections(Ray ray) {
         var geoList = findGeoIntersections(ray);
@@ -56,7 +56,11 @@ public interface Intersectable {
                 : geoList.stream().map(gp -> gp.point).collect(Collectors.toList());
     }
     
-    
+    /**
+     * a method that find all the geopoints intersection
+     * @param ray the intersect ray
+     * @return the list with the intersection geo point
+     */
     public  List<GeoPoint> findGeoIntersections(Ray ray);
     
 }

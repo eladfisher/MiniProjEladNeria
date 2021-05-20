@@ -6,6 +6,9 @@ import primitives.Ray;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * a class that collect geometries
+ */
 public class Geometries implements Intersectable {
 	
 	List<Intersectable> geometries;
@@ -30,9 +33,9 @@ public class Geometries implements Intersectable {
 	
 	
 	/**
-	 *
-	 * @param ray
-	 * @return
+	 *find and return all the Geo intersection points of the points that on the geometries in the collection
+	 * @param ray the ray that intersect with the geometries
+	 * @return a list of the intersection geo points
 	 */
 	@Override
 	public List<GeoPoint> findGeoIntersections(Ray ray) {

@@ -94,9 +94,9 @@ public class Polygon extends Geometry {
 	}
 	
 	/**
-	 *
-	 * @param ray
-	 * @return
+	 * find the intersection geo point
+	 * @param ray the intersected ray
+	 * @return a list with geo points
 	 */
 	@Override
 	public List<GeoPoint> findGeoIntersections(Ray ray) {

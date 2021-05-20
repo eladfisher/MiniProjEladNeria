@@ -15,11 +15,7 @@ public class Triangle extends Polygon {
 		super(p0, p1, p2);
 	}
 	
-	/**
-	 * override for the findIntersections function of the geometry interface
-	 * @param ray the ray that intersects with the triangle
-	 * @return a list with the intersect point
-	 */
+	
 	
 	
 	

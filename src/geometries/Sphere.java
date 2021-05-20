@@ -80,16 +80,9 @@ public class Sphere extends  Geometry{
     }
     
     /**
-     * override for the findIntersections function of the geometry interface
+     * override for the findGeoIntersections function of the geometry interface
      * @param ray the ray that intersects with the sphere
-     * @return a list with the intersect points
-     */
-    
-    
-    /**
-     *
-     * @param ray
-     * @return
+     * @return a list with the intersect GeoPoints
      */
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
