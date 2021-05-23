@@ -44,7 +44,7 @@ public class RayTracerBasic extends RayTracerBase {
 	
 	/**
 	 *calc the color of a specific point
-	 * @param p the point
+	 * @param geoPoint the point
 	 * @param r the ray from the camera to the pixel
 	 * @return the color of p
 	 */
@@ -61,14 +61,18 @@ public class RayTracerBasic extends RayTracerBase {
 		//
 		for (LightSource l:scene.lights)
 		{
-			Vector specularV = l.getL(p).subtract(g.getNormal(p).scale(2*l.getL(p).dotProduct(g.getNormal(p))));
-			double vrShininess = Math.pow(v.scale(-1).dotProduct(specularV),g.getMaterial().nShininess);
-			
-			
-			Color diffuse = l.getIntensity(p).scale(g.getMaterial().Kd*Math.abs(l.getL(p).dotProduct(g.getNormal(p))));
-			Color specular = l.getIntensity(p).scale(g.getMaterial().Kd*vrShininess);
-			
-			res = res.add(diffuse).add(specular);
+			double ln = l.getL(p).dotProduct(g.getNormal(p));
+			double vn = v.dotProduct(g.getNormal(p));
+
+			if (ln*vn > 0) {
+				Vector specularV = l.getL(p).subtract(g.getNormal(p).scale(2 * l.getL(p).dotProduct(g.getNormal(p))));
+				double vrShininess = Math.pow(v.scale(-1).dotProduct(specularV), g.getMaterial().nShininess);
+
+				Color diffuse = l.getIntensity(p).scale(g.getMaterial().Kd * Math.abs(ln));
+				Color specular = l.getIntensity(p).scale(g.getMaterial().Kd * vrShininess);
+
+				res = res.add(diffuse).add(specular);
+			}
 		}
 		
 		return res;
