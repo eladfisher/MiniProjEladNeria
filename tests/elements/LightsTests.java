@@ -152,7 +152,7 @@ public class LightsTests {
                 .setVpDistance(1000);
         Geometry coolSphere = new Sphere(new Point3D(0, 0, -50), 50) //
                 .setEmission(new Color(java.awt.Color.black)) //
-                .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
+                .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)) ;
         
         coolScene.geometries.add(coolSphere);
         
