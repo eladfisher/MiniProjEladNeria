@@ -7,7 +7,7 @@ import primitives.Color;
  * It contains the field intensity that means the intensity and the color of the light.
  */
 abstract class Light {
-	private Color intensity;
+	protected Color intensity;
 	
 	/**
 	 * this is an abstract constructors which determines once and for all what the color of the light source is.

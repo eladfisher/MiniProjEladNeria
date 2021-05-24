@@ -12,13 +12,12 @@ import java.util.MissingResourceException;
  */
 public class Render {
 	ImageWriter _imageWriter;
-	Scene _scene;
+	
 	Camera _camera;
 	RayTracerBase _rayTracerBase;
 	
 	
 	public Render setScene(Scene scene) {
-		_scene = scene;
 		
 		return this;
 	}

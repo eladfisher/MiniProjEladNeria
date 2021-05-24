@@ -19,32 +19,32 @@ public class DirectionalLight extends Light implements LightSource{
 	private Vector direction;
 	
 	/**
-	 * constructor that use the abstract ctor for the intensity and set the vector in his direction parameter.
-	 * @param intensity intensity, in the abstract class Light.
-	 * @param direction because its DIRECTIONAL Light.
+	 * Builds a directional light object given its position and direction.
+	 * @param intensity Light's intensity(color)
+	 * @param direction Light's position
 	 */
 	public DirectionalLight(Color intensity, Vector direction) {
 		super(intensity);
-		this.direction = direction.normalized();
+		this.direction = direction;
 	}
 	
-	/**
-	 * Function  in order to know the intensity. For the interface LightSource.
-	 * @param p point in the scene that we want to check how the directional light effects at her.
-	 * @return the regular constant intensity from Light class, because the directional light is never changes.
-	 */
 	@Override
 	public Color getIntensity(Point3D p) {
-		return getIntensity();
+		return intensity;
+	}
+	
+	@Override
+	public Vector getL(Point3D p) {
+		return direction.normalize();
 	}
 	
 	/**
-	 * Function in order to know the direction. For the interface LightSource.
-	 * @param p p point in the scene that we want to check how the directional light effects at her.
-	 * @return the constant direction Vector, because the directional light is never changes.
+	 *
+	 * @param point
+	 * @return
 	 */
 	@Override
-	public Vector getL(Point3D p) {
-		return direction;
+	public double getDistance(Point3D point) {
+		return Double.POSITIVE_INFINITY;
 	}
 }

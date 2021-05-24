@@ -101,6 +101,7 @@ public class LightsTests {
         render.writeToImage();
     }
     
+    
     /**
      * Produce a picture of a two triangles lighted by a point light
      */
@@ -137,6 +138,41 @@ public class LightsTests {
                 .setRayTracer(new RayTracerBasic(scene2));
         render.renderImage();
         render.writeToImage();
+    }
+    
+    /**
+     * test with a sphere and multiple light sources to check the result
+     */
+    @Test
+    public void coolImageTest() {
+        Scene coolScene = new Scene("Test cool scene") //
+                .setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0));
+        Camera coolCamera = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+                .setVpSize(150, 150) //
+                .setVpDistance(1000);
+        Geometry coolSphere = new Sphere(new Point3D(0, 0, -50), 50) //
+                .setEmission(new Color(java.awt.Color.black)) //
+                .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
+        
+        coolScene.geometries.add(coolSphere);
+        
+        coolScene.lights.add(new PointLight(new Color(java.awt.Color.BLUE), new Point3D(-50, 100, 50))//
+                                     .setKl(0.00001).setKq(0.000001));
+        coolScene.lights.add(new PointLight(new Color(java.awt.Color.GREEN), new Point3D(-50, -100, 50))//
+                                     .setKl(0.00001).setKq(0.000001));
+        coolScene.lights.add(new PointLight(new Color(java.awt.Color.RED), new Point3D(111.8033989, 0, 50))//
+                                     .setKl(0.00001).setKq(0.000001));
+        coolScene.lights.add(new DirectionalLight(new Color(java.awt.Color.WHITE).scale(0.4), new Vector(0,0,-1)));
+        
+        
+        
+        ImageWriter coolImageWriter = new ImageWriter("coolImage", 500, 500);
+        Render coolRender = new Render()//
+                .setImageWriter(coolImageWriter) //
+                .setCamera(coolCamera) //
+                .setRayTracer(new RayTracerBasic(coolScene));
+        coolRender.renderImage();
+        coolRender.writeToImage();
     }
     
 }
