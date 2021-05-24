@@ -29,7 +29,7 @@ public class DirectionalLight extends Light implements LightSource{
 	}
 	
 	/**
-	 * Function in order to know the intensity. For the interface LightSource.
+	 * Function  in order to know the intensity. For the interface LightSource.
 	 * @param p point in the scene that we want to check how the directional light effects at her.
 	 * @return the regular constant intensity from Light class, because the directional light is never changes.
 	 */
