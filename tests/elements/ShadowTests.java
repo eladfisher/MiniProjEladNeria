@@ -28,9 +28,6 @@ public class ShadowTests {
 			.setEmission(new Color(java.awt.Color.BLUE)) //
 			.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30));//
 	
-	
-	
-	
 	/**
 	 * Produce a picture of a sphere and triangle with point light and shade
 	 */

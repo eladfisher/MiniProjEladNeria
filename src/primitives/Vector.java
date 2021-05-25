@@ -161,7 +161,7 @@ public class Vector {
     /**
      * normalize a vector
      *
-     * @return the normalized vector
+     * @return the normalize vector (same instance)
      */
     public Vector normalize() {
         Vector v = this.scale(1.0 / length());
@@ -173,7 +173,7 @@ public class Vector {
     /**
      * does a normalized for a vector and don't change the vector
      *
-     * @return normalized vector
+     * @return new normalized vector
      */
     public Vector normalized() {
         Vector v = new Vector(head);

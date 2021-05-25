@@ -5,6 +5,7 @@ import geometries.Intersectable.*;
 import java.util.*;
 import java.util.Objects;
 
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /**
@@ -15,6 +16,9 @@ public class Ray {
 	Point3D head;
 	Vector direction;
 	
+	//the delta to move the head of the ray for shadowing
+	private static final double DELTA = 0.1;
+	
 	/**
 	 * default ctor that gets the head point and the direction of the ray
 	 *
@@ -24,6 +28,26 @@ public class Ray {
 	public Ray(Point3D head, Vector direction) {
 		this.head = head;
 		this.direction = direction.normalize();
+	}
+	
+	/**
+	 * ctor that make ray that is with the head moved in the direction of the normal
+	 *
+	 * @param head      the head of the ray
+	 * @param direction the direction of the ray
+	 * @param normal    the normal of the ray
+	 */
+	public Ray(Point3D head, Vector direction, Vector normal) {
+		Vector delta;
+		
+		if (alignZero(direction.dotProduct(normal)) > 0)
+			delta = normal.scale(DELTA);
+		
+		else
+			delta = normal.scale(-DELTA);
+		
+		this.direction = direction.normalized();
+		this.head = head.add(delta);
 	}
 	
 	/**
@@ -111,7 +135,6 @@ public class Ray {
 	}
 	
 	/**
-	 *
 	 * @param points
 	 * @return
 	 */
@@ -141,5 +164,7 @@ public class Ray {
 		return res;
 		
 	}
+	
+	
 	//endregion
 }
