@@ -7,8 +7,11 @@ import elements.*;
 import geometries.Sphere;
 import geometries.Triangle;
 import primitives.*;
+import primitives.Vector;
 import renderer.*;
 import scene.Scene;
+
+import java.util.*;
 
 /**
  * Tests for reflection and transparency functionality, test for partial shadows
@@ -124,106 +127,6 @@ public class ReflectionRefractionTests {
 	
 	@Test
 	public void WOW_ImageTest() {
-		Material wall_m = new Material().setKd(0).setKs(0).setShininess(30).setKt(0);
-		Color wall_c = new Color(java.awt.Color.gray);
-		Polygon r_wall = (Polygon) new Polygon(
-				new Point3D(2, 0, 1),
-				new Point3D(2, 0, -2),
-				new Point3D(2, 4, -2),
-				new Point3D(2, 4, 1)
-		).setEmission(wall_c)
-				.setMaterial(wall_m);
-		Polygon b_wall = (Polygon) new Polygon(
-				new Point3D(-2, 0, -2),
-				new Point3D(2, 0, -2),
-				new Point3D(2, 4, -2),
-				new Point3D(0, 6, -2),
-				new Point3D(-2, 4, -2)
-		).setEmission(wall_c)
-				.setMaterial(wall_m);
-		Polygon l_wall = (Polygon) new Polygon(
-				new Point3D(-2, 0, 1),
-				new Point3D(-2, 0, -2),
-				new Point3D(-2, 4, -2),
-				new Point3D(-2, 4, 1)
-		).setEmission(wall_c)
-				.setMaterial(wall_m);
-		Polygon f_wall = (Polygon) new Polygon(
-				new Point3D(-2, 0, 1),
-				new Point3D(2, 0, 1),
-				new Point3D(2, 4, 1),
-				new Point3D(0, 6, 1),
-				new Point3D(-2, 4, 1)
-		).setEmission(wall_c)
-				.setMaterial(wall_m);
-		
-		
-		Material roof_m = new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6);
-		Color roof_c = new Color(java.awt.Color.RED);
-		Polygon r_roof = (Polygon) new Polygon(
-				new Point3D(0, 6, 1),
-				new Point3D(0, 6, -2),
-				new Point3D(2.5, 3.5, -2),
-				new Point3D(2.5, 3.5, 1)
-		).setEmission(roof_c)
-				.setMaterial(roof_m);
-		Polygon l_roof = (Polygon) new Polygon(
-				new Point3D(0, 6, 1),
-				new Point3D(0, 6, -2),
-				new Point3D(-2.5, 3.5, -2),
-				new Point3D(-2.5, 3.5, 1)
-		).setEmission(roof_c)
-				.setMaterial(roof_m);
-		
-		Material ground_m = new Material().setKd(0).setKs(0).setShininess(20).setKt(0);
-		Color ground_c = new Color(java.awt.Color.green);
-		Plane ground = (Plane) new Plane(new Vector(0, 1, 0), new Point3D(0, 0, 0))
-				.setMaterial(ground_m)
-				.setEmission(ground_c);
-		
-		Material ball_m = new Material().setKd(0).setKs(0).setShininess(30).setKt(0);
-		Color ball_c = new Color(java.awt.Color.gray);
-		Sphere sphere = (Sphere) new Sphere(new Point3D(0, 0, 0), 50)
-				.setEmission(ball_c)
-				.setMaterial(ball_m);
-		
-		Camera coolCamera = new Camera(
-				new Point3D(200, 200, 1000),
-				new Vector(-10, -10, -50),
-				new Vector(-10, 260, -50)) //
-				.setVpSize(200, 200)
-				.setVpDistance(500);
-		scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
-		scene.setBackground(new Color(java.awt.Color.CYAN));
-		scene.geometries.add(
-				r_wall, l_wall, b_wall, f_wall,
-				r_roof, l_roof,
-				ground, sphere,
-				new Triangle(
-						new Point3D(0, 0, 0),
-						new Point3D(0, 250, 0),
-						new Point3D(-250, 0, 0)
-				).setEmission(ball_c).setMaterial(ball_m)
-		);
-		
-		scene.lights.add(new DirectionalLight(
-				new Color(java.awt.Color.WHITE).scale(0.7),
-				new Vector(-1, -1, 1)
-		));
-		
-		ImageWriter imageWriter = new ImageWriter("amazingImage", 600, 600);
-		Render render = new Render() //
-				.setImageWriter(imageWriter) //
-				.setCamera(coolCamera) //
-				.setRayTracer(new RayTracerBasic(scene));
-		
-		render.renderImage();
-		render.writeToImage();
-	}
-	
-	
-	@Test
-	public void WOW_ImageTestOfFisher() {
 		Material wall_m = new Material().setKd(1).setKs(1).setShininess(30).setKt(0);
 		Color wall_c = new Color(java.awt.Color.gray);
 		double d = 20;
@@ -259,7 +162,7 @@ public class ReflectionRefractionTests {
 				.setMaterial(wall_m);
 		
 		
-		Material roof_m = new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6);
+		Material roof_m = new Material().setKd(0.4).setKs(0.1).setShininess(10).setKt(0);
 		Color roof_c = new Color(java.awt.Color.RED);
 		Polygon r_roof = (Polygon) new Polygon(
 				new Point3D(d*0,d*6, d*1),
@@ -275,42 +178,66 @@ public class ReflectionRefractionTests {
 				new Point3D(d*-2.5, d*3.5,d* 1)
 		).setEmission(roof_c)
 				.setMaterial(roof_m);
+
+		Polygon door = (Polygon) new Polygon(
+				new Point3D(d*-0.7,d* 0,d*1.005),
+				new Point3D(d*0.7, d*0, d*1.005),
+				new Point3D(d*0.7, d*2, d*1.005),
+				new Point3D(d*-0.7,d* 2,d*1.005)
+		).setEmission(new Color(139,69,19))
+				.setMaterial(wall_m);
 		
-		Material ground_m = new Material().setKd(0).setKs(0).setShininess(20).setKt(0);
+		Material ground_m = new Material().setKd(0.3).setKs(0).setShininess(0).setKt(0).setKr(0.3);
 		Color ground_c = new Color(java.awt.Color.green);
 		Plane ground = (Plane) new Plane(new Vector(0, 1, 0), new Point3D(0, 0, 0))
 				.setMaterial(ground_m)
 				.setEmission(ground_c);
+
+
+
+
 		
-		Material ball_m = new Material().setKd(0).setKs(0).setShininess(30).setKt(0);
-		Color ball_c = new Color(java.awt.Color.gray);
-		Sphere sphere = (Sphere) new Sphere(new Point3D(0, 0, 0), 50)
+		Material ball_m = new Material().setKd(1).setKs(1).setShininess(0).setKt(0).setKr(0.2);
+		Color ball_c = new Color(java.awt.Color.darkGray);
+		Sphere sphere1 = (Sphere) new Sphere(new Point3D(50, 20, 50), 20)
 				.setEmission(ball_c)
 				.setMaterial(ball_m);
+		Sphere sphere2 = (Sphere) new Sphere(new Point3D(20, 20, 60), 20)
+				.setEmission(ball_c)
+				.setMaterial(ball_m);
+
+		Point3D sun_p = new Point3D(-390,240,-190);
+		Sphere sun = (Sphere) new Sphere(sun_p,70)
+				.setEmission(new Color(java.awt.Color.yellow))
+				.setMaterial(new Material()
+					.setKd(0.2)
+					.setKt(0.9)
+					.setShininess(100)
+					.setKs(1));
 		
-		//Camera coolCamera = new Camera(
-		//		new Point3D(200, 200, 1000),
-		//		new Vector(-10, -10, -50),
-		//		new Vector(-10, 260, -50)) //
-		//		.setVpSize(200, 200)
-		//		.setVpDistance(500);
-		
-		Camera coolCamera = new Camera(new Point3D(1000, 100, 1000), new Vector(-1000, -100, -1000), new Vector(-1, 20, -1)) //
+
+		Camera coolCamera = new Camera(new Point3D(1000, 150, 1000), new Vector(-1000, -100, -1000), new Vector(-1, 20, -1)) //
 				.setVpSize(200, 200).setVpDistance(1000);
 		scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
-		scene.setBackground(new Color(java.awt.Color.CYAN));
+		scene.setBackground(new Color(java.awt.Color.CYAN).scale(0.7));
 		scene.geometries.add(
 				r_wall, l_wall, b_wall, f_wall,
+				door,
 				r_roof, l_roof,
-				ground
+				ground,
+				sphere1,sphere2,
+				sun
 		);
 		
 		scene.lights.add(new DirectionalLight(
-				new Color(java.awt.Color.WHITE).scale(0.7),
-				new Vector(0, 0, -1)
+				new Color(java.awt.Color.WHITE).scale(0.5),
+				new Vector(1, -1, -1)
 		));
+		scene.lights.add(
+				new PointLight(new Color(java.awt.Color.WHITE),sun_p)
+		);
 		
-		ImageWriter imageWriter = new ImageWriter("amazingFFFFImage", 600, 600);
+		ImageWriter imageWriter = new ImageWriter("amazingImage", 600, 600);
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
 				.setCamera(coolCamera) //
@@ -319,7 +246,94 @@ public class ReflectionRefractionTests {
 		render.renderImage();
 		render.writeToImage();
 	}
-	
+
+
+	@Test
+	public void WOWOW_ImageTest() {
+		Material ground_m = new Material().setKd(1).setKs(0).setShininess(0).setKt(0).setKr(0.35);
+		Color ground_c = new Color(java.awt.Color.DARK_GRAY);
+		Plane ground = (Plane) new Plane(new Vector(0, 1, 0), new Point3D(0, 0, 0))
+				.setMaterial(ground_m)
+				.setEmission(ground_c);
+
+		Point3D p_l1 = new Point3D(50,100,1009);
+		Sphere s_l1 = (Sphere) new Sphere(p_l1,30)
+				.setMaterial(new Material().setKd(1).setKs(0).setShininess(100).setKt(0.7).setKr(0.2))
+				.setEmission(new Color(java.awt.Color.YELLOW));
+
+		Point3D p_l2 = new Point3D(-70,100,-70);
+		Sphere s_l2 = (Sphere) new Sphere(p_l2,8)
+				.setMaterial(new Material().setKd(1).setKs(0).setShininess(100).setKt(0.7).setKr(0.2))
+				.setEmission(new Color(java.awt.Color.YELLOW));
+
+		Material ball_m = new Material().setKd(1).setKs(1).setShininess(0).setKt(0).setKr(0.4);
+		Color ball_c = new Color(java.awt.Color.blue).scale(0.7);
+
+		List<Sphere> spheres = new ArrayList<Sphere>();
+		spheres.add((Sphere) new Sphere(new Point3D(-100, 50, 100), 50)
+						.setEmission(ball_c)
+						.setMaterial(ball_m));
+		spheres.add((Sphere) new Sphere(new Point3D(70, 30, -60), 30)
+						.setEmission(ball_c)
+						.setMaterial(new Material().setKd(1).setKs(1).setShininess(0).setKt(0.6).setKr(0.3)));
+		spheres.add((Sphere) new Sphere(new Point3D(40, 80, -600), 80)
+				.setEmission(new Color(java.awt.Color.GREEN).scale(0.4))
+				.setMaterial(ball_m));
+		spheres.add((Sphere) new Sphere(new Point3D(-20, 20, 250), 20)
+				.setEmission(new Color(java.awt.Color.RED).scale(0.7))
+				.setMaterial(ball_m));
+		spheres.add((Sphere) new Sphere(new Point3D(60, 25, 400), 25)
+				.setEmission(new Color(java.awt.Color.yellow).scale(0.3))
+				.setMaterial(ball_m));
+		spheres.add((Sphere) new Sphere(new Point3D(-45, 30, 750), 30)
+				.setEmission(new Color(java.awt.Color.MAGENTA).scale(0.7))
+				.setMaterial(ball_m));
+		spheres.add((Sphere) new Sphere(new Point3D(30, 15, 600), 15)
+				.setEmission(new Color(java.awt.Color.cyan).scale(0.3))
+				.setMaterial(new Material().setKd(1).setKs(1).setShininess(0).setKt(0.6).setKr(0.3)));
+		spheres.add((Sphere) new Sphere(new Point3D(5, 15, 10), 15)
+				.setEmission(new Color(java.awt.Color.black).scale(0.3))
+				.setMaterial(ball_m));
+		spheres.add((Sphere) new Sphere(new Point3D(15, 10, 430), 10)
+				.setEmission(new Color(java.awt.Color.LIGHT_GRAY).scale(0.01))
+				.setMaterial(ball_m));
+
+
+		Camera coolCamera = new Camera(new Point3D(0, 50, 1000), new Vector(0, -5, -100), new Vector(0, 100, -5)) //
+				.setVpSize(200, 200).setVpDistance(1000);
+		scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.01));
+		//scene.setBackground(new Color(java.awt.Color.CYAN).scale(0.7));
+		scene.geometries.add(
+				ground,
+				//s_l1,
+				s_l2
+		);
+		for (Sphere s :
+				spheres) {
+			scene.geometries.add(s);
+		}
+
+		scene.lights.add(new DirectionalLight(
+				new Color(java.awt.Color.WHITE).scale(0),
+				new Vector(1, -1, -1)
+		));
+		//scene.lights.add(
+		//		new PointLight(new Color(java.awt.Color.WHITE).scale(0.2),p_l1)
+		//);
+		scene.lights.add(
+				new PointLight(new Color(java.awt.Color.WHITE).scale(0.4),p_l2)
+		);
+
+		ImageWriter imageWriter = new ImageWriter("amazingImage3", 600, 600);
+		Render render = new Render() //
+				.setImageWriter(imageWriter) //
+				.setCamera(coolCamera) //
+				.setRayTracer(new RayTracerBasic(scene));
+
+		render.renderImage();
+		render.writeToImage();
+	}
+
 }
 
 
