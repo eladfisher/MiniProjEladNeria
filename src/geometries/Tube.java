@@ -70,4 +70,9 @@ public class Tube extends Geometry {
     public List<GeoPoint> findGeoIntersections(Ray ray) {
         return null;
     }
+    
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+        return null;
+    }
 }

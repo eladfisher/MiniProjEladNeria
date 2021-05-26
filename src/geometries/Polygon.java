@@ -93,15 +93,17 @@ public class Polygon extends Geometry {
 		return plane.getNormal();
 	}
 	
+	
+	
 	/**
 	 * find the intersection geo point
 	 * @param ray the intersected ray
 	 * @return a list with geo points
 	 */
 	@Override
-	public List<GeoPoint> findGeoIntersections(Ray ray) {
+	public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 		//the intersection points will be get by the super function.
-		List<GeoPoint> intersectionList = plane.findGeoIntersections(ray);
+		List<GeoPoint> intersectionList = plane.findGeoIntersections(ray,maxDistance);
 		
 		//if there aren't intersection points null will be return
 		if (intersectionList == null)

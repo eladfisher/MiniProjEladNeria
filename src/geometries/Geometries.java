@@ -30,20 +30,19 @@ public class Geometries implements Intersectable {
 	}
 	
 	
-	
-	
 	/**
-	 *find and return all the Geo intersection points of the points that on the geometries in the collection
-	 * @param ray the ray that intersect with the geometries
-	 * @return a list of the intersection geo points
+	 * find all the intersection points in some distance from the ray's head
+	 * @param ray the intersected ray
+	 * @param maxDistance the max distance
+	 * @return a list with the intersected points
 	 */
 	@Override
-	public List<GeoPoint> findGeoIntersections(Ray ray) {
+	public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 		List<GeoPoint> res = null;
 		
 		for (Intersectable i : geometries)
 		{
-			List<GeoPoint> l = i.findGeoIntersections(ray);
+			List<GeoPoint> l = i.findGeoIntersections(ray,maxDistance);
 			
 			if(l!=null&&res==null)
 				res = new ArrayList<GeoPoint>(l);

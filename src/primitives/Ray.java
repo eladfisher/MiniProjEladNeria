@@ -135,8 +135,9 @@ public class Ray {
 	}
 	
 	/**
-	 * @param points
-	 * @return
+	 * find the closest intersection geo point from a list
+	 * @param points the list of points
+	 * @return the closest point
 	 */
 	public GeoPoint findClosestGeoPoint(List<GeoPoint> points) {
 		

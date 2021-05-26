@@ -70,22 +70,13 @@ public class Plane extends Geometry{
                 '}';
     }
     
-    
     /**
      * override for the findIntersections function of the geometry interface
      * @param ray the ray that intersects with the plane
      * @return a list with the intersect point
      */
-    
-    
-    /**
-     *
-     * @param ray
-     * @return
-     */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
-        
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         Point3D p0 = ray.getHead();
         Vector v = ray.getDirection();
     
@@ -108,6 +99,12 @@ public class Plane extends Geometry{
         if (t<=0)
             return null;
     
-        return List.of(new GeoPoint(this,ray.getPoint(t)));
+        Point3D point = ray.getPoint(t);
+        
+        //check that the distance is bigger than the max distance
+        if(alignZero(t - maxDistance) > 0)
+            return null;
+        
+        return List.of(new GeoPoint(this,point));
     }
 }
