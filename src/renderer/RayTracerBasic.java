@@ -108,15 +108,15 @@ public class RayTracerBasic extends RayTracerBase {
 	}
 	
 	/**
-	 * @param ks
-	 * @param l
-	 * @param n
-	 * @param v
-	 * @param nShininess
-	 * @param lightIntensity
-	 * @return
+	 * calc the specular color of a certain point and a light source
+	 * @param ks the discount factor of the material
+	 * @param l the L vector from the light source
+	 * @param n the normal in the point
+	 * @param v the direction vector of the intersect ray
+	 * @param nShininess the shininess level of the geometry
+	 * @param lightIntensity the light intensity
+	 * @return the specular color of the point
 	 */
-	
 	private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
 		
 		Vector specularV = l.subtract(n.scale(2 * l.dotProduct(n)));
@@ -126,11 +126,12 @@ public class RayTracerBasic extends RayTracerBase {
 	}
 	
 	/**
-	 * @param kd
-	 * @param l
-	 * @param n
-	 * @param lightIntensity
-	 * @return
+	 * calc the diffusive color of a certain point and a light source
+	 * @param kd the discount factor of the material
+	 * @param l the L vector from the light source
+	 * @param n the normal in the point
+	 * @param lightIntensity the light intensity
+	 * @return the diffusive color of the color
 	 */
 	private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
 		double ln = l.dotProduct(n);
@@ -225,13 +226,13 @@ public class RayTracerBasic extends RayTracerBase {
 	}
 	
 	/**
-	 * check if the point is un shaded
+	 * calc the transparency level of the point
 	 *
 	 * @param light    the light source
 	 * @param l        the light direction to the point
 	 * @param n        the normal in the point
 	 * @param geopoint the geopoint
-	 * @return true if the point is unshaded
+	 * @return the transparency discount factor of the material
 	 */
 	private double transparency(LightSource light, Vector l, Vector n, GeoPoint geopoint) {
 		

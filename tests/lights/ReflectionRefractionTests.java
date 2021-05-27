@@ -124,7 +124,8 @@ public class ReflectionRefractionTests {
         render.renderImage();
         render.writeToImage();
     }
-
+    
+    
     @Test
     public void WOW_ImageTest() {
         Material wall_m = new Material().setKd(1).setKs(1).setShininess(30).setKt(0);
