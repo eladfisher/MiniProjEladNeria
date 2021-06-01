@@ -125,4 +125,66 @@ public class Point3D {
     public double getZ() {
         return z.coord;
     }
+
+    public Point3D rotateAroundVector(Vector u, double a)
+    {
+        Matrix v = new Matrix(this);
+		double  x = u.getHead().getX(),
+				y = u.getHead().getY(),
+				z = u.getHead().getZ(),
+				ca = Math.cos(a),
+				sa = Math.sin(a);
+		double[][] ra = {
+				{ca+x*x*(1-ca),		x*y*(1-ca)-z*sa,	x*z*(1-ca)+y*sa},
+				{x*y*(1-ca)+z*sa,	ca+y*y*(1-ca),		z*y*(1-ca)-x*sa},
+				{x*z*(1-ca)-y*sa,	z*y*(1-ca)+x*sa,	ca+z*z*(1-ca)}
+		};
+
+		Matrix rm = new Matrix(ra);
+
+		Matrix rotate = rm.times(v);
+
+		double[][] drot = rotate.getData();
+		this.x = new Coordinate(drot[0][0]);
+		this.y = new Coordinate(drot[1][0]);
+		this.z = new Coordinate(drot[2][0]);
+
+		return this;
+    }
+
+    public Point3D rotated_AroundVector(Vector u, double a)
+    {
+        Point3D p = new Point3D(x,y,z);
+        return p.rotateAroundVector(u,a);
+    }
+
+    public Point3D rotateAroundRay(Ray r, double a)
+    {
+        Point3D Hup = this;
+
+        boolean f = !r.head.equals(ZERO);
+        Vector ToH0 = null;
+        if(f) {
+            ToH0 = ZERO.subtract(r.head);
+            Hup = Hup.add(ToH0);
+        }
+
+        Hup.rotateAroundVector(r.direction, a);
+
+        if(f)
+            Hup = Hup.add(ToH0.scale(-1));
+
+        this.x = Hup.x;
+        this.y = Hup.y;
+        this.z = Hup.z;
+
+        return this;
+    }
+
+    public Point3D rotated_AroundRay(Ray r, double a)
+    {
+        Point3D p = new Point3D(x,y,z);
+        return p.rotateAroundRay(r,a);
+    }
+
 }

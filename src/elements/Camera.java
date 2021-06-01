@@ -158,31 +158,9 @@ public class Camera {
      * @param a
      */
 	public void rotateCameraAroundVto(double a){
-		Point3D h0 = Point3D.ZERO;
-		Vector ToH0 = h0.subtract(point3D);
 		Point3D Hup = point3D.add(vUp);
-		Hup = Hup.add(ToH0);
-
-		Matrix v = new Matrix(Hup);
-		double x = vTo.getHead().getX(),
-				y = vTo.getHead().getY(),
-				z = vTo.getHead().getZ(),
-				ca = Math.cos(a),
-				sa = Math.sin(a);
-		double[][] ra = {
-				{ca+x*x*(1-ca),		x*y*(1-ca)-z*sa,	x*z*(1-ca)+y*sa},
-				{x*y*(1-ca)+z*sa,	ca+y*y*(1-ca),		z*y*(1-ca)-x*sa},
-				{x*z*(1-ca)-y*sa,	z*y*(1-ca)+x*sa,	ca+z*z*(1-ca)}
-		};
-
-		Matrix rm = new Matrix(ra);
-
-		Matrix rotate = rm.times(v);
-
-		double[][] drot = rotate.getData();
-		Point3D newone = new Point3D(drot[0][0],drot[1][0],drot[2][0]);
-
-		set_vTo_vUp(vTo,newone.subtract(h0));
+		Hup.rotateAroundRay(new Ray(point3D,vTo), a);
+		set_vTo_vUp(vTo, Hup.subtract(point3D));
 	}
 
 	public void MoveCamera(Point3D newPlace, Point3D lookAtP, double a)
