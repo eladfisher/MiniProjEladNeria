@@ -1,11 +1,8 @@
 package lights;
 
-import geometries.Plane;
-import geometries.Polygon;
+import geometries.*;
 import org.junit.jupiter.api.Test;
 import elements.*;
-import geometries.Sphere;
-import geometries.Triangle;
 import primitives.*;
 import primitives.Vector;
 import renderer.*;
@@ -319,7 +316,48 @@ public class ReflectionRefractionTests {
     }
 
 
+    @Test
+    public void BoxCylinder_ImageTest() {
+        Material ground_m = new Material().setKd(1).setKs(0).setShininess(0).setKt(0).setKr(0.35);
+        Color ground_c = new Color(java.awt.Color.DARK_GRAY);
+        Plane ground = (Plane) new Plane(new Vector(0, 1, 0), new Point3D(0, 0, 0))
+                .setMaterial(ground_m)
+                .setEmission(ground_c);
 
+
+
+
+        Camera coolCamera = new Camera(new Point3D(0, 50, 1000), new Vector(0, -5, -100), new Vector(0, 100, -5)) //
+                .setVpSize(200, 200).setVpDistance(1000);
+        scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.01));
+        scene.geometries.add(
+                ground,
+                new Box(new Point3D(-30,25,0),50,30,20).
+                        setEmission(new Color(java.awt.Color.RED)).
+                        setMaterial(new Material().setKd(1).setKs(0.2).setShininess(0).setKt(0.3).setKr(0.35)),
+                new Cylinder(
+                        new Ray(new Point3D(20,20,20),
+                                new Vector(20,2,20)),
+                        30,100).
+                        setEmission(new Color(java.awt.Color.BLUE)).
+                        setMaterial(new Material().setKd(1).setKs(0.2).setShininess(0).setKt(0.3).setKr(0.35))
+        );
+
+        scene.lights.add(new DirectionalLight(
+                new Color(java.awt.Color.WHITE).scale(0.6),
+                new Vector(1, -1, -1)
+        ));
+
+
+        ImageWriter imageWriter = new ImageWriter("BoxCylinderImage", 600, 600);
+        Render render = new Render() //
+                .setImageWriter(imageWriter) //
+                .setCamera(coolCamera) //
+                .setRayTracer(new RayTracerBasic(scene));
+
+        render.renderImage();
+        render.writeToImage();
+    }
 }
 
 

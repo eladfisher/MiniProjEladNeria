@@ -153,10 +153,10 @@ public class Camera {
 		set_vTo_vUp(to,up);
 	}
 
-    /**
-     *
-     * @param a
-     */
+	/**
+	 *
+	 * @param a
+	 */
 	public void rotateCameraAroundVto(double a){
 		Point3D Hup = point3D.add(vUp);
 		Hup.rotateAroundRay(new Ray(point3D,vTo), a);
@@ -164,11 +164,11 @@ public class Camera {
 	}
 
 	public void MoveCamera(Point3D newPlace, Point3D lookAtP, double a)
-    {
-        point3D = newPlace;
-        lookAt(lookAtP,new Vector(0,1,0));
-        rotateCameraAroundVto(a);
-    }
+	{
+		point3D = newPlace;
+		lookAt(lookAtP,new Vector(0,1,0));
+		rotateCameraAroundVto(a);
+	}
 	//endregion
 
 	//region getters using method chaining

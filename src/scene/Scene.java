@@ -15,7 +15,7 @@ public class Scene {
 	public AmbientLight ambientLight;
 	public Geometries geometries;
 	public List<LightSource> lights;
-	
+
 	/**
 	 * ctor that gets the name of the scene and initialized the scene
 	 * with black background and a new list of geometries
@@ -28,7 +28,7 @@ public class Scene {
 		geometries = new Geometries();
 		ambientLight = new AmbientLight(Color.BLACK,0);
 	}
-	
+
 	//region Chain Setters
 	/**
 	 *
@@ -37,10 +37,10 @@ public class Scene {
 	 */
 	public Scene setBackground(Color background) {
 		this.background = background;
-		
+
 		return this;
 	}
-	
+
 	/**
 	 *
 	 * @param ambientLight
@@ -48,10 +48,10 @@ public class Scene {
 	 */
 	public Scene setAmbientLight(AmbientLight ambientLight) {
 		this.ambientLight = ambientLight;
-		
+
 		return this;
 	}
-	
+
 	/**
 	 *
 	 * @param geometries
@@ -59,10 +59,10 @@ public class Scene {
 	 */
 	public Scene setGeometries(Geometries geometries) {
 		this.geometries = geometries;
-		
+
 		return this;
 	}
-	
+
 	/**
 	 *
 	 * @param lights
@@ -72,6 +72,6 @@ public class Scene {
 		this.lights = lights;
 		return this;
 	}
-	
+
 	//endregion
 }

@@ -69,7 +69,7 @@ public class Plane extends Geometry{
                 ", planePoint=" + planePoint +
                 '}';
     }
-    
+
     /**
      * override for the findIntersections function of the geometry interface
      * @param ray the ray that intersects with the plane
@@ -79,32 +79,40 @@ public class Plane extends Geometry{
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         Point3D p0 = ray.getHead();
         Vector v = ray.getDirection();
-    
+
         Vector n = normal;
-    
+
         //the ray start at the plane point
         if(p0.equals(planePoint))
             return null;
-    
+
         double nv = alignZero(n.dotProduct(v));
-    
+
         //ray inside or parallel to plane
         if (isZero(nv))
             return null;
-    
+
         double nq = alignZero(n.dotProduct(planePoint.subtract(p0)));
         double t =nq/nv;
-    
+
         //if there isn't points ahead of the ray
         if (t<=0)
             return null;
-    
+
         Point3D point = ray.getPoint(t);
-        
+
         //check that the distance is bigger than the max distance
         if(alignZero(t - maxDistance) > 0)
             return null;
-        
+
         return List.of(new GeoPoint(this,point));
+    }
+
+
+    public boolean onPlane(Point3D p)
+    {
+        if (p.equals(planePoint)) return true;
+        if (isZero(p.subtract(planePoint).dotProduct(normal))) return true;
+        return false;
     }
 }

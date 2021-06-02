@@ -11,7 +11,7 @@ import primitives.*;
  * which is a fraction, and thus reduce the lighting.
  */
 public class AmbientLight extends Light {
-	
+
 	/**
 	 * ctor for the ambient light which gets parameters.
 	 * @param iA the color intensity
@@ -20,13 +20,13 @@ public class AmbientLight extends Light {
 	public AmbientLight(Color iA, double kA) {
 		super(  iA.scale(kA));
 	}
-	
+
 	/**
 	 * default ctor that make the light black (= no ambient light).
 	 */
 	public AmbientLight() {
 		super(Color.BLACK);
 	}
-	
-	
+
+
 }

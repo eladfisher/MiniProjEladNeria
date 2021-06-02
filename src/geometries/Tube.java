@@ -2,7 +2,6 @@ package geometries;
 
 import primitives.Point3D;
 import primitives.Ray;
-import primitives.Util;
 import primitives.Vector;
 
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ public class Tube extends Geometry {
         Point3D o = direction.getHead().add(direction.getDirection().scale(t));
         return point3D.subtract(o).normalize();
     }
-    
+
     /**
      *
      * @param ray
@@ -64,7 +63,7 @@ public class Tube extends Geometry {
     public List<Point3D> findIntersections(Ray ray) {
         return null;
     }
-    
+
     /**
      *
      * @param ray

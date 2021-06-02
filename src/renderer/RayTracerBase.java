@@ -10,7 +10,7 @@ import scene.Scene;
  */
 public abstract class RayTracerBase {
 	protected Scene scene;
-	
+
 	/**
 	 * a ctor that gets a scene
 	 * @param scene the param scene
@@ -18,7 +18,7 @@ public abstract class RayTracerBase {
 	public RayTracerBase(Scene scene) {
 		this.scene = scene;
 	}
-	
+
 	/**
 	 * return the color of the pixel that gets by the intersection of the ray and the scene
 	 * @param ray the ray that intersect the scene

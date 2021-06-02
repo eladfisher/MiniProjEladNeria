@@ -15,9 +15,9 @@ import primitives.Vector;
  * when in the entire space there is the same direction and intensity.
  */
 public class DirectionalLight extends Light implements LightSource{
-	
+
 	private Vector direction;
-	
+
 	/**
 	 * Builds a directional light object given its position and direction.
 	 * @param intensity Light's intensity(color)
@@ -27,17 +27,17 @@ public class DirectionalLight extends Light implements LightSource{
 		super(intensity);
 		this.direction = direction;
 	}
-	
+
 	@Override
 	public Color getIntensity(Point3D p) {
 		return intensity;
 	}
-	
+
 	@Override
 	public Vector getL(Point3D p) {
 		return direction.normalize();
 	}
-	
+
 	/**
 	 *
 	 * @param point

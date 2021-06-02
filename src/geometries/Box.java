@@ -34,6 +34,11 @@ public class Box extends Geometry {
 
     @Override
     public Vector getNormal(Point3D point3D) {
+        for (Polygon p :
+                corners) {
+            if (p.onPlane(point3D))
+                return p.getNormal(point3D);
+        }
         return null;
     }
 

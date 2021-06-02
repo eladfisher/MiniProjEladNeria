@@ -17,9 +17,9 @@ import primitives.Vector;
  *     (i.e. there is a thinning of the light due to the distance, but less than point light).
  */
 public class SpotLight extends  PointLight{
-	
+
 	private Vector direction;
-	
+
 	/**
 	 * constructor that gets the basic parameters (position and intensity)
 	 * and sets attenuation factors for no depending on distance.
@@ -31,7 +31,7 @@ public class SpotLight extends  PointLight{
 		super(intensity, position);
 		this.direction = direction.normalized();
 	}
-	
+
 	/**
 	 * setter for the quad attenuation factor, that doesn't depend the distance.
 	 * @param p the wanted point to calc intensity
@@ -40,7 +40,7 @@ public class SpotLight extends  PointLight{
 	@Override
 	public Color getIntensity(Point3D p) {
 		double product = Math.max(0,direction.dotProduct(getL(p)));
-		
+
 		return super.getIntensity(p).scale(product);
 	}
 }

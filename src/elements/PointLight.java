@@ -20,10 +20,10 @@ import primitives.Vector;
  * ==> Il = I0 / (Kc + Kl*d + Kq*(d^2))
  */
 public class PointLight extends Light implements LightSource {
-	
+
 	private Point3D position;
 	private double Kc, Kl, Kq;
-	
+
 	/**
 	 * constructor that gets the basic parameters (position and intensity)
 	 * and sets attenuation factors for no depending on distance.
@@ -37,7 +37,7 @@ public class PointLight extends Light implements LightSource {
 		Kl = 0;
 		Kq = 0;
 	}
-	
+
 	//region setters
 	/**
 	 * setter for the constant attenuation factor, that doesn't depend the distance.
@@ -48,7 +48,7 @@ public class PointLight extends Light implements LightSource {
 		Kc = kc;
 		return this;
 	}
-	
+
 	/**
 	 * setter for the l attenuation factor, that depend a little on the distance.
 	 * @param kl Kl attenuation factor
@@ -58,7 +58,7 @@ public class PointLight extends Light implements LightSource {
 		Kl = kl;
 		return this;
 	}
-	
+
 	/**
 	 * setter for the quad attenuation factor, that doesn't depend the distance.
 	 * @param kq Kq attenuation factor
@@ -69,7 +69,7 @@ public class PointLight extends Light implements LightSource {
 		return this;
 	}
 	//endregion
-	
+
 	/**
 	 * setter for the quad attenuation factor, that doesn't depend the distance.
 	 * @param p the wanted point to calc intensity
@@ -77,16 +77,16 @@ public class PointLight extends Light implements LightSource {
 	 */
 	@Override
 	public Color getIntensity(Point3D p) {
-		
+
 		Point3D p0 = position;
 		double distance = p.distance(p0);
 		double distanceSquared = p.distanceSquared(p0);
-		
+
 		double denominator = Kc+distance*Kl+distanceSquared*Kq;
-		
+
 		return getIntensity().reduce(denominator);
 	}
-	
+
 	/**
 	 * getter for the vector of the light direction
 	 * @param p the point that intersect and wanted the light ray to it
@@ -96,7 +96,7 @@ public class PointLight extends Light implements LightSource {
 	public Vector getL(Point3D p) {
 		return p.subtract(position).normalize();
 	}
-	
+
 	/**
 	 *
 	 * @param point

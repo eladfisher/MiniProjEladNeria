@@ -129,27 +129,27 @@ public class Point3D {
     public Point3D rotateAroundVector(Vector u, double a)
     {
         Matrix v = new Matrix(this);
-		double  x = u.getHead().getX(),
-				y = u.getHead().getY(),
-				z = u.getHead().getZ(),
-				ca = Math.cos(a),
-				sa = Math.sin(a);
-		double[][] ra = {
-				{ca+x*x*(1-ca),		x*y*(1-ca)-z*sa,	x*z*(1-ca)+y*sa},
-				{x*y*(1-ca)+z*sa,	ca+y*y*(1-ca),		z*y*(1-ca)-x*sa},
-				{x*z*(1-ca)-y*sa,	z*y*(1-ca)+x*sa,	ca+z*z*(1-ca)}
-		};
+        double  x = u.getHead().getX(),
+                y = u.getHead().getY(),
+                z = u.getHead().getZ(),
+                ca = Math.cos(a),
+                sa = Math.sin(a);
+        double[][] ra = {
+                {ca+x*x*(1-ca),		x*y*(1-ca)-z*sa,	x*z*(1-ca)+y*sa},
+                {x*y*(1-ca)+z*sa,	ca+y*y*(1-ca),		z*y*(1-ca)-x*sa},
+                {x*z*(1-ca)-y*sa,	z*y*(1-ca)+x*sa,	ca+z*z*(1-ca)}
+        };
 
-		Matrix rm = new Matrix(ra);
+        Matrix rm = new Matrix(ra);
 
-		Matrix rotate = rm.times(v);
+        Matrix rotate = rm.times(v);
 
-		double[][] drot = rotate.getData();
-		this.x = new Coordinate(drot[0][0]);
-		this.y = new Coordinate(drot[1][0]);
-		this.z = new Coordinate(drot[2][0]);
+        double[][] drot = rotate.getData();
+        this.x = new Coordinate(drot[0][0]);
+        this.y = new Coordinate(drot[1][0]);
+        this.z = new Coordinate(drot[2][0]);
 
-		return this;
+        return this;
     }
 
     public Point3D rotated_AroundVector(Vector u, double a)

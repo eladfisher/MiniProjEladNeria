@@ -1,11 +1,13 @@
 package geometries;
 
+import primitives.Point3D;
+import primitives.Ray;
+import primitives.Vector;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import primitives.*;
-
-import static primitives.Util.*;
+import static primitives.Util.isZero;
 
 /**
  * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
@@ -22,7 +24,7 @@ public class Polygon extends Geometry {
 	 * Associated plane in which the polygon lays
 	 */
 	protected Plane plane;
-	
+
 	/**
 	 * Polygon constructor based on vertices list. The list must be ordered by edge
 	 * path. The polygon must be convex.
@@ -47,23 +49,23 @@ public class Polygon extends Geometry {
 	public Polygon(Point3D... vertices) {
 		if (vertices.length < 3)
 			throw new IllegalArgumentException("A polygon can't have less than 3 vertices");
-		
+
 		this.vertices = List.of(vertices);
-		
+
 		// Generate the plane according to the first three vertices and associate the
 		// polygon with this plane.
 		// The plane holds the invariant normal (orthogonal unit) vector to the polygon
 		plane = new Plane(vertices[0], vertices[1], vertices[2]);
 		if (vertices.length == 3)
 			return; // no need for more tests for a Triangle
-		
+
 		Vector n = plane.getNormal();
-		
+
 		// Subtracting any subsequent points will throw an IllegalArgumentException
 		// because of Zero Vector if they are in the same point
 		Vector edge1 = vertices[vertices.length - 1].subtract(vertices[vertices.length - 2]);
 		Vector edge2 = vertices[0].subtract(vertices[vertices.length - 1]);
-		
+
 		// Cross Product of any subsequent edges will throw an IllegalArgumentException
 		// because of Zero Vector if they connect three vertices that lay in the same
 		// line.
@@ -74,7 +76,7 @@ public class Polygon extends Geometry {
 		// the
 		// polygon is convex ("kamur" in Hebrew).
 		boolean positive = edge1.crossProduct(edge2).dotProduct(n) > 0;
-		
+
 		for (int i = 1; i < vertices.length; ++i)
 		{
 			// Test that the point is in the same plane as calculated originally
@@ -87,14 +89,14 @@ public class Polygon extends Geometry {
 				throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
 		}
 	}
-	
+
 	@Override
 	public Vector getNormal(Point3D point) {
 		return plane.getNormal();
 	}
-	
-	
-	
+
+
+
 	/**
 	 * find the intersection geo point
 	 * @param ray the intersected ray
@@ -104,20 +106,20 @@ public class Polygon extends Geometry {
 	public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 		//the intersection points will be get by the super function.
 		List<GeoPoint> intersectionList = plane.findGeoIntersections(ray,maxDistance);
-		
+
 		//if there aren't intersection points null will be return
 		if (intersectionList == null)
 			return null;
-		
+
 		//here we decide whether the point is on the polygon or not
 		List<Vector> vectors = new ArrayList<Vector>(vertices.size());
-		
+
 		Point3D p0 = ray.getHead();
 		for (Point3D p : vertices)
 		{
 			vectors.add(p.subtract(p0));
 		}
-		
+
 		List<Vector> normals = new ArrayList<Vector>(vertices.size());
 		for (int i = 0; i < vertices.size(); ++i)
 		{
@@ -126,31 +128,36 @@ public class Polygon extends Geometry {
 							vectors.get((i + 1) % vertices.size()
 							)).normalize());
 		}
-		
+
 		Vector v = ray.getDirection();
-		
+
 		double Initsign = v.dotProduct(normals.get(0));
 		boolean pos = true;
-		
+
 		if(Initsign<0)
 			pos=false;
-		
+
 		if(isZero(Initsign))
 			return null;
-		
+
 		for (Vector n:normals)
 		{
 			double sign = v.dotProduct(n);
-			
+
 			if(isZero(sign))
 				return null;
-			
+
 			if((pos&&sign<0)||(!pos&&sign>0))
 				return null;
 		}
-		
+
 		//update that the geometry is the polygon and not the plain
 		intersectionList.get(0).geometry=this;
 		return intersectionList;
+	}
+
+	public boolean onPlane(Point3D p)
+	{
+		return plane.onPlane(p);
 	}
 }
