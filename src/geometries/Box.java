@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * a 3D geometry of a box for 3D graphic model
  */
-public class Box extends Geometry {
+public class Box extends Geometry  {
     Point3D p;
     //double w,h,d;
     //Vector vw, vh, vd;
