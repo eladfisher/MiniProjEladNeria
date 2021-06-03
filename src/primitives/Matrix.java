@@ -1,7 +1,7 @@
 package primitives;
 
 /******************************************************************************
- *  Compilation:  javac Matrix.java
+ *  Compilation:  javac Matrix.java TODO
  *  Execution:    java Matrix
  *
  *  A bare-bones immutable data type for M-by-N matrices.
@@ -13,14 +13,14 @@ final public class Matrix {
     private final int N;             // number of columns
     private final double[][] data;   // M-by-N array
 
-    // create M-by-N matrix of 0's
+    // create M-by-N matrix of 0's TODO
     public Matrix(int M, int N) {
         this.M = M;
         this.N = N;
         data = new double[M][N];
     }
 
-    // create matrix based on 2d array
+    // create matrix based on 2d array TODO
     public Matrix(double[][] data) {
         M = data.length;
         N = data[0].length;
@@ -40,12 +40,12 @@ final public class Matrix {
         data[2][0] = p.getZ();
     }
 
-    // copy constructor
+    // copy constructor TODO
     private Matrix(Matrix A) {
         this(A.data);
     }
 
-    // create and return a random M-by-N matrix with values between 0 and 1
+    // create and return a random M-by-N matrix with values between 0 and 1 TODO
     public static Matrix random(int M, int N) {
         Matrix A = new Matrix(M, N);
         for (int i = 0; i < M; i++)
@@ -54,7 +54,7 @@ final public class Matrix {
         return A;
     }
 
-    // create and return the N-by-N identity matrix
+    // create and return the N-by-N identity matrix TODO
     public static Matrix identity(int N) {
         Matrix I = new Matrix(N, N);
         for (int i = 0; i < N; i++)
@@ -62,14 +62,14 @@ final public class Matrix {
         return I;
     }
 
-    // swap rows i and j
+    // swap rows i and j TODO
     private void swap(int i, int j) {
         double[] temp = data[i];
         data[i] = data[j];
         data[j] = temp;
     }
 
-    // create and return the transpose of the invoking matrix
+    // create and return the transpose of the invoking matrix TODO
     public Matrix transpose() {
         Matrix A = new Matrix(N, M);
         for (int i = 0; i < M; i++)
@@ -78,7 +78,7 @@ final public class Matrix {
         return A;
     }
 
-    // return C = A + B
+    // return C = A + B TODO
     public Matrix plus(Matrix B) {
         Matrix A = this;
         if (B.M != A.M || B.N != A.N) throw new RuntimeException("Illegal matrix dimensions.");
@@ -90,7 +90,7 @@ final public class Matrix {
     }
 
 
-    // return C = A - B
+    // return C = A - B TODO
     public Matrix minus(Matrix B) {
         Matrix A = this;
         if (B.M != A.M || B.N != A.N) throw new RuntimeException("Illegal matrix dimensions.");
@@ -101,7 +101,7 @@ final public class Matrix {
         return C;
     }
 
-    // does A = B exactly?
+    // does A = B exactly? TODO
     public boolean eq(Matrix B) {
         Matrix A = this;
         if (B.M != A.M || B.N != A.N) throw new RuntimeException("Illegal matrix dimensions.");
@@ -111,7 +111,7 @@ final public class Matrix {
         return true;
     }
 
-    // return C = A * B
+    // return C = A * B TODO
     public Matrix times(Matrix B) {
         Matrix A = this;
         if (A.N != B.M) throw new RuntimeException("Illegal matrix dimensions.");
@@ -124,19 +124,19 @@ final public class Matrix {
     }
 
 
-    // return x = A^-1 b, assuming A is square and has full rank
+    // return x = A^-1 b, assuming A is square and has full rank TODO
     public Matrix solve(Matrix rhs) {
         if (M != N || rhs.M != N || rhs.N != 1)
             throw new RuntimeException("Illegal matrix dimensions.");
 
-        // create copies of the data
+        // create copies of the data TODO
         Matrix A = new Matrix(this);
         Matrix b = new Matrix(rhs);
 
-        // Gaussian elimination with partial pivoting
+        // Gaussian elimination with partial pivoting TODO
         for (int i = 0; i < N; i++) {
 
-            // find pivot row and swap
+            // find pivot row and swap TODO
             int max = i;
             for (int j = i + 1; j < N; j++)
                 if (Math.abs(A.data[j][i]) > Math.abs(A.data[max][i]))
@@ -144,7 +144,7 @@ final public class Matrix {
             A.swap(i, max);
             b.swap(i, max);
 
-            // singular
+            // singular TODO
             if (A.data[i][i] == 0.0) throw new RuntimeException("Matrix is singular.");
 
             // pivot within b
@@ -172,7 +172,11 @@ final public class Matrix {
         return x;
 
     }
-
+    
+    /**
+     * TODO
+     * @return
+     */
     public double[][] getData() {
         int nM = data.length;
         int nN = data[0].length;

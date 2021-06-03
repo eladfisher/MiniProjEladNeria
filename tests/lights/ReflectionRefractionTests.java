@@ -122,7 +122,9 @@ public class ReflectionRefractionTests {
         render.writeToImage();
     }
     
-    
+    /**
+     * build an image of a house and sun with very smooth and reflective ground
+     */
     @Test
     public void WOW_ImageTest() {
         Material wall_m = new Material().setKd(1).setKs(1).setShininess(30).setKt(0);
@@ -135,6 +137,7 @@ public class ReflectionRefractionTests {
                 new Point3D(d * 2, d * 4, d * 1)
         ).setEmission(wall_c)
                 .setMaterial(wall_m);
+        
         Polygon b_wall = (Polygon) new Polygon(
                 new Point3D(d * -2, d * 0, d * -2),
                 new Point3D(d * 2, d * 0, d * -2),
@@ -143,6 +146,7 @@ public class ReflectionRefractionTests {
                 new Point3D(d * -2, d * 4, d * -2)
         ).setEmission(wall_c)
                 .setMaterial(wall_m);
+        
         Polygon l_wall = (Polygon) new Polygon(
                 new Point3D(d * -2, d * 0, d * 1),
                 new Point3D(d * -2, d * 0, d * -2),
@@ -150,6 +154,7 @@ public class ReflectionRefractionTests {
                 new Point3D(d * -2, d * 4, d * 1)
         ).setEmission(wall_c)
                 .setMaterial(wall_m);
+        
         Polygon f_wall = (Polygon) new Polygon(
                 new Point3D(d * -2, d * 0, d * 1),
                 new Point3D(d * 2, d * 0, d * 1),
@@ -169,6 +174,7 @@ public class ReflectionRefractionTests {
                 new Point3D(d * 2.5, d * 3.5, d * 1)
         ).setEmission(roof_c)
                 .setMaterial(roof_m);
+        
         Polygon l_roof = (Polygon) new Polygon(
                 new Point3D(d * 0, d * 6, d * 1),
                 new Point3D(d * 0, d * 6, d * -2),
@@ -231,8 +237,10 @@ public class ReflectionRefractionTests {
         render.renderImage();
         render.writeToImage();
     }
-
-
+    
+    /**
+     * a test with a lot of reflective spheres and transparent spheres and reflective plain
+     */
     @Test
     public void WOWOW_ImageTest() {
         Material ground_m = new Material().setKd(1).setKs(0).setShininess(0).setKt(0).setKr(0.35);

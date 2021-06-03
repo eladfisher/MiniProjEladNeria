@@ -125,7 +125,13 @@ public class Point3D {
     public double getZ() {
         return z.coord;
     }
-
+    
+    /**
+     * TODO
+     * @param u
+     * @param a
+     * @return
+     */
     public Point3D rotateAroundVector(Vector u, double a)
     {
         Matrix v = new Matrix(this);
@@ -151,13 +157,25 @@ public class Point3D {
 
         return this;
     }
-
+    
+    /**
+     * TODO
+     * @param u
+     * @param a
+     * @return
+     */
     public Point3D rotated_AroundVector(Vector u, double a)
     {
         Point3D p = new Point3D(x,y,z);
         return p.rotateAroundVector(u,a);
     }
-
+    
+    /**
+     * TODO
+     * @param r
+     * @param a
+     * @return
+     */
     public Point3D rotateAroundRay(Ray r, double a)
     {
         Point3D Hup = this;
@@ -180,7 +198,13 @@ public class Point3D {
 
         return this;
     }
-
+    
+    /**
+     * TODO
+     * @param r
+     * @param a
+     * @return
+     */
     public Point3D rotated_AroundRay(Ray r, double a)
     {
         Point3D p = new Point3D(x,y,z);
