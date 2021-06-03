@@ -160,4 +160,22 @@ public class Polygon extends Geometry {
 	{
 		return plane.onPlane(p);
 	}
+
+	public void rotateAroundVector(Vector u, double a)
+	{
+		for (Point3D p :
+				vertices) {
+			p.rotateAroundVector(u, a);
+		}
+		plane = new Plane(vertices.get(0),vertices.get(1),vertices.get(2));
+	}
+
+	public void rotateAroundRay(Ray r, double a)
+	{
+		for (Point3D p :
+				vertices) {
+			p.rotateAroundRay(r,a);
+		}
+		plane = new Plane(vertices.get(0),vertices.get(1),vertices.get(2));
+	}
 }
