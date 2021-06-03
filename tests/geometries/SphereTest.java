@@ -22,7 +22,7 @@ class SphereTest {
         Point3D pointInSphere = new  Point3D(8,1,1);
         Point3D p0 = new Point3D(1,1,1);
         Vector normal = new Vector(1,0,0);
-        Sphere sphere = new Sphere(p0,3);
+        Sphere sphere = new Sphere(3, p0);
 
         // TC01: Test for regular point
         assertTrue(sphere.getNormal(p).equals(normal),"ERROR: normal of sphere isn't working");
@@ -34,7 +34,7 @@ class SphereTest {
      */
     @Test
     public void testFindIntersections() {
-        Sphere sphere = new Sphere( new Point3D(1, 0, 0),1d);
+        Sphere sphere = new Sphere(1d, new Point3D(1, 0, 0));
 
         //region ============ Equivalence Partitions Tests ==============
 
@@ -54,7 +54,7 @@ class SphereTest {
         assertEquals( List.of(p1, p2), result,"Ray crosses sphere");
         
         // TC03: Ray starts inside the sphere (1 point)
-        Sphere sp03 = new Sphere(new Point3D(-7.04,5.16,2),1.5);
+        Sphere sp03 = new Sphere(1.5, new Point3D(-7.04, 5.16, 2));
         List l03 =  List.of(new Point3D(-5.977227068529, 6.168291356648, 1.677723354489));
         Ray ray03 = new Ray(new Point3D(-7.248100929974, 5.207740358653, 1),new Vector(0.7340957903833, 0.5548437696832, 0.3914738328231));
         List<Point3D> r03 = sp03.findIntersections(ray03);

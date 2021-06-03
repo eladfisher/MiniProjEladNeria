@@ -7,9 +7,7 @@ import primitives.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-import elements.*;
 import geometries.*;
-import primitives.*;
 import renderer.*;
 import scene.Scene;
 
@@ -24,7 +22,7 @@ public class ShadowTests {
 	private Camera camera = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
 			.setVpSize(200, 200).setVpDistance(1000);
 
-	Sphere sphereTest = (Sphere) new Sphere(new Point3D(0, 0, -200), 60) //
+	Sphere sphereTest = (Sphere) new Sphere(60, new Point3D(0, 0, -200)) //
 			.setEmission(new Color(java.awt.Color.BLUE)) //
 			.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30));//
 	
@@ -173,7 +171,7 @@ public class ShadowTests {
 									  .setMaterial(new Material().setKs(0.8).setShininess(60)), //
 							  new Triangle(new Point3D(-150, -150, -115), new Point3D(-70, 70, -140), new Point3D(75, 75, -150)) //
 									  .setMaterial(new Material().setKs(0.8).setShininess(60)), //
-							  new Sphere( new Point3D(0, 0, -115),30) //
+							  new Sphere(30, new Point3D(0, 0, -115)) //
 									  .setEmission(new Color(java.awt.Color.BLUE)) //
 									  .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)) //
 		);

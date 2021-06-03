@@ -12,17 +12,22 @@ import static primitives.Util.alignZero;
  * a class of 3D sphere for a 3D graphic model
  */
 public class Sphere extends Geometry {
-
+	
+	/**
+	 * the center point of the sphere
+ 	 */
 	final Point3D p0;
+	
+	//the radius of the sphere
 	final double radius;
 
 	/**
 	 * ctor that gets the middle point and the radius of the sphere
 	 *
-	 * @param p0     the point in the sphere
 	 * @param radius the sphere radius
+	 * @param p0     the point in the sphere
 	 */
-	public Sphere(Point3D p0, double radius) {
+	public Sphere(double radius, Point3D p0) {
 		this.p0 = p0;
 		this.radius = radius;
 	}
@@ -82,8 +87,6 @@ public class Sphere extends Geometry {
 	public Vector getNormal(Point3D p) {
 		return p.subtract(p0).normalize();
 	}
-
-
 
 	/**
 	 * override for the findGeoIntersections function of the geometry interface

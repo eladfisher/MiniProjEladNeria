@@ -28,10 +28,10 @@ public class ReflectionRefractionTests {
                 .setVpSize(150, 150).setVpDistance(1000);
 
         scene.geometries.add( //
-                new Sphere(new Point3D(0, 0, -50), 50) //
+                new Sphere(50, new Point3D(0, 0, -50)) //
                         .setEmission(new Color(java.awt.Color.BLUE)) //
                         .setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(100).setKt(0.3)),
-                new Sphere(new Point3D(0, 0, -50), 25) //
+                new Sphere(25, new Point3D(0, 0, -50)) //
                         .setEmission(new Color(java.awt.Color.RED)) //
                         .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)));
         scene.lights.add( //
@@ -58,10 +58,10 @@ public class ReflectionRefractionTests {
         scene.setAmbientLight(new AmbientLight(new Color(255, 255, 255), 0.1));
 
         scene.geometries.add( //
-                new Sphere(new Point3D(-950, -900, -1000), 400) //
+                new Sphere(400, new Point3D(-950, -900, -1000)) //
                         .setEmission(new Color(0, 0, 100)) //
                         .setMaterial(new Material().setKd(0.25).setKs(0.25).setShininess(20).setKt(0.5)),
-                new Sphere(new Point3D(-950, -900, -1000), 200) //
+                new Sphere(200, new Point3D(-950, -900, -1000)) //
                         .setEmission(new Color(100, 20, 20)) //
                         .setMaterial(new Material().setKd(0.25).setKs(0.25).setShininess(20)),
                 new Triangle(new Point3D(1500, -1500, -1500), new Point3D(-1500, 1500, -1500),
@@ -105,7 +105,7 @@ public class ReflectionRefractionTests {
                 new Triangle(new Point3D(-150, -150, -115), new Point3D(-70, 70, -140),
                         new Point3D(75, 75, -150)) //
                         .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(60)), //
-                new Sphere(new Point3D(60, 50, -50), 30) //
+                new Sphere(30, new Point3D(60, 50, -50)) //
                         .setEmission(new Color(java.awt.Color.BLUE)) //
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)));
 
@@ -199,7 +199,7 @@ public class ReflectionRefractionTests {
 
 
         Point3D sun_p = new Point3D(-390, 240, -190);
-        Sphere sun = (Sphere) new Sphere(sun_p, 70)
+        Sphere sun = (Sphere) new Sphere(70, sun_p)
                 .setEmission(new Color(java.awt.Color.yellow))
                 .setMaterial(new Material()
                         .setKd(0.2)
@@ -250,12 +250,12 @@ public class ReflectionRefractionTests {
                 .setEmission(ground_c);
 
         Point3D p_l1 = new Point3D(50, 100, 1009);
-        Sphere s_l1 = (Sphere) new Sphere(p_l1, 30)
+        Sphere s_l1 = (Sphere) new Sphere(30, p_l1)
                 .setMaterial(new Material().setKd(1).setKs(0).setShininess(100).setKt(0.7).setKr(0.2))
                 .setEmission(new Color(java.awt.Color.YELLOW));
 
         Point3D p_l2 = new Point3D(-70, 100, -70);
-        Sphere s_l2 = (Sphere) new Sphere(p_l2, 8)
+        Sphere s_l2 = (Sphere) new Sphere(8, p_l2)
                 .setMaterial(new Material().setKd(1).setKs(0).setShininess(100).setKt(0.7).setKr(0.2))
                 .setEmission(new Color(java.awt.Color.YELLOW));
 
@@ -263,31 +263,31 @@ public class ReflectionRefractionTests {
         Color ball_c = new Color(java.awt.Color.blue).scale(0.7);
 
         List<Sphere> spheres = new ArrayList<Sphere>();
-        spheres.add((Sphere) new Sphere(new Point3D(-100, 50, 100), 50)
+        spheres.add((Sphere) new Sphere(50, new Point3D(-100, 50, 100))
                 .setEmission(ball_c)
                 .setMaterial(ball_m));
-        spheres.add((Sphere) new Sphere(new Point3D(70, 30, -60), 30)
+        spheres.add((Sphere) new Sphere(30, new Point3D(70, 30, -60))
                 .setEmission(ball_c)
                 .setMaterial(new Material().setKd(1).setKs(1).setShininess(0).setKt(0.6).setKr(0.3)));
-        spheres.add((Sphere) new Sphere(new Point3D(40, 80, -600), 80)
+        spheres.add((Sphere) new Sphere(80, new Point3D(40, 80, -600))
                 .setEmission(new Color(java.awt.Color.GREEN).scale(0.4))
                 .setMaterial(ball_m));
-        spheres.add((Sphere) new Sphere(new Point3D(-20, 20, 250), 20)
+        spheres.add((Sphere) new Sphere(20, new Point3D(-20, 20, 250))
                 .setEmission(new Color(java.awt.Color.RED).scale(0.7))
                 .setMaterial(ball_m));
-        spheres.add((Sphere) new Sphere(new Point3D(60, 25, 400), 25)
+        spheres.add((Sphere) new Sphere(25, new Point3D(60, 25, 400))
                 .setEmission(new Color(java.awt.Color.yellow).scale(0.3))
                 .setMaterial(ball_m));
-        spheres.add((Sphere) new Sphere(new Point3D(-45, 30, 750), 30)
+        spheres.add((Sphere) new Sphere(30, new Point3D(-45, 30, 750))
                 .setEmission(new Color(java.awt.Color.MAGENTA).scale(0.7))
                 .setMaterial(ball_m));
-        spheres.add((Sphere) new Sphere(new Point3D(30, 15, 600), 15)
+        spheres.add((Sphere) new Sphere(15, new Point3D(30, 15, 600))
                 .setEmission(new Color(java.awt.Color.cyan).scale(0.3))
                 .setMaterial(new Material().setKd(1).setKs(1).setShininess(0).setKt(0.6).setKr(0.3)));
-        spheres.add((Sphere) new Sphere(new Point3D(5, 15, 10), 15)
+        spheres.add((Sphere) new Sphere(15, new Point3D(5, 15, 10))
                 .setEmission(new Color(java.awt.Color.black).scale(0.3))
                 .setMaterial(ball_m));
-        spheres.add((Sphere) new Sphere(new Point3D(15, 10, 430), 10)
+        spheres.add((Sphere) new Sphere(10, new Point3D(15, 10, 430))
                 .setEmission(new Color(java.awt.Color.LIGHT_GRAY).scale(0.01))
                 .setMaterial(ball_m));
 

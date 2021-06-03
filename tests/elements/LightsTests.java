@@ -26,7 +26,7 @@ public class LightsTests {
             new Point3D(-150, -150, -150), new Point3D(150, -150, -150), new Point3D(75, 75, -150));
     private static Geometry triangle2 = new Triangle( //
             new Point3D(-150, -150, -150), new Point3D(-70, 70, -50), new Point3D(75, 75, -150));
-    private static Geometry sphere = new Sphere( new Point3D(0, 0, -50),50) //
+    private static Geometry sphere = new Sphere(50, new Point3D(0, 0, -50)) //
             .setEmission(new Color(java.awt.Color.BLUE)) //
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
 
@@ -150,7 +150,7 @@ public class LightsTests {
         Camera coolCamera = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
                 .setVpSize(150, 150) //
                 .setVpDistance(1000);
-        Geometry coolSphere = new Sphere(new Point3D(0, 0, -50), 50) //
+        Geometry coolSphere = new Sphere(50, new Point3D(0, 0, -50)) //
                 .setEmission(new Color(java.awt.Color.black)) //
                 .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)) ;
 

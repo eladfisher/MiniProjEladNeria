@@ -5,8 +5,6 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class GeometriesTest {
@@ -31,8 +29,8 @@ class GeometriesTest {
 		Ray ray02 = new Ray(new Point3D(-3.3866610310164, 2.4658689737339, 1.191879105173),
 							new Vector(4.8773770658716, -1.1678648857608, -0.3405368871923));
 		Geometries geometries = new Geometries();
-		geometries.add(new Sphere(new Point3D(1.9830981616661, -4.1789435470063, 0)
-				, Math.sqrt(4.7480806531793)));
+		geometries.add(new Sphere(Math.sqrt(4.7480806531793), new Point3D(1.9830981616661, -4.1789435470063, 0)
+		));
 		
 		geometries.add(new Triangle(new Point3D(1.5913891885845, 0.8972900190323, 0.6131727697483),
 									new Point3D(4.4449233374946, 3.7594391959405, -1),

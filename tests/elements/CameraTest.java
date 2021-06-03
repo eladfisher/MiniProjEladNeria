@@ -132,7 +132,7 @@ public class CameraTest {
 
 
         Point3D sun_p = new Point3D(-390, 240, -190);
-        Sphere sun = (Sphere) new Sphere(sun_p, 70)
+        Sphere sun = (Sphere) new Sphere(70, sun_p)
                 .setEmission(new Color(java.awt.Color.yellow))
                 .setMaterial(new Material()
                         .setKd(0.2)
@@ -255,7 +255,7 @@ public class CameraTest {
 
 
         Point3D sun_p = new Point3D(-390, 240, -190);
-        Sphere sun = (Sphere) new Sphere(sun_p, 70)
+        Sphere sun = (Sphere) new Sphere(70, sun_p)
                 .setEmission(new Color(java.awt.Color.yellow))
                 .setMaterial(new Material()
                         .setKd(0.2)
@@ -382,7 +382,7 @@ public class CameraTest {
 
 
         Point3D sun_p = new Point3D(-390, 240, -190);
-        Sphere sun = (Sphere) new Sphere(sun_p, 70)
+        Sphere sun = (Sphere) new Sphere(70, sun_p)
                 .setEmission(new Color(java.awt.Color.yellow))
                 .setMaterial(new Material()
                         .setKd(0.2)
