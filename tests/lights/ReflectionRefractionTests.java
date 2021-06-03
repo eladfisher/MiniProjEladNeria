@@ -324,23 +324,28 @@ public class ReflectionRefractionTests {
                 .setMaterial(ground_m)
                 .setEmission(ground_c);
 
+        Box b = (Box) new Box(new Point3D(-30,25,0),50,30,20).
+                //setEmission(new Color(java.awt.Color.GREEN).scale(0.8)).
+                setMaterial(new Material().setKd(1).setKs(0.2).setShininess(30).setKt(0).setKr(0.1));
+        b.rotateAroundRay(new Ray(new Point3D(0,50,50),new Vector(1,0,0)),Math.PI/6);
+        b.rotateAroundRay(new Ray(new Point3D(0,50,50),new Vector(1,0,0)),-Math.PI/6);
 
+        //b.rotateAroundVector(new Vector(1,0,0),Math.PI);
+        //b.rotateAroundVector(new Vector(1,0,0),-Math.PI/6);
 
-
-        Camera coolCamera = new Camera(new Point3D(0, 50, 1000), new Vector(0, -5, -100), new Vector(0, 100, -5)) //
+        Camera coolCamera = new Camera(new Point3D(-200, 700, 707), new Vector(0, -5, -100), new Vector(0, 100, -5)) //
                 .setVpSize(200, 200).setVpDistance(1000);
+        coolCamera.lookAt(new Point3D(0,0,0),new Vector(0,1,0));
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.01));
         scene.geometries.add(
-                ground,
-                new Box(new Point3D(-30,25,0),50,30,20).
-                        setEmission(new Color(java.awt.Color.RED)).
-                        setMaterial(new Material().setKd(1).setKs(0.2).setShininess(0).setKt(0.3).setKr(0.35)),
-                new Cylinder(
-                        new Ray(new Point3D(20,20,20),
-                                new Vector(20,2,20)),
-                        30,100).
-                        setEmission(new Color(java.awt.Color.BLUE)).
-                        setMaterial(new Material().setKd(1).setKs(0.2).setShininess(0).setKt(0.3).setKr(0.35))
+                //ground,
+                b//,
+                //new Cylinder(
+                //        new Ray(new Point3D(20,20,20),
+                //                new Vector(20,2,20)),
+                //        30,100).
+                //        setEmission(new Color(java.awt.Color.BLUE)).
+                //        setMaterial(new Material().setKd(1).setKs(0.2).setShininess(0).setKt(0.3).setKr(0.35))
         );
 
         scene.lights.add(new DirectionalLight(
