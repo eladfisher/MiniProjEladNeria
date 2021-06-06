@@ -121,7 +121,7 @@ public class ReflectionRefractionTests {
         render.renderImage();
         render.writeToImage();
     }
-    
+
     /**
      * build an image of a house and sun with very smooth and reflective ground
      */
@@ -137,7 +137,7 @@ public class ReflectionRefractionTests {
                 new Point3D(d * 2, d * 4, d * 1)
         ).setEmission(wall_c)
                 .setMaterial(wall_m);
-        
+
         Polygon b_wall = (Polygon) new Polygon(
                 new Point3D(d * -2, d * 0, d * -2),
                 new Point3D(d * 2, d * 0, d * -2),
@@ -146,7 +146,7 @@ public class ReflectionRefractionTests {
                 new Point3D(d * -2, d * 4, d * -2)
         ).setEmission(wall_c)
                 .setMaterial(wall_m);
-        
+
         Polygon l_wall = (Polygon) new Polygon(
                 new Point3D(d * -2, d * 0, d * 1),
                 new Point3D(d * -2, d * 0, d * -2),
@@ -154,7 +154,7 @@ public class ReflectionRefractionTests {
                 new Point3D(d * -2, d * 4, d * 1)
         ).setEmission(wall_c)
                 .setMaterial(wall_m);
-        
+
         Polygon f_wall = (Polygon) new Polygon(
                 new Point3D(d * -2, d * 0, d * 1),
                 new Point3D(d * 2, d * 0, d * 1),
@@ -174,7 +174,7 @@ public class ReflectionRefractionTests {
                 new Point3D(d * 2.5, d * 3.5, d * 1)
         ).setEmission(roof_c)
                 .setMaterial(roof_m);
-        
+
         Polygon l_roof = (Polygon) new Polygon(
                 new Point3D(d * 0, d * 6, d * 1),
                 new Point3D(d * 0, d * 6, d * -2),
@@ -237,7 +237,7 @@ public class ReflectionRefractionTests {
         render.renderImage();
         render.writeToImage();
     }
-    
+
     /**
      * a test with a lot of reflective spheres and transparent spheres and reflective plain
      */
@@ -326,34 +326,34 @@ public class ReflectionRefractionTests {
 
     @Test
     public void BoxCylinder_ImageTest() {
-        Material ground_m = new Material().setKd(1).setKs(0).setShininess(0).setKt(0).setKr(0.35);
-        Color ground_c = new Color(java.awt.Color.DARK_GRAY);
-        Plane ground = (Plane) new Plane(new Vector(0, 1, 0), new Point3D(0, 0, 0))
+        Material ground_m = new Material().setKd(0.2).setKs(0).setShininess(0).setKt(0).setKr(0.8);
+        Color ground_c = new Color(java.awt.Color.black);
+        Plane ground = (Plane) new Plane(new Vector(0, 1, 1), new Point3D(0, 0, 0))
                 .setMaterial(ground_m)
                 .setEmission(ground_c);
 
-        Box b = (Box) new Box(new Point3D(-30,25,0),50,30,20).
+        Box b = (Box) new Box(new Point3D(-30, 40, 40), 50, 30, 20).
                 //setEmission(new Color(java.awt.Color.GREEN).scale(0.8)).
-                setMaterial(new Material().setKd(1).setKs(0.2).setShininess(30).setKt(0).setKr(0.1));
-        b.rotateAroundRay(new Ray(new Point3D(0,50,50),new Vector(1,0,0)),Math.PI/6);
-        b.rotateAroundRay(new Ray(new Point3D(0,50,50),new Vector(1,0,0)),-Math.PI/6);
+                        setMaterial(new Material().setKd(1).setKs(0.2).setShininess(30).setKt(0).setKr(0.1));
+        b.rotateAroundRay(new Ray(b.getCenter(), new Vector(1, 0, 0)), Math.PI / 2);
+        b.rotateAroundRay(new Ray(b.getCenter(), new Vector(0, 1, 0)), Math.PI / 2);
 
         //b.rotateAroundVector(new Vector(1,0,0),Math.PI);
         //b.rotateAroundVector(new Vector(1,0,0),-Math.PI/6);
 
         Camera coolCamera = new Camera(new Point3D(-200, 700, 707), new Vector(0, -5, -100), new Vector(0, 100, -5)) //
                 .setVpSize(200, 200).setVpDistance(1000);
-        coolCamera.lookAt(new Point3D(0,0,0),new Vector(0,1,0));
+        coolCamera.lookAt(new Point3D(0, 0, 0), new Vector(0, 1, 0));
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.01));
         scene.geometries.add(
-                //ground,
-                b//,
-                //new Cylinder(
-                //        new Ray(new Point3D(20,20,20),
-                //                new Vector(20,2,20)),
-                //        30,100).
-                //        setEmission(new Color(java.awt.Color.BLUE)).
-                //        setMaterial(new Material().setKd(1).setKs(0.2).setShininess(0).setKt(0.3).setKr(0.35))
+                ground,
+                b,
+                new Cylinder(
+                        new Ray(b.getCenter(),
+                                new Vector(0, 1, 0)),
+                        10, 50).
+                        setEmission(new Color(java.awt.Color.BLUE).scale(0.5)).
+                        setMaterial(new Material().setKd(1).setKs(0.2).setShininess(0).setKt(0.1).setKr(0.45))
         );
 
         scene.lights.add(new DirectionalLight(
@@ -363,6 +363,76 @@ public class ReflectionRefractionTests {
 
 
         ImageWriter imageWriter = new ImageWriter("BoxCylinderImage", 600, 600);
+        Render render = new Render() //
+                .setImageWriter(imageWriter) //
+                .setCamera(coolCamera) //
+                .setRayTracer(new RayTracerBasic(scene));
+
+        render.renderImage();
+        render.writeToImage();
+    }
+
+
+    @Test
+    public void Focus_ImageTest() {
+        scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.01));
+        double d = 10;
+
+        Color w_bC = new Color(java.awt.Color.WHITE).scale(0.8),
+                b_bC = new Color(java.awt.Color.BLACK),
+                deskC = new Color(139,69,19);
+        Material bM = new Material().setKd(1).setKs(0).setShininess(0).setKt(0).setKr(0),
+                deskM = new Material().setKd(1).setKs(0).setShininess(0).setKt(0).setKr(0);
+
+        Vector vr = new Vector(1, 0, 0),
+                vd = new Vector(0, 0, 1),
+                vw = new Vector(0,1,0);
+        Point3D center = Point3D.ZERO,
+                upLeft = center.add(vr.scale(-4 * d)).add(vd.scale(-4 * d));
+        for (int i = 1; i < 9; i++) {
+            for (int j = 1; j < 9; j++) {
+                if (j == 1 || j == 8 || i == 1 || i == 8) {
+                    Box b = (Box) new Box(upLeft.add(vr.scale(d * (i))).add(vd.scale(d * (j))), d, -d, d).setMaterial(bM);
+                    if ((i + j) % 2 == 0)
+                        b.setEmission(w_bC);
+                    else b.setEmission(b_bC);
+                    scene.geometries.add(
+                            b
+                    );
+                } else {
+                    Polygon p = (Polygon) new Polygon(
+                            upLeft.add(vr.scale(d * (i))).add(vd.scale(d * (j))),
+                            upLeft.add(vr.scale(d * (i+1))).add(vd.scale(d * (j))),
+                            upLeft.add(vr.scale(d * (i+1))).add(vd.scale(d * (j+1))),
+                            upLeft.add(vr.scale(d * (i))).add(vd.scale(d * (j+1)))
+                    ).setMaterial(bM);
+                    if ((i + j) % 2 == 0)
+                        p.setEmission(w_bC);
+                    else p.setEmission(b_bC);
+                    scene.geometries.add(
+                            p
+                    );
+                }
+            }
+        }
+        scene.geometries.add(
+                new Box(upLeft.add(vw.scale(-d/2)),d*10,-d,d*10).
+                        setEmission(deskC).
+                        setMaterial(deskM)
+        );
+
+        scene.lights.add(new DirectionalLight(
+                new Color(java.awt.Color.WHITE).scale(0.6),
+                new Vector(5, -10, -1)
+        ));
+
+
+        Camera coolCamera = new Camera(new Point3D(100, 50, 100), new Vector(0, -5, -100), new Vector(0, 100, -5)) //
+                .setVpSize(200, 200).setVpDistance(1000);
+        coolCamera.lookAt(center, new Vector(0, 1, 0));
+        coolCamera.setPoint3D(coolCamera.getPoint3D().add(coolCamera.getvTo().scale(-400)));
+
+        ImageWriter imageWriter = new ImageWriter("BoardImage", 600, 600);
         Render render = new Render() //
                 .setImageWriter(imageWriter) //
                 .setCamera(coolCamera) //

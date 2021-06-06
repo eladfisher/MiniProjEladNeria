@@ -11,7 +11,7 @@ import java.util.List;
 public class Box extends Geometry  {
     Point3D p;
     //double w,h,d;
-    //Vector vw, vh, vd;
+    Vector vw, vh, vd;
     Polygon[] corners;
     
     /**
@@ -23,9 +23,37 @@ public class Box extends Geometry  {
      */
     public Box(Point3D point, double width, double height, double depth) {
         p = point;
-        Vector vw = new Vector(width, 0, 0);
-        Vector vh = new Vector(0, height, 0);
-        Vector vd = new Vector(0, 0, depth);
+        vw = new Vector(width, 0, 0);
+        vh = new Vector(0, height, 0);
+        vd = new Vector(0, 0, depth);
+
+        Point3D h = p.add(vw).add(vh).add(vd);
+        Vector _vw = vw.scale(-1);
+        Vector _vh = vh.scale(-1);
+        Vector _vd = vd.scale(-1);
+
+        corners = new Polygon[6];
+        corners[0] = (Polygon) new Polygon(p, p.add(vw), p.add(vw).add(vh), p.add(vh))    .setEmission(new Color(java.awt.Color.RED)).setMaterial(new Material().setKd(1));
+        corners[1] = (Polygon) new Polygon(p, p.add(vw), p.add(vw).add(vd), p.add(vd))    .setEmission(new Color(java.awt.Color.GREEN)).setMaterial(new Material().setKd(1));
+        corners[2] = (Polygon) new Polygon(p, p.add(vd), p.add(vd).add(vh), p.add(vh))    .setEmission(new Color(java.awt.Color.BLUE)).setMaterial(new Material().setKd(1));
+        corners[3] = (Polygon) new Polygon(h, h.add(_vw), h.add(_vw).add(_vh), h.add(_vh)).setEmission(new Color(java.awt.Color.CYAN)).setMaterial(new Material().setKd(1));
+        corners[4] = (Polygon) new Polygon(h, h.add(_vw), h.add(_vw).add(_vd), h.add(_vd)).setEmission(new Color(java.awt.Color.MAGENTA)).setMaterial(new Material().setKd(1));
+        corners[5] = (Polygon) new Polygon(h, h.add(_vd), h.add(_vd).add(_vh), h.add(_vh)).setEmission(new Color(java.awt.Color.white)).setMaterial(new Material().setKd(1));
+    }
+
+    /**
+     * default ctor that gets the first point and the width height and depth of the box
+     * @param point the left down point
+     * @param vw the width of the box
+     * @param vh the height of the box
+     * @param vd the depth of the box
+     */
+    public Box(Point3D point, Vector vw, Vector vh, Vector vd) {
+        p = point;
+
+        this.vw = vw;
+        this.vh = vh;
+        this.vd = vd;
 
         Point3D h = p.add(vw).add(vh).add(vd);
         Vector _vw = vw.scale(-1);
@@ -41,7 +69,11 @@ public class Box extends Geometry  {
         corners[5] = (Polygon) new Polygon(h, h.add(_vd), h.add(_vd).add(_vh), h.add(_vh)).setEmission(new Color(java.awt.Color.white)).setMaterial(new Material().setKd(1));
     }
     
-    
+
+    public Point3D getCenter()
+    {
+        return p.add(vd.scale(0.5)).add(vh.scale(0.5)).add(vw.scale(0.5));
+    }
     /**
      * get the normal of the box in certain point
      * @param point3D the point of the normal
