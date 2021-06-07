@@ -374,7 +374,7 @@ public class ReflectionRefractionTests {
 
 
     @Test
-    public void Focus_ImageTest() {
+    public void Fetcher_ImageTest() {
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.01));
         double d = 10;
 
@@ -391,6 +391,17 @@ public class ReflectionRefractionTests {
                 upLeft = center.add(vr.scale(-4 * d)).add(vd.scale(-4 * d));
         for (int i = 1; i < 9; i++) {
             for (int j = 1; j < 9; j++) {
+                if(i==j)
+                {
+                    scene.geometries.add(
+                            new Cylinder(
+                                    new Tube(
+                                            new Ray(
+                                                    upLeft.add(vr.scale(d * (i))).add(vd.scale(d * (j))),
+                                                    vw),d/3),4*d).setEmission(new Color(java.awt.Color.GREEN)).setMaterial(deskM)
+                            );
+                }
+                
                 if (j == 1 || j == 8 || i == 1 || i == 8) {
                     Box b = (Box) new Box(upLeft.add(vr.scale(d * (i))).add(vd.scale(d * (j))), d, -d, d).setMaterial(bM);
                     if ((i + j) % 2 == 0)
@@ -428,7 +439,7 @@ public class ReflectionRefractionTests {
 
 
         Camera coolCamera = new Camera(new Point3D(100, 50, 100), new Vector(0, -5, -100), new Vector(0, 100, -5)) //
-                .setVpSize(200, 200).setVpDistance(1000);
+                .setVpSize(4, 4).setVpDistance(20).setApertureSize(3).setFocalPlaneDist(145).setSamplingDepth(64);
         coolCamera.lookAt(center, new Vector(0, 1, 0));
         coolCamera.setPoint3D(coolCamera.getPoint3D().add(coolCamera.getvTo().scale(-400)));
 

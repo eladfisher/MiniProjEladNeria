@@ -351,6 +351,7 @@ public class CameraTest {
 
         Material roof_m = new Material().setKd(0.4).setKs(0.1).setShininess(10).setKt(0);
         Color roof_c = new Color(java.awt.Color.RED);
+        
         Polygon r_roof = (Polygon) new Polygon(
                 new Point3D(d * 0, d * 6, d * 1),
                 new Point3D(d * 0, d * 6, d * -2),
@@ -358,6 +359,7 @@ public class CameraTest {
                 new Point3D(d * 2.5, d * 3.5, d * 1)
         ).setEmission(roof_c)
                 .setMaterial(roof_m);
+        
         Polygon l_roof = (Polygon) new Polygon(
                 new Point3D(d * 0, d * 6, d * 1),
                 new Point3D(d * 0, d * 6, d * -2),
@@ -391,7 +393,9 @@ public class CameraTest {
                         .setKs(1));
 
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
+        
         scene.setBackground(new Color(java.awt.Color.CYAN).scale(0.7));
+        
         scene.geometries.add(
                 r_wall, l_wall, b_wall, f_wall,
                 door,
@@ -404,6 +408,7 @@ public class CameraTest {
                 new Color(java.awt.Color.WHITE).scale(0.5),
                 new Vector(1, -1, -1)
         ));
+        
         scene.lights.add(
                 new PointLight(new Color(java.awt.Color.WHITE), sun_p)
         );
