@@ -17,29 +17,67 @@ public class Render {
 	Camera _camera;
 	RayTracerBase _rayTracerBase;
 	
-	
+	//region Setters & Getters
+	/**
+	 * setter for scene
+	 * @param scene the Scene that contains every thing end wo want to render it.
+	 * @return this
+	 */
 	public Render setScene(Scene scene) {
-		
 		return this;
 	}
-	
+
+	/**
+	 * setter for Camera.
+	 * @param camera the camera that through it we see the picture
+	 * @return this
+	 */
 	public Render setCamera(Camera camera) {
 		_camera = camera;
 		return this;
 	}
-	
+
+	/**
+	 * setter for the ray tracer, because there is some kinds of ray tracer, and we want to get which one to use.
+	 * @param rayTracerBase the ray tracer.
+	 * @return this
+	 */
 	public Render setRayTracer(RayTracerBase rayTracerBase) {
 		_rayTracerBase = rayTracerBase;
 		
 		return this;
 	}
-	
+
+	/**
+	 * setter for image writer
+	 * @param imageWriter the image writer for write the image to it
+	 * @return this
+	 */
 	public Render setImageWriter(ImageWriter imageWriter) {
 		_imageWriter = imageWriter;
 		
 		return this;
 	}
-	
+	//endregion
+
+	//region actions
+	/**
+	 * helper function that calculate the average color that the rays return.
+	 * @param rays list of rays that the func trace and check the color of each ray and calculate the average
+	 * @return the average color
+	 */
+	private Color getAverageColor(List<Ray> rays) {
+		Color c = Color.BLACK;
+
+		// for each ray in rays we check the color and add to c.
+		for (Ray r : rays) {
+			c = c.add(_rayTracerBase.traceRay(r));
+		}
+
+
+		return c.reduce(rays.size());
+	}
+
 	/**
 	 * for now the method checks that all the fields are initialized
 	 */
@@ -54,11 +92,8 @@ public class Render {
 		for (int i = 0; i < nX; ++i)
 			for (int j = 0; j < nY; ++j)
 			{
-				
 				Color color = getAverageColor(_camera.constructRaysThroughPixel(nX, nY, i, j));
 				_imageWriter.writePixel(i, j, color);
-				
-				
 			}
 	}
 	
@@ -96,23 +131,5 @@ public class Render {
 				_imageWriter.writePixel(x, y, color);
 		
 	}
-	
-	/**
-	 * TODO
-	 * @param rays
-	 * @return
-	 */
-	private Color getAverageColor(List<Ray> rays) {
-		Color c = Color.BLACK;
-		
-		//TODO
-		for (Ray r : rays) {
-			c = c.add(_rayTracerBase.traceRay(r));
-		}
-		
-		
-		return c.reduce(rays.size());
-	}
-	
-	
+	//endregion
 }
