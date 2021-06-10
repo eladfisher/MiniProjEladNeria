@@ -34,7 +34,7 @@ public class Camera {
 	int raysSampling = 1;
 	
 	/**
-	 * TODO
+	 * ctor that gets all the data required for the camera
 	 *
 	 * @param point3D the point where the Camera is
 	 * @param vTo     the direction where the camera looking
@@ -137,10 +137,10 @@ public class Camera {
 	}
 	
 	/**
-	 * TODO
+	 * setter of how many rays to shoot at each pixel
 	 *
-	 * @param samplingDepth
-	 * @return
+	 * @param samplingDepth the new number of rays
+	 * @return the same object for chaining methods
 	 */
 	public Camera setSamplingDepth(int samplingDepth) {
 		this.samplingDepth = samplingDepth;
@@ -148,10 +148,10 @@ public class Camera {
 	}
 	
 	/**
-	 * TODO
+	 * setter for the vectors up and right and check that they are orthogonal
 	 *
-	 * @param vTo
-	 * @param vUp
+	 * @param vTo the  new direction that the camera looking at
+	 * @param vUp the vector above the Camera
 	 */
 	public void set_vTo_vUp(Vector vTo, Vector vUp) {
 		if (!isZero(vTo.dotProduct(vUp)))
@@ -166,19 +166,19 @@ public class Camera {
 	}
 	
 	/**
-	 * TODO
+	 * setter for the new point where the camera is
 	 *
-	 * @param p
+	 * @param p the new place of the camera
 	 */
 	public void setPoint3D(Point3D p) {
 		point3D = p;
 	}
 	
 	/**
-	 * TODO
+	 * a setter for the size of the aperture
 	 *
-	 * @param apertureSize
-	 * @return
+	 * @param apertureSize the new size of the aperture window
+	 * @return the same object for chaining method
 	 */
 	public Camera setApertureSize(double apertureSize) {
 		this.apertureSize = apertureSize;
@@ -186,10 +186,10 @@ public class Camera {
 	}
 	
 	/**
-	 * TODO
+	 * a setter for the distance of the focal plane from the VB
 	 *
-	 * @param focalPlaneDist
-	 * @return
+	 * @param focalPlaneDist the new distance
+	 * @return the same object for chaining method
 	 */
 	public Camera setFocalPlaneDist(double focalPlaneDist) {
 		this.focalPlaneDist = focalPlaneDist;
@@ -228,15 +228,16 @@ public class Camera {
 	//region Move Camera Methods
 	
 	/**
-	 * TODO
+	 * make the camera look at certain point
 	 *
-	 * @param p
-	 * @param axisUp
+	 * @param p the new location of the camera
+	 * @param axisUp the direction of the axis up
 	 */
 	public void lookAt(Point3D p, Vector axisUp) {
 		Vector to = p.subtract(point3D).normalized();
 		axisUp.normalize();
 		
+		//check is the vectors to and up orthogonal and make them the directions of the camera
 		if (isZero(to.dotProduct(axisUp)))
 		{
 			set_vTo_vUp(to, axisUp);
@@ -261,9 +262,9 @@ public class Camera {
 	}
 	
 	/**
-	 * TODO
+	 * rotate the  camera around the to vector
 	 *
-	 * @param a
+	 * @param a the degrees to rotate in radians
 	 */
 	public void rotateCameraAroundVto(double a) {
 		Point3D Hup = point3D.add(vUp);
@@ -272,11 +273,11 @@ public class Camera {
 	}
 	
 	/**
-	 * TODO
+	 * move the camera to new place and rotate it to look on ceration point with rotate of a radians around the vector to
 	 *
-	 * @param newPlace
-	 * @param lookAtP
-	 * @param a
+	 * @param newPlace the new place for the camera
+	 * @param lookAtP the new point that the camera should look at
+	 * @param a the radians to rotate the camera around the "to" vector
 	 */
 	public void MoveCamera(Point3D newPlace, Point3D lookAtP, double a) {
 		point3D = newPlace;
@@ -290,15 +291,15 @@ public class Camera {
 	
 	
 	/**
-	 * construct a ray Through a specific Pixel on the view plane
-	 * and return the ray
-	 * TODO update the description for list of rays
+	 * construct rays Through a specific Pixel on the view plane
+	 * and return the rays
+	 *
 	 *
 	 * @param nX the number of pixels in each column
 	 * @param nY the number of pixels in each row
 	 * @param j  the x coordinate of the wanted pixel
 	 * @param i  the y coordinate of the wanted pixel
-	 * @return a new ray from the center of the camera that go through the center of the param pixel.
+	 * @return a new rays list that go through the the param pixel.
 	 */
 	public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i) {
 		Point3D p0 = this.point3D;
@@ -356,14 +357,14 @@ public class Camera {
 	
 	
 	/**
-	 * TODO
+	 * generate points in a pixel that bounds by its 4 corner points
 	 *
-	 * @param samplingDepth
-	 * @param ru
-	 * @param rd
-	 * @param lu
-	 * @param ld
-	 * @return
+	 * @param samplingDepth the root of the number of points to create
+	 * @param ru the right up corner
+	 * @param rd the right down corner
+	 * @param lu the left up corner
+	 * @param ld the left down corner
+	 * @return a list of points that in the square
 	 */
 	private List<Point3D> generatePointsInPixel(int samplingDepth, Point3D ru, Point3D rd, Point3D lu, Point3D ld) {
 		int sq = (int) Math.sqrt(samplingDepth);
@@ -371,20 +372,20 @@ public class Camera {
 		Vector d = lu.subtract(ld).scale((double) 1 / sq);
 		List<Point3D> res = new LinkedList<Point3D>();
 		
-		//TODO
+		//generate the grid of the points
 		for (int i = 0; i < sq; i++)
 		{
 			for (int j = 0; j < sq; j++)
 			{
 				Point3D p = lu;
 				
-				//TODO
+				//check if the points not on the edges of the grid in order to not create vector 0
 				if (i != 0)
 					p = p.add(r.scale(i));
 				
-				//TODO
 				if (j != 0)
 					p = p.add(d.scale(j));
+				
 				
 				res.add(p);
 			}
@@ -393,9 +394,9 @@ public class Camera {
 	}
 	
 	/**
-	 * TODO
+	 * calc the center point of the VB
 	 *
-	 * @return
+	 * @return the center point of the VB
 	 */
 	private Point3D getCenterPoint() {
 		Point3D p0 = this.point3D;
@@ -422,29 +423,32 @@ public class Camera {
 	//region appearance improvements
 	
 	/**
-	 * TODO
+	 * create a beam of DOF rays
 	 *
-	 * @param pij
-	 * @param ray
-	 * @return
+	 * @param pij the center of the pixel
+	 * @param ray the ray that go through the pixel
+	 * @return a beam of rays that go through the pixel and intersect the focal point
 	 */
 	private List<Ray> createDepthOfFieldRays(Point3D pij, Ray ray) {
 		
-		//TODO
+		//calc the focal point(add the distance to the center point)
 		Plane focalPlane = new Plane(vTo, getCenterPoint().add(vTo.scale(focalPlaneDist)));
 		
 		Point3D focalPoint = focalPlane.findIntersections(ray).get(0);
 		
+		//calc the edges of the aperture
 		Point3D ru = pij.add(vUp.scale(apertureSize / 2)).add(vRight.scale(apertureSize / 2));
 		Point3D rd = pij.add(vUp.scale(-apertureSize / 2)).add(vRight.scale(apertureSize / 2));
 		Point3D lu = pij.add(vUp.scale(apertureSize / 2)).add(vRight.scale(-apertureSize / 2));
 		Point3D ld = pij.add(vUp.scale(-apertureSize / 2)).add(vRight.scale(-apertureSize / 2));
 		
+		//get points on the aperture
 		List<Point3D> gridPoints = generatePointsInPixel(samplingDepth, ru, rd, lu, ld);
 		
 		List<Ray> r = new LinkedList<Ray>();
 		r.add(ray);
 		
+		//create all the focused rays
 		for (Point3D p : gridPoints)
 		{
 			r.add(new Ray(p, focalPoint.subtract(p)));

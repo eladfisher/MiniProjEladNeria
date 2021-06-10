@@ -11,7 +11,7 @@ import scene.Scene;
 import java.util.*;
 
 /**
- * TODO
+ * tests  for the picture improvements for MP1
  */
 public class DepthOfField {
 	
