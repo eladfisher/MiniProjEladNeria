@@ -60,22 +60,29 @@ public class DepthOfField {
 	
 	
 	@Test
-	public void DOF() {
-		Scene scene1 = new Scene("DOF");
+	public void SuperSamplingTest() {
+		Scene scene1 = new Scene("AntiAliasing");
 		Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
 				.setVpSize(150, 150).setVpDistance(1000);
+		
 		Camera camera2 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
-				.setVpSize(150, 150).setVpDistance(1000).setFocalPlaneDist(50).setApertureSize(3);
+				.setVpSize(150, 150).setVpDistance(1000).setRaysSampling(4);
+		
+		Camera camera3 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+				.setVpSize(150, 150).setVpDistance(1000).setRaysSampling(36);
+		
 		Geometry sphere1 = new Sphere(25,new Point3D(10, -10, -100)) //
 				.setEmission(new Color(java.awt.Color.BLUE)) //
 				.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
+		
 		Geometry sphere2 = new Sphere(25, new Point3D(0, 30, -50)) //
 				.setEmission(new Color(java.awt.Color.BLUE)) //
 				.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
+		
 		scene1.geometries.add(sphere1, sphere2);
 		scene1.lights.add(new DirectionalLight(new Color(500, 300, 0), new Vector(1, 1, -1)));
 		
-		ImageWriter imageWriter1 = new ImageWriter("withoutDOF", 500, 500);
+		ImageWriter imageWriter1 = new ImageWriter("withoutAntiAliasing", 500, 500);
 		Render render1 = new Render()//
 				.setImageWriter(imageWriter1) //
 				.setCamera(camera1) //
@@ -83,13 +90,22 @@ public class DepthOfField {
 		render1.renderImage();
 		render1.writeToImage();
 		
-		ImageWriter imageWriter2 = new ImageWriter("withDOF", 500, 500);
+		
+		ImageWriter imageWriter2 = new ImageWriter("with4AntiAliasing", 500, 500);
 		Render render2 = new Render()//
 				.setImageWriter(imageWriter2) //
-				.setCamera(camera2.setSamplingDepth(64)) //
+				.setCamera(camera2) //
 				.setRayTracer(new RayTracerBasic(scene1));
 		render2.renderImage();
 		render2.writeToImage();
+		
+		ImageWriter imageWriter3 = new ImageWriter("with64AntiAliasing", 500, 500);
+		Render render3 = new Render()//
+				.setImageWriter(imageWriter3) //
+				.setCamera(camera3.setSamplingDepth(64)) //
+				.setRayTracer(new RayTracerBasic(scene1));
+		render3.renderImage();
+		render3.writeToImage();
 	}
 	
 	

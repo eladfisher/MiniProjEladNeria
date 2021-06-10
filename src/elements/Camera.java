@@ -1,8 +1,10 @@
 package elements;
 
+import com.sun.source.tree.NewClassTree;
 import geometries.Plane;
 import primitives.*;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,18 +28,10 @@ public class Camera {
 	double apertureSize;
 	double focalPlaneDist = 0;
 	
-	/**
-	 * TODO
-	 *
-	 * @param samplingDepth
-	 * @return
-	 */
-	public Camera setSamplingDepth(int samplingDepth) {
-		this.samplingDepth = samplingDepth;
-		return this;
-	}
-	
 	int samplingDepth = 1;
+	
+	
+	int raysSampling = 1;
 	
 	/**
 	 * TODO
@@ -53,6 +47,15 @@ public class Camera {
 	
 	
 	//region Getters
+	
+	/**
+	 * getter of the rays sampling field
+	 *
+	 * @return the rays sampling field
+	 */
+	public int getRaysSampling() {
+		return raysSampling;
+	}
 	
 	/**
 	 * getter for the point field
@@ -123,6 +126,28 @@ public class Camera {
 	//region Setters
 	
 	/**
+	 * setter for the ray samplings field
+	 *
+	 * @param raysSampling the new value for the ray sampling field
+	 * @return the same instance for chaining method
+	 */
+	public Camera setRaysSampling(int raysSampling) {
+		this.raysSampling = raysSampling;
+		return this;
+	}
+	
+	/**
+	 * TODO
+	 *
+	 * @param samplingDepth
+	 * @return
+	 */
+	public Camera setSamplingDepth(int samplingDepth) {
+		this.samplingDepth = samplingDepth;
+		return this;
+	}
+	
+	/**
 	 * TODO
 	 *
 	 * @param vTo
@@ -152,6 +177,59 @@ public class Camera {
 	/**
 	 * TODO
 	 *
+	 * @param apertureSize
+	 * @return
+	 */
+	public Camera setApertureSize(double apertureSize) {
+		this.apertureSize = apertureSize;
+		return this;
+	}
+	
+	/**
+	 * TODO
+	 *
+	 * @param focalPlaneDist
+	 * @return
+	 */
+	public Camera setFocalPlaneDist(double focalPlaneDist) {
+		this.focalPlaneDist = focalPlaneDist;
+		
+		return this;
+	}
+	
+	
+	/**
+	 * update the size of the view plane
+	 *
+	 * @param width  the new width for the view plane
+	 * @param height the new height for the view plane
+	 * @return the current instance of camera after the changed
+	 */
+	public Camera setVpSize(double width, double height) {
+		this.width = width;
+		this.height = height;
+		
+		return this;
+	}
+	
+	/**
+	 * update the distance of the camera from view plane
+	 *
+	 * @param distance the new distance from the view plane
+	 * @return the current instance of camera after the changed
+	 */
+	public Camera setVpDistance(double distance) {
+		this.distance = distance;
+		
+		return this;
+	}
+	//endregion
+	
+	//region Move Camera Methods
+	
+	/**
+	 * TODO
+	 *
 	 * @param p
 	 * @param axisUp
 	 */
@@ -159,7 +237,8 @@ public class Camera {
 		Vector to = p.subtract(point3D).normalized();
 		axisUp.normalize();
 		
-		if (isZero(to.dotProduct(axisUp))){
+		if (isZero(to.dotProduct(axisUp)))
+		{
 			set_vTo_vUp(to, axisUp);
 			return;
 		}
@@ -205,58 +284,10 @@ public class Camera {
 		rotateCameraAroundVto(a);
 	}
 	
-	/**
-	 * TODO
-	 *
-	 * @param apertureSize
-	 * @return
-	 */
-	public Camera setApertureSize(double apertureSize) {
-		this.apertureSize = apertureSize;
-		return this;
-	}
-	
-	/**
-	 * TODO
-	 *
-	 * @param focalPlaneDist
-	 * @return
-	 */
-	public Camera setFocalPlaneDist(double focalPlaneDist) {
-		this.focalPlaneDist = focalPlaneDist;
-		
-		return this;
-	}
-	
 	//endregion
 	
 	//region methods
 	
-	/**
-	 * update the size of the view plane
-	 *
-	 * @param width  the new width for the view plane
-	 * @param height the new height for the view plane
-	 * @return the current instance of camera after the changed
-	 */
-	public Camera setVpSize(double width, double height) {
-		this.width = width;
-		this.height = height;
-		
-		return this;
-	}
-	
-	/**
-	 * update the distance of the camera from view plane
-	 *
-	 * @param distance the new distance from the view plane
-	 * @return the current instance of camera after the changed
-	 */
-	public Camera setVpDistance(double distance) {
-		this.distance = distance;
-		
-		return this;
-	}
 	
 	/**
 	 * construct a ray Through a specific Pixel on the view plane
@@ -272,7 +303,7 @@ public class Camera {
 	public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i) {
 		Point3D p0 = this.point3D;
 		Point3D pC = getCenterPoint();
-		double ru, rd, lu, ld;
+		
 		
 		double ratioY = height / nY;//the ratio between the height and the number of pixels in each column
 		double ratioX = width / nX;//the ratio between the width and the number of pixels in each row
@@ -294,45 +325,35 @@ public class Camera {
 		if (yI != 0)// if there is a need to change the y axis point
 			Pij = Pij.add(vUp.scale(yI));
 		
+		List<Ray> rays = null;
 		
-		//if there is no focus the return ray is the regular ray
-		if (0 == focalPlaneDist || samplingDepth == 1)
-			return List.of(new Ray(p0, Pij.subtract(p0)));
+		if (raysSampling != 1)
+			rays = createRaySampling(Pij, ratioY, ratioX);
 		
 		else
+			rays = List.of(new Ray(p0, Pij.subtract(p0)));
+		
+		//if there is focus generate and return the focused rays
+		if (0 != focalPlaneDist && samplingDepth != 1)
+		{
+			List<Ray> DOFrays = new LinkedList<>();
+			
+			//calc and add all the DOF rays
+			for (Ray r: rays)
+			{
+				DOFrays.addAll(createDepthOfFieldRays(Pij,r));
+			}
+			
+			//return all the DOF rays
 			return createDepthOfFieldRays(Pij, new Ray(p0, Pij.subtract(p0)));
-	}
-	
-	/**
-	 * TODO
-	 *
-	 * @param pij
-	 * @param ray
-	 * @return
-	 */
-	private List<Ray> createDepthOfFieldRays(Point3D pij, Ray ray) {
-		
-		//TODO
-		Plane focalPlane = new Plane(vTo, getCenterPoint().add(vTo.scale(focalPlaneDist)));
-		
-		Point3D focalPoint = focalPlane.findIntersections(ray).get(0);
-		
-		Point3D ru = pij.add(vUp.scale(apertureSize / 2)).add(vRight.scale(apertureSize / 2));
-		Point3D rd = pij.add(vUp.scale(-apertureSize / 2)).add(vRight.scale(apertureSize / 2));
-		Point3D lu = pij.add(vUp.scale(apertureSize / 2)).add(vRight.scale(-apertureSize / 2));
-		Point3D ld = pij.add(vUp.scale(-apertureSize / 2)).add(vRight.scale(-apertureSize / 2));
-		
-		List<Point3D> gridPoints = generatePointsInPixel(samplingDepth, ru, rd, lu, ld);
-		
-		List<Ray> r = new LinkedList<Ray>();
-		r.add(ray);
-		
-		for (Point3D p : gridPoints) {
-			r.add(new Ray(p,focalPoint.subtract(p)));
 		}
 		
-		return r;
+		
+		//if there isn't focus return the rays that calculated before no matter if the rays are anti aliasing or a single ray
+		else
+			return rays;
 	}
+	
 	
 	/**
 	 * TODO
@@ -358,12 +379,12 @@ public class Camera {
 				Point3D p = lu;
 				
 				//TODO
-				if(i!=0)
-					p=p.add(r.scale(i));
+				if (i != 0)
+					p = p.add(r.scale(i));
 				
 				//TODO
-				if(j!=0)
-					p=p.add(d.scale(j));
+				if (j != 0)
+					p = p.add(d.scale(j));
 				
 				res.add(p);
 			}
@@ -395,6 +416,71 @@ public class Camera {
 		return constructRaysThroughPixel(nX, nY, i, j).get(0);
 	}
 	
+	
+	//endregion
+	
+	//region appearance improvements
+	
+	/**
+	 * TODO
+	 *
+	 * @param pij
+	 * @param ray
+	 * @return
+	 */
+	private List<Ray> createDepthOfFieldRays(Point3D pij, Ray ray) {
+		
+		//TODO
+		Plane focalPlane = new Plane(vTo, getCenterPoint().add(vTo.scale(focalPlaneDist)));
+		
+		Point3D focalPoint = focalPlane.findIntersections(ray).get(0);
+		
+		Point3D ru = pij.add(vUp.scale(apertureSize / 2)).add(vRight.scale(apertureSize / 2));
+		Point3D rd = pij.add(vUp.scale(-apertureSize / 2)).add(vRight.scale(apertureSize / 2));
+		Point3D lu = pij.add(vUp.scale(apertureSize / 2)).add(vRight.scale(-apertureSize / 2));
+		Point3D ld = pij.add(vUp.scale(-apertureSize / 2)).add(vRight.scale(-apertureSize / 2));
+		
+		List<Point3D> gridPoints = generatePointsInPixel(samplingDepth, ru, rd, lu, ld);
+		
+		List<Ray> r = new LinkedList<Ray>();
+		r.add(ray);
+		
+		for (Point3D p : gridPoints)
+		{
+			r.add(new Ray(p, focalPoint.subtract(p)));
+		}
+		
+		return r;
+	}
+	
+	/**
+	 * create list with rays that intersect the pixel
+	 *
+	 * @param pixel       the pixel to create rays trough it
+	 * @param pixelHeight the height of a pixel
+	 * @param pixelWidth  the width of the poxel
+	 * @return
+	 */
+	private List<Ray> createRaySampling(Point3D pixel, double pixelHeight, double pixelWidth) {
+		//find the 4 corners of the pixel
+		Point3D ru = pixel.add(vUp.scale(pixelHeight / 2)).add(vRight.scale(pixelWidth / 2));
+		Point3D rd = pixel.add(vUp.scale(-pixelHeight / 2)).add(vRight.scale(pixelWidth / 2));
+		Point3D lu = pixel.add(vUp.scale(pixelHeight / 2)).add(vRight.scale(-pixelWidth / 2));
+		Point3D ld = pixel.add(vUp.scale(-pixelHeight / 2)).add(vRight.scale(-pixelWidth / 2));
+		
+		
+		List<Ray> res = new LinkedList<>();
+		
+		List<Point3D> pointsInPixel = generatePointsInPixel(raysSampling, ru, rd, lu, ld);
+		
+		//create all the rays that intersect the VB through the points
+		for (Point3D p : pointsInPixel)
+		{
+			res.add(new Ray(point3D, p.subtract(point3D)));
+		}
+		
+		return res;
+	}
 	
 	//endregion
 	
