@@ -236,6 +236,17 @@ public class ReflectionRefractionTests {
 
         render.renderImage();
         render.writeToImage();
+    
+        coolCamera.setRaysSampling(36);
+        
+        imageWriter = new ImageWriter("amazingImageWithRaySampling", 600, 600);
+        render = new Render() //
+                .setImageWriter(imageWriter) //
+                .setCamera(coolCamera) //
+                .setRayTracer(new RayTracerBasic(scene));
+    
+        render.renderImage();
+        render.writeToImage();
     }
 
     /**
