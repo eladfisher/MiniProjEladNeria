@@ -148,14 +148,39 @@ public class MP1Tests {
 		).setEmission(wall_c)
 				.setMaterial(wall_m);
 		
-		Polygon f_wall = (Polygon) new Polygon(
+		Geometries f_wall = new Geometries();
+		Material wall_f = new Material().setKd(0.1).setKs(1).setShininess(200).setKt(0).setKr(0.5);
+		
+		
+		Polygon f_wallLeft = (Polygon) new Polygon(
 				new Point3D(d * -2, d * 0, d * 1),
+				new Point3D(d * -0.7, d * 0, d * 1),
+				new Point3D(d * -0.7, d * 2, d * 1),
+				new Point3D(d * -2, d * 2, d * 1)
+		).setEmission(wall_c)
+				.setMaterial(wall_f);
+		
+		Polygon f_wallRight = (Polygon) new Polygon(
 				new Point3D(d * 2, d * 0, d * 1),
+				new Point3D(d * 2, d * 2, d * 1),
+				
+				new Point3D(d * 0.7, d * 2, d * 1),
+				new Point3D(d * 0.7, d * 0, d * 1)
+		).setEmission(wall_c)
+				.setMaterial(wall_f);
+		
+		Polygon f_wallUp = (Polygon) new Polygon(
+				new Point3D(d * -2, d * 2, d * 1),
+				new Point3D(d * 2, d * 2, d * 1),
 				new Point3D(d * 2, d * 4, d * 1),
 				new Point3D(d * 0, d * 6, d * 1),
 				new Point3D(d * -2, d * 4, d * 1)
 		).setEmission(wall_c)
-				.setMaterial(wall_m);
+				.setMaterial(wall_f);
+		
+		f_wall.add(f_wallLeft,f_wallUp,f_wallRight);
+		
+		
 		//endregion
 		
 		//region roof
@@ -176,21 +201,25 @@ public class MP1Tests {
 				new Point3D(d * -2.5, d * 3.5, d * 1.1)
 		).setEmission(roof_c)
 				.setMaterial(roof_m);
+		
+		scene.lights.add(new PointLight(new Color(700,400,250),new Point3D(0,100,0)).setKl(0.0001).setKc(1).setKq(0.0002));
 		//endregion
 		
 		//region door
+		
+		Material doorM = new Material().setKd(0.05).setKs(0).setShininess(30).setKt(0.5).setKr(0);
 		Polygon door = (Polygon) new Polygon(
 				new Point3D(d * -0.7, d * 0, d * 1.005),
 				new Point3D(d * 0.7, d * 0, d * 1.005),
 				new Point3D(d * 0.7, d * 2, d * 1.005),
 				new Point3D(d * -0.7, d * 2, d * 1.005)
 		).setEmission(new Color(139, 69, 19))
-				.setMaterial(wall_m);
+				.setMaterial(doorM);
 		//endregion
 		//endregion
 		
 		//region Ground
-		Material ground_m = new Material().setKd(0.3).setKs(0).setShininess(0).setKt(0).setKr(0.3);
+		Material ground_m = new Material().setKd(0.4).setKs(0).setShininess(0).setKt(0).setKr(0.3);
 		Color ground_c = new Color(java.awt.Color.green).scale(0.25);
 		Plane ground = (Plane) new Plane(new Vector(0, 1, 0), new Point3D(0, 0, 0))
 				.setMaterial(ground_m)
@@ -209,20 +238,43 @@ public class MP1Tests {
 		
 		scene.geometries.add(pyramid1) ;
 		scene.geometries.add(sphereInPyramid1);
-		scene.lights.add(new PointLight(new Color(700, 400, 400).scale(1),pyramid1Head.add(new Vector(0,-20,0))).setKl(4E-5).setKq(2E-7));
-		//scene.lights.add(new SpotLight(new Color(700, 400, 400).scale(1),pyramid1Head.add(new Vector(0,-30,0)),new Vector(0,-1,0)).setKl(4E-5).setKq(2E-7));
+		scene.lights.add(new PointLight(new Color(700, 400, 400).scale(1),pyramid1Head.add(new Vector(0,-20,0))).setKl(4E-5).setKq(0.00001));
+//		//scene.lights.add(new SpotLight(new Color(700, 400, 400).scale(1),pyramid1Head.add(new Vector(0,-30,0)),new Vector(0,-1,0)).setKl(4E-5).setKq(2E-7));
 		
 		
 		//endregion
 		
-		//region Path
+		
 		//region Path itself
-		Box path = (Box) new Box(new Point3D(d * -0.7, d * 0, d * 1.005),1.4*d,2.5,1000).setEmission(new Color(101,67,33)).setMaterial(new Material().setKd(0.1));
-		scene.geometries.add(path);
+		Material materialPath = new Material().setKd(0.1);
+		Color emissionPath = new Color(101,67,33);
+		Box pathFromHouse = (Box) new Box(new Point3D(d * -0.7, d * 0, d * 1.005),1.4*d,2.5,150).setEmission(emissionPath).setMaterial(materialPath);
+		Box pathOrthogonal = (Box) new Box(new Point3D(d * -0.7, d * 0, d * 1.005+136),new Vector(0,0,28),new Vector(0,2.5,0),new Vector(1000,0,0)).setEmission(emissionPath).setMaterial(materialPath);
+		scene.geometries.add(pathFromHouse,pathOrthogonal);
 		//endregion
 		
 		//region lamps
-		//region
+		//new Point3D(d * -0.7+x, d * 0, d * 1.005+136)
+		Material materialLampsSpheres = new Material().setKd(0.33).setKs(1).setShininess(30).setKt(0.7);
+		Material materialLampsCylinder = new Material().setKd(1).setKs(0.6).setShininess(30).setKt(0);
+		Color emissionLampSphere = new Color(0,0,200);
+		
+		scene.geometries.add( new Box(new Point3D(d * 0.7, 0, d * 1.005),new Vector(0,0,120+1*d),new Vector(0,6,0),new Vector(1000,0,0))
+		.setEmission(new Color(0,100,0)).setMaterial(new Material().setKd(0.7).setKs(0.5).setShininess(60)));
+//		scene.geometries.add(new Polygon(
+//				new Point3D(d * -0.7, 5, d * 1.005+136)
+//				,new Point3D(d * -0.7, 5, d * 1.005)
+//				,new Point3D(d * -0.7+400, 5, d * 1.005)
+//				,new Point3D(d * -0.7+400, 5, d * 1.005+136)
+//							 ).setEmission(new Color(0,100,0)).setMaterial(new Material().setKd(0.7).setKs(0.5).setShininess(60)));
+
+		
+		for(int i = 50; i<400;i+=100){
+			
+			scene.geometries.add(new Sphere(12,new Point3D(d * -0.7+i, 30, d * 1.005+100)).setEmission(emissionLampSphere).setMaterial(materialLampsSpheres));
+			scene.geometries.add(new Cylinder(new Tube(new Ray(new Point3D(d * -0.7+i, 0, d * 1.005+100),new Vector(0,1,0)),2),18).setEmission(Color.BLACK).setMaterial(materialLampsCylinder));
+			scene.lights.add( new SpotLight( new Color(800,0,400),new Point3D(d * -0.7+i, 48, d * 1.005+100),new Vector(0,-1,0)).setKc(1).setKq(0.0007).setKl(0.00015));
+		}
 		
 		//endregion
 		
@@ -230,20 +282,26 @@ public class MP1Tests {
 		
 		coolCamera.MoveCamera(new Point3D(1000, 160, 1000), new Point3D(-15,50,0),0); //
 				coolCamera.setVpSize(28, 28).setVpDistance(100);
-		
+				
+				
+		//region scene build
 		scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
 		scene.setBackground(new Color(java.awt.Color.CYAN).scale(0.7));
 		scene.geometries.add(
-				r_wall, l_wall, b_wall, f_wall,
+				r_wall,
+				l_wall,
+				b_wall,
+				f_wall,
 				door,
 				r_roof, l_roof,
-				ground
+			ground
 		);
 		
 		scene.lights.add(new DirectionalLight(
 				new Color(java.awt.Color.WHITE).scale(0.1),
 				new Vector(1, -1, -1)
 		));
+		//endregion
 		
 		ImageWriter imageWriter = new ImageWriter("final image Little House on the Prairie", 600, 600);
 		Render render = new Render() //
@@ -254,16 +312,32 @@ public class MP1Tests {
 		render.renderImage();
 		render.writeToImage();
 		
-		coolCamera.setRaysSampling(16);
-
-		imageWriter = new ImageWriter("final image with ray sampling", 600, 600);
-		render = new Render() //
-				.setImageWriter(imageWriter) //
-				.setCamera(coolCamera) //
-				.setRayTracer(new RayTracerBasic(scene));
-
-		//render.renderImage();
-		render.writeToImage();
+//		coolCamera.setRaysSampling(900);
+//
+//		imageWriter = new ImageWriter("final image with ray sampling 30", 600, 600);
+//		render = new Render() //
+//				.setImageWriter(imageWriter) //
+//				.setCamera(coolCamera) //
+//				.setRayTracer(new RayTracerBasic(scene));
+//
+//		render.renderImage();
+//		render.writeToImage();
+//
+		
+//		Camera DOFCamera = new Camera(new Point3D(1000, 130, 1000), new Vector(-1000, -100, -1000), new Vector(-1, 20, -1));
+//
+//		DOFCamera.MoveCamera(new Point3D(1000, 160, 1000), new Point3D(-15,50,0),0); //
+//		DOFCamera.setVpSize(28, 28).setVpDistance(100);
+//		DOFCamera.setSamplingDepth(4*4).setFocalPlaneDist(new Point3D(1000, 130, 1000).distance(Point3D.ZERO)).setApertureSize(13);
+//
+//		imageWriter = new ImageWriter("final image with DOF", 600, 600);
+//		render = new Render() //
+//				.setImageWriter(imageWriter) //
+//				.setCamera(DOFCamera) //
+//				.setRayTracer(new RayTracerBasic(scene));
+//
+//		render.renderImage();
+//		render.writeToImage();
 	}
 	
 	/**
