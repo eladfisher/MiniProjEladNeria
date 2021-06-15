@@ -20,8 +20,18 @@ import primitives.Vector;
  * ==> Il = I0 / (Kc + Kl*d + Kq*(d^2))
  */
 public class PointLight extends Light implements LightSource {
-	
+	/**
+	 * position: the postion of the point in the space.
+	 */
 	private Point3D position;
+	/**
+	 * PointColor(according to pointLight only)  = intensity/(Kc+Kl*d+Kq*d^2)
+	 * intensity: color of this PointLight.
+	 * d: distance between the wanted Point to the point of the pointLight.
+	 * Kc: constant.
+	 * Kl: linear.
+	 * Kq: square.
+	 */
 	private double Kc, Kl, Kq;
 	
 	/**
@@ -105,8 +115,9 @@ public class PointLight extends Light implements LightSource {
 	}
 	
 	/**
-	 * @param point
-	 * @return
+	 * getter for the distance between the pointLight to a Point
+	 * @param point the Point we want to know the distance to PointLight
+	 * @return the distance.
 	 */
 	@Override
 	public double getDistance(Point3D point) {

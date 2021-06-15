@@ -9,9 +9,17 @@ import java.util.List;
  * a 3D geometry of a box for 3D graphic model
  */
 public class Box extends Geometry  {
+    /**
+     * the first point of the box.
+     */
     Point3D p;
-    //double w,h,d;
+    /**
+     * vectors of edges
+     */
     Vector vw, vh, vd;
+    /**
+     * list of the corners.
+     */
     Polygon[] corners;
     
     /**
@@ -68,12 +76,18 @@ public class Box extends Geometry  {
         corners[4] = (Polygon) new Polygon(h, h.add(_vw), h.add(_vw).add(_vd), h.add(_vd)).setEmission(new Color(java.awt.Color.MAGENTA)).setMaterial(new Material().setKd(1));
         corners[5] = (Polygon) new Polygon(h, h.add(_vd), h.add(_vd).add(_vh), h.add(_vh)).setEmission(new Color(java.awt.Color.white)).setMaterial(new Material().setKd(1));
     }
-    
 
+
+    /**
+     * getter for the Center of the box.
+     *
+     * @return the center of the box, if we want to know it.
+     */
     public Point3D getCenter()
     {
         return p.add(vd.scale(0.5)).add(vh.scale(0.5)).add(vw.scale(0.5));
     }
+
     /**
      * get the normal of the box in certain point
      * @param point3D the point of the normal
@@ -160,14 +174,23 @@ public class Box extends Geometry  {
         return this;
     }
 
+    /**
+     * method that rotate the box around the center point of the box, on a degrees around vector u.
+     *
+     * @param u vector that we rotate around it.
+     * @param a degrees we rotate.
+     */
     public void rotateAroundVector(Vector u, double a)
     {
-        for (Polygon p :
-                corners) {
-            p.rotateAroundVector(u,a);
-        }
+        rotateAroundRay(new Ray(getCenter(),u),a);
     }
 
+    /**
+     * method that rotate the box around r (some ray in the universe we get).
+     *
+     * @param r ray that we rotate around it.
+     * @param a degrees we rotate.
+     */
     public void rotateAroundRay(Ray r, double a)
     {
         for (Polygon p :

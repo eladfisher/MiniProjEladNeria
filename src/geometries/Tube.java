@@ -14,9 +14,21 @@ import static primitives.Util.isZero;
  * a class of Tube for a 3D graphic model
  */
 public class Tube extends Geometry {
+    /**
+     * direction of this endless tube.
+     */
     Ray direction;
+    /**
+     * the radius of the tube.
+     */
     double radius;
 
+    /**
+     * Constructor for tube.
+     *
+     * @param direction direction of this endless tube.
+     * @param radius the radius of the tube.
+     */
     public Tube(Ray direction, double radius) {
         if (radius <= 0)
             throw new IllegalArgumentException("radius can't be not positive.");
@@ -25,10 +37,19 @@ public class Tube extends Geometry {
     }
 
     //region Getters
+
+    /**
+     * getter for the direction.
+     * @return the direction.
+     */
     public Ray getDirection() {
         return direction;
     }
 
+    /**
+     * getter for the radius.
+     * @return the radius.
+     */
     public double getRadius() {
         return radius;
     }

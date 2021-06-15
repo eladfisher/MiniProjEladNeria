@@ -17,7 +17,11 @@ import primitives.Vector;
  * (i.e. there is a thinning of the light due to the distance, but less than point light).
  */
 public class SpotLight extends PointLight {
-	
+
+	/**
+	 * spotLight is like pointLight but with more depending a direction.
+	 * so this is the direction.
+	 */
 	private Vector direction;
 	
 	/**
