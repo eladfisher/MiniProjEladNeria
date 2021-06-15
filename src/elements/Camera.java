@@ -15,6 +15,7 @@ import static primitives.Util.*;
  * the use of this class is to use camera in order to render a scene
  */
 public class Camera {
+	//region fields
 	/**
 	 * pont3D: the point in the space that the camera placed.
 	 */private Point3D point3D;
@@ -53,6 +54,13 @@ public class Camera {
 	/**
 	 * raysSampling: num of rays we want to trace from the Camera for Ray Sampling.
 	 */int raysSampling = 1;
+	
+	/**
+	 * the focal plane itself
+	 */
+	private Plane focalPlane;
+	//endregion
+	
 	
 	/**
 	 * ctor that gets all the data required for the camera
@@ -339,8 +347,8 @@ public class Camera {
 		Point3D Pij = pC;//.add(vRight.scale(xJ)).add(vUp.scale(yI))
 		
 		
-		//without this if statement an exception will be thrown
-		//because vector 0 will be created in case that either of xJ or yI will be 0
+//		without this if statement an exception will be thrown
+//		because vector 0 will be created in case that either of xJ or yI will be 0
 		if (xJ != 0)// if there is a need to change the x axis point
 			Pij = Pij.add(vRight.scale(xJ));
 		
@@ -359,6 +367,7 @@ public class Camera {
 		if (0 != focalPlaneDist && samplingDepth != 1)
 		{
 			List<Ray> DOFrays = new LinkedList<>();
+			focalPlane = new Plane(vTo, getCenterPoint().add(vTo.scale(focalPlaneDist)));
 			
 			//calc and add all the DOF rays
 			for (Ray r: rays)
@@ -367,7 +376,7 @@ public class Camera {
 			}
 			
 			//return all the DOF rays
-			return createDepthOfFieldRays(Pij, new Ray(p0, Pij.subtract(p0)));
+			return DOFrays;
 		}
 		
 		
@@ -452,9 +461,7 @@ public class Camera {
 	 */
 	private List<Ray> createDepthOfFieldRays(Point3D pij, Ray ray) {
 		
-		//calc the focal point(add the distance to the center point)
-		Plane focalPlane = new Plane(vTo, getCenterPoint().add(vTo.scale(focalPlaneDist)));
-		
+		//calc the focal point
 		Point3D focalPoint = focalPlane.findIntersections(ray).get(0);
 		
 		//calc the edges of the aperture
