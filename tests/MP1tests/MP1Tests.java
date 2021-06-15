@@ -202,6 +202,25 @@ public class MP1Tests {
 		).setEmission(roof_c)
 				.setMaterial(roof_m);
 		
+		Cylinder chimney = (Cylinder) new Cylinder(
+				new Ray(new Point3D(d*1.2,4*d,-d),
+						new Vector(0,1,0)),
+				7,
+				2.2*d).
+				setEmission(new Color(java.awt.Color.DARK_GRAY)).
+				setMaterial(new Material().setKr(0.2).setKd(1).setKs(0.7));
+		
+		Geometries smoke = new Geometries();
+		
+		for (int i = 0; i < 10; ++i)
+		{
+			smoke.add(
+					new Sphere(6+3.5*i,
+							   new Point3D(24,124,-20).add(new Vector(i*i*4,0.01+i*15,0))).setMaterial(new Material().setKt(0.7).setKs(0))
+			);
+		}
+		
+		scene.geometries.add(chimney,smoke);
 		scene.lights.add(new PointLight(new Color(700,400,250),new Point3D(0,100,0)).setKl(0.0001).setKc(1).setKq(0.0002));
 		//endregion
 		
@@ -249,17 +268,47 @@ public class MP1Tests {
 		Material materialPath = new Material().setKd(0.1);
 		Color emissionPath = new Color(101,67,33);
 		Box pathFromHouse = (Box) new Box(new Point3D(d * -0.7, d * 0, d * 1.005),1.4*d,2.5,150).setEmission(emissionPath).setMaterial(materialPath);
-		Box pathOrthogonal = (Box) new Box(new Point3D(d * -0.7, d * 0, d * 1.005+136),new Vector(0,0,28),new Vector(0,2.5,0),new Vector(1000,0,0)).setEmission(emissionPath).setMaterial(materialPath);
-		scene.geometries.add(pathFromHouse,pathOrthogonal);
+		Vector v_help = new Vector(1260,0,1000);
+		Box pathToCamera = (Box) new Box(new Point3D(d * -0.7, d * 0, d * 1.005+150),new Vector(1.4*d,0,0),new Vector(0,2.5,0),v_help).setEmission(emissionPath).setMaterial(materialPath);
+		Box pathOrthogonal = (Box) new Box(new Point3D(d * 0.7, d * 0, d * 1.005+136),new Vector(0,0,28),new Vector(0,2.5,0),new Vector(1000,0,0)).setEmission(emissionPath).setMaterial(materialPath);
+		
+//		v_help = v_help.scale((double) 1/10);
+//		Point3D p_help = new Point3D(0,1,150+d*1.005);
+//		for (double i = 1; i<11; ++i)
+//		{
+//			scene.geometries.add(
+//					new Sphere(14,p_help.add(v_help.scale(i)))
+//							.setEmission(new Color(java.awt.Color.BLACK))
+//					.setMaterial(new Material().setKd(0.5).setKr(0.8).setKs(0.6))
+//			);
+//		}
+//
+		scene.geometries.add(pathFromHouse,pathOrthogonal,pathToCamera);
 		//endregion
 		
-		//region lamps
+		//region behind
+		
+		Point3D[] stars = new Point3D[50];
+		stars[0] = new Point3D(-120000,10000,-100000);
+		scene.geometries.add(
+				new Sphere(5000,stars[0]).
+						setMaterial(new Material().setKd(1).setShininess(100).setKs(1)).
+						setEmission(new Color(126,125,109))
+		);
+		
+		scene.geometries.add(new Sphere(50,new Point3D(-200,50,-100)).setMaterial(new Material().setKr(1).setKs(1).setShininess(30)).setEmission(Color.BLACK));
+		
+		//scene.geometries.add(new Sphere(20,new Point3D(-200,100,-100)).setMaterial(new Material().setKr(0.9)));
+		
+		//endregion
+		
+		//region lamps Orthogonal
 		//new Point3D(d * -0.7+x, d * 0, d * 1.005+136)
 		Material materialLampsSpheres = new Material().setKd(0.33).setKs(1).setShininess(30).setKt(0.7);
 		Material materialLampsCylinder = new Material().setKd(1).setKs(0.6).setShininess(30).setKt(0);
 		Color emissionLampSphere = new Color(0,0,200);
 		
-		scene.geometries.add( new Box(new Point3D(d * 0.7, 0, d * 1.005),new Vector(0,0,120+1*d),new Vector(0,6,0),new Vector(1000,0,0))
+		scene.geometries.add( new Box(new Point3D(d * 0.7+20, 0, d * 1.005),new Vector(0,0,120+1*d),new Vector(0,6,0),new Vector(1000,0,0))
 		.setEmission(new Color(0,100,0)).setMaterial(new Material().setKd(0.7).setKs(0.5).setShininess(60)));
 //		scene.geometries.add(new Polygon(
 //				new Point3D(d * -0.7, 5, d * 1.005+136)
@@ -286,7 +335,7 @@ public class MP1Tests {
 				
 		//region scene build
 		scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
-		scene.setBackground(new Color(java.awt.Color.CYAN).scale(0.7));
+		//scene.setBackground(new Color(java.awt.Color.CYAN).scale(0.7));
 		scene.geometries.add(
 				r_wall,
 				l_wall,
@@ -298,7 +347,7 @@ public class MP1Tests {
 		);
 		
 		scene.lights.add(new DirectionalLight(
-				new Color(java.awt.Color.WHITE).scale(0.1),
+				new Color(java.awt.Color.WHITE).scale(0.10),
 				new Vector(1, -1, -1)
 		));
 		//endregion
@@ -312,32 +361,32 @@ public class MP1Tests {
 		render.renderImage();
 		render.writeToImage();
 		
-//		coolCamera.setRaysSampling(900);
-//
-//		imageWriter = new ImageWriter("final image with ray sampling 30", 600, 600);
-//		render = new Render() //
-//				.setImageWriter(imageWriter) //
-//				.setCamera(coolCamera) //
-//				.setRayTracer(new RayTracerBasic(scene));
-//
-//		render.renderImage();
-//		render.writeToImage();
-//
-		
-//		Camera DOFCamera = new Camera(new Point3D(1000, 130, 1000), new Vector(-1000, -100, -1000), new Vector(-1, 20, -1));
-//
-//		DOFCamera.MoveCamera(new Point3D(1000, 160, 1000), new Point3D(-15,50,0),0); //
-//		DOFCamera.setVpSize(28, 28).setVpDistance(100);
-//		DOFCamera.setSamplingDepth(4*4).setFocalPlaneDist(new Point3D(1000, 130, 1000).distance(Point3D.ZERO)).setApertureSize(13);
-//
-//		imageWriter = new ImageWriter("final image with DOF", 600, 600);
-//		render = new Render() //
-//				.setImageWriter(imageWriter) //
-//				.setCamera(DOFCamera) //
-//				.setRayTracer(new RayTracerBasic(scene));
-//
-//		render.renderImage();
-//		render.writeToImage();
+		coolCamera.setRaysSampling(19*19);
+
+		imageWriter = new ImageWriter("final image with ray sampling", 600, 600);
+		render = new Render() //
+				.setImageWriter(imageWriter) //
+				.setCamera(coolCamera) //
+				.setRayTracer(new RayTracerBasic(scene));
+
+		render.renderImage();
+		render.writeToImage();
+
+
+		Camera DOFCamera = new Camera(new Point3D(1000, 130, 1000), new Vector(-1000, -100, -1000), new Vector(-1, 20, -1));
+
+		DOFCamera.MoveCamera(new Point3D(1000, 160, 1000), new Point3D(-15,50,0),0); //
+		DOFCamera.setVpSize(28, 28).setVpDistance(100);
+		DOFCamera.setSamplingDepth(19*19).setFocalPlaneDist(new Point3D(1000, 130, 1000).distance(Point3D.ZERO)).setApertureSize(13);
+
+		imageWriter = new ImageWriter("final image with DOF", 600, 600);
+		render = new Render() //
+				.setImageWriter(imageWriter) //
+				.setCamera(DOFCamera) //
+				.setRayTracer(new RayTracerBasic(scene));
+
+		render.renderImage();
+		render.writeToImage();
 	}
 	
 	/**
