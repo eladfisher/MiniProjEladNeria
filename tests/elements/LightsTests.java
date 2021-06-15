@@ -12,21 +12,35 @@ import scene.Scene;
  * @author Dan
  */
 public class LightsTests {
-    private Scene scene1 = new Scene("Test scene");
-    private Scene scene2 = new Scene("Test scene") //
+    /**
+     * scene1 for testing
+     */private Scene scene1 = new Scene("Test scene");
+    /**
+     * scene2 for testing
+     */private Scene scene2 = new Scene("Test scene") //
             .setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
-    private Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+    /**
+     * camera1 for testing
+     */private Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
             .setVpSize(150, 150) //
             .setVpDistance(1000);
-    private Camera camera2 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+    /**
+     * camera2 for testing
+     */private Camera camera2 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
             .setVpSize(200, 200) //
             .setVpDistance(1000);
 
-    private static Geometry triangle1 = new Triangle( //
+    /**
+     * static triangle1 for testing
+     */private static Geometry triangle1 = new Triangle( //
             new Point3D(-150, -150, -150), new Point3D(150, -150, -150), new Point3D(75, 75, -150));
-    private static Geometry triangle2 = new Triangle( //
+    /**
+     * static triangle2 for testing
+     */private static Geometry triangle2 = new Triangle( //
             new Point3D(-150, -150, -150), new Point3D(-70, 70, -50), new Point3D(75, 75, -150));
-    private static Geometry sphere = new Sphere(50, new Point3D(0, 0, -50)) //
+    /**
+     * static sphere for testing
+     */private static Geometry sphere = new Sphere(50, new Point3D(0, 0, -50)) //
             .setEmission(new Color(java.awt.Color.BLUE)) //
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
 

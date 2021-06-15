@@ -15,8 +15,10 @@ import primitives.Vector;
  * when in the entire space there is the same direction and intensity.
  */
 public class DirectionalLight extends Light implements LightSource {
-	
-	private Vector direction;
+
+	/**
+	 * the direction of the Light (that why its called directional light, because it have direction)
+	 */private Vector direction;
 	
 	/**
 	 * Builds a directional light object given its position and direction.
@@ -40,8 +42,11 @@ public class DirectionalLight extends Light implements LightSource {
 	}
 	
 	/**
-	 * @param point
-	 * @return
+	 * method for getting the distance between point and lightSource.
+	 * the point is that directional light doesn't depend on distance so we don't need to do any calculation.
+	 *
+	 * @param point the point we want to get the distance to.
+	 * @return Double.POSITIVE_INFINITY. because directional light doesn't have real place.
 	 */
 	@Override
 	public double getDistance(Point3D point) {

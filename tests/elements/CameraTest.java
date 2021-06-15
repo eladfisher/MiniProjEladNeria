@@ -60,6 +60,10 @@ public class CameraTest {
 
     }
 
+    /**
+     * Test Method for
+     * {@link elements.Camera#lookAt(Point3D, Vector)}
+     */
     @Test
     void lookAtTest() {
         Scene scene = new Scene("Test scene");
@@ -183,8 +187,12 @@ public class CameraTest {
         render.writeToImage();
     }
 
+    /**
+     * Test Method for
+     * {@link elements.Camera#rotateCameraAroundVto(double)}
+     */
     @Test
-    void rotateCameraAroundVto() {
+    void rotateCameraAroundVtoTest() {
         Scene scene = new Scene("Test scene");
 
         Material wall_m = new Material().setKd(1).setKs(1).setShininess(30).setKt(0);
@@ -305,13 +313,14 @@ public class CameraTest {
 
         render.renderImage();
         render.writeToImage();
-
-
-
     }
 
+    /**
+     * Test Method for
+     * {@link elements.Camera#MoveCamera(Point3D, Point3D, double)}
+     */
     @Test
-    void moveCamera() {
+    void moveCameraTest() {
         Scene scene = new Scene("Test scene");
 
         Material wall_m = new Material().setKd(1).setKs(1).setShininess(30).setKt(0);
