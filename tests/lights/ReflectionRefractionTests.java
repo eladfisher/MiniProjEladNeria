@@ -17,6 +17,9 @@ import java.util.*;
  * @author dzilb
  */
 public class ReflectionRefractionTests {
+    /**
+     * the scene object for the tests of this class
+     */
     private Scene scene = new Scene("Test scene");
 
     /**
@@ -333,8 +336,11 @@ public class ReflectionRefractionTests {
         render.renderImage();
         render.writeToImage();
     }
-
-
+    
+    
+    /**
+     * a test for checking if cylinder and boxes are working fine
+     */
     @Test
     public void BoxCylinder_ImageTest() {
         Material ground_m = new Material().setKd(0.2).setKs(0).setShininess(0).setKt(0).setKr(0.8);
@@ -382,8 +388,11 @@ public class ReflectionRefractionTests {
         render.renderImage();
         render.writeToImage();
     }
-
-
+    
+    
+    /**
+     * create a image of a chess board
+     */
     @Test
     public void Fetcher_ImageTest() {
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.01));

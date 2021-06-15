@@ -15,6 +15,9 @@ import java.util.*;
  */
 public class MP1Tests {
 	
+	/**
+	 * Depth Of Field tests. create 2 pictures of spheres with and without DoF to check the differences
+	 */
 	@Test
 	public void DepthOfFieldTests()
 	{
@@ -58,7 +61,9 @@ public class MP1Tests {
 		
 	}
 	
-	
+	/**
+	 * super sampling tests. create 2 pictures of spheres with and without anti aliasing to check the differences
+	 */
 	@Test
 	public void SuperSamplingTest() {
 		Scene scene1 = new Scene("AntiAliasing");
@@ -111,6 +116,7 @@ public class MP1Tests {
 	
 	/**
 	 * build an image of a house and sun with very smooth and reflective ground
+	 * with other geometries for the check of the final image
 	 */
 	@Test
 	public void WOW_ImageTest() {

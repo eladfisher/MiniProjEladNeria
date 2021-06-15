@@ -18,10 +18,20 @@ import scene.Scene;
  */
 
 public class ShadowTests {
+	/**
+	 * the scene for the tests in this class
+	 */
 	private Scene scene = new Scene("Test scene");
+	
+	/**
+	 * the camera for this class tests
+	 */
 	private Camera camera = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
 			.setVpSize(200, 200).setVpDistance(1000);
-
+	
+	/**
+	 * the sphere for the tests with the shadowing
+	 */
 	Sphere sphereTest = (Sphere) new Sphere(60, new Point3D(0, 0, -200)) //
 			.setEmission(new Color(java.awt.Color.BLUE)) //
 			.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30));//
