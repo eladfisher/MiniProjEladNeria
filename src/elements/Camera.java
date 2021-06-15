@@ -461,7 +461,7 @@ public class Camera {
 	 */
 	private List<Ray> createDepthOfFieldRays(Point3D pij, Ray ray) {
 		
-		//calc the focal point
+		//calc the focal  point
 		Point3D focalPoint = focalPlane.findIntersections(ray).get(0);
 		
 		//calc the edges of the aperture
