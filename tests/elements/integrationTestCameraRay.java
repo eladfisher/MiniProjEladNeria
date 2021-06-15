@@ -7,6 +7,9 @@ import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for the integration between Camera and the rayTracer
+ */
 class integrationTestCameraRay {
 	
 	/**

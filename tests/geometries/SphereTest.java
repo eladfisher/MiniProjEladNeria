@@ -9,6 +9,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for Sphere
+ */
 class SphereTest {
     /**
      * Test method for {@link Sphere#getNormal(Point3D)}    (primitives.Sphere)}.

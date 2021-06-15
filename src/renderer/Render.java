@@ -74,7 +74,6 @@ public class Render {
 			c = c.add(_rayTracerBase.traceRay(r));
 		}
 
-
 		return c.reduce(rays.size());
 	}
 
@@ -88,7 +87,13 @@ public class Render {
 		
 		int nX = _imageWriter.getNx();
 		int nY = _imageWriter.getNy();
-		
+
+
+		/* for each pixel in the image we need to get is color,
+		 * so we going over each pixel and trace the rays we need to trace (according to what we need for DoF and SS),
+		 * and then we calculate (in another function) the color that each ray return,
+		 * and calculate the average color for the pixel.
+		 */
 		for (int i = 0; i < nX; ++i)
 			for (int j = 0; j < nY; ++j)
 			{

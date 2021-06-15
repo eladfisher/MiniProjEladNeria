@@ -15,26 +15,44 @@ import static primitives.Util.*;
  * the use of this class is to use camera in order to render a scene
  */
 public class Camera {
-	private Point3D point3D;
-	
 	/**
-	 * blablabla
-	 */
-	private Vector vTo;
-	private Vector vUp;
-	private Vector vRight;
-	
-	private double height;
-	private double width;
-	private double distance;
-	
-	double apertureSize;
-	double focalPlaneDist = 0;
-	
-	int samplingDepth = 1;
-	
-	
-	int raysSampling = 1;
+	 * pont3D: the point in the space that the camera placed.
+	 */private Point3D point3D;
+
+	/**
+	 * vTo: vector Toward, the camera direction
+	 */private Vector vTo;
+	/**
+	 * vUp: vector Up, the camera up direction, must be orthogonal to vTo
+	 */private Vector vUp;
+	/**
+	 * vRight: vector Right, the camera right direction, its just cross product of vTo and vUp
+	 */private Vector vRight;
+
+	/**
+	 * height: the height of the view plane
+	 */private double height;
+	/**
+	 * width: the width of the view plane
+	 */private double width;
+	/**
+	 * distance: the distance between the camera (point3D) and the view plane
+	 */private double distance;
+
+	/**
+	 * apertureSize: the size of the aperture, for Depth of field.
+	 */double apertureSize;
+	/**
+	 * focalPlaneDist: the distance between the view plane to the focal plane (for DoF).
+	 * this is bad planning, we should do it with plane instead.
+	 */double focalPlaneDist = 0;
+	/**
+	 * samplingDepth: num of rays we want to trace from the Camera for DoF.
+	 */int samplingDepth = 1;
+
+	/**
+	 * raysSampling: num of rays we want to trace from the Camera for Ray Sampling.
+	 */int raysSampling = 1;
 	
 	/**
 	 * ctor that gets all the data required for the camera
@@ -447,7 +465,10 @@ public class Camera {
 		
 		//get points on the aperture
 		List<Point3D> gridPoints = generatePointsInPixel(samplingDepth, ru, rd, lu, ld);
-		
+
+		/**
+		 * a beam of rays that go through the pixel and intersect the focal point.
+		 */
 		List<Ray> r = new LinkedList<Ray>();
 		r.add(ray);
 		
@@ -466,7 +487,7 @@ public class Camera {
 	 * @param pixel       the pixel to create rays trough it
 	 * @param pixelHeight the height of a pixel
 	 * @param pixelWidth  the width of the poxel
-	 * @return
+	 * @return list of the race we should trace for ray sampling
 	 */
 	private List<Ray> createRaySampling(Point3D pixel, double pixelHeight, double pixelWidth) {
 		//find the 4 corners of the pixel
@@ -474,8 +495,10 @@ public class Camera {
 		Point3D rd = pixel.add(vUp.scale(-pixelHeight / 2)).add(vRight.scale(pixelWidth / 2));
 		Point3D lu = pixel.add(vUp.scale(pixelHeight / 2)).add(vRight.scale(-pixelWidth / 2));
 		Point3D ld = pixel.add(vUp.scale(-pixelHeight / 2)).add(vRight.scale(-pixelWidth / 2));
-		
-		
+
+		/**
+		 * the list
+		 */
 		List<Ray> res = new LinkedList<>();
 		
 		List<Point3D> pointsInPixel = generatePointsInPixel(raysSampling, ru, rd, lu, ld);

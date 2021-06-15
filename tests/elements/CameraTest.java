@@ -61,7 +61,7 @@ public class CameraTest {
     }
 
     @Test
-    void lookAt() {
+    void lookAtTest() {
         Scene scene = new Scene("Test scene");
 
         Material wall_m = new Material().setKd(1).setKs(1).setShininess(30).setKt(0);

@@ -7,12 +7,16 @@ import primitives.Color;
  * It contains the field intensity that means the intensity and the color of the light.
  */
 abstract class Light {
+	/**
+	 * Color of the Light
+	 * its called intensity because its include the intensity
+	 */
 	protected Color intensity;
 	
 	/**
 	 * this is an abstract constructors which determines once and for all what the color of the light source is.
 	 *
-	 * @param intensity
+	 * @param intensity Color of the Light
 	 */
 	protected Light(Color intensity) {
 		this.intensity = intensity;

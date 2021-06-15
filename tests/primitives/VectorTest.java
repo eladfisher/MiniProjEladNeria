@@ -8,7 +8,9 @@ import static primitives.Util.isZero;
 
 import primitives.Vector;
 
-
+/**
+ * Test class for Vector
+ */
 class VectorTest {
 
     /**
