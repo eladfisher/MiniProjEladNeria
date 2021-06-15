@@ -14,11 +14,11 @@ class integrationTestCameraRay {
 	
 	/**
 	 * private func only for ex 4 that return the number of the intersection points of the camera and the geometries
-	 * @param camera
-	 * @param geometries
-	 * @param nX
-	 * @param nY
-	 * @return
+	 * @param camera the camera
+	 * @param geometries the geometries
+	 * @param nX x of the pixel we on it
+	 * @param nY y of the pixel we on it
+	 * @return num of intersection.
 	 */
 	int getNomIntersectPoints(Camera camera,Geometries geometries,int nX,int nY)
 	{
