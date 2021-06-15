@@ -8,7 +8,24 @@ import static java.lang.Math.sqrt;
  * a class of 3D point in the 3D dimensional for graphic scenes
  */
 public class Point3D {
-	Coordinate x, y, z;
+	/**
+	 * the X coordinate
+	 */
+	Coordinate x;
+	
+	/**
+	 * the Y coordinate
+	 */
+	Coordinate y;
+	
+	/**
+	 * the Z coordinate
+	 */
+	Coordinate z;
+	
+	/**
+	 * the Point ZERO
+	 */
 	static public final Point3D ZERO = new Point3D(0, 0, 0);
 	
 	/**
@@ -92,6 +109,11 @@ public class Point3D {
 		return sqrt(distanceSquared(otherPoint));
 	}
 	
+	/**
+	 * check if the objects are equals
+	 * @param o the other object
+	 * @return true if equals
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -104,7 +126,7 @@ public class Point3D {
 	/**
 	 * to sring func for debug only
 	 *
-	 * @return
+	 * @return the string for debug
 	 */
 	@Override
 	public String toString() {
@@ -115,14 +137,26 @@ public class Point3D {
 				'}';
 	}
 	
+	/**
+	 * the getter of the X coordinate
+	 * @return the Z coordinate
+	 */
 	public double getX() {
 		return x.coord;
 	}
 	
+	/**
+	 * the getter of the Y coordinate
+	 * @return the Y coordinate
+	 */
 	public double getY() {
 		return y.coord;
 	}
 	
+	/**
+	 * the getter of the Z coordinate
+	 * @return the Z coordinate
+	 */
 	public double getZ() {
 		return z.coord;
 	}

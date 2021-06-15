@@ -90,8 +90,11 @@ public class Polygon extends Geometry {
 				throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
 		}
 	}
-
-
+	
+	/**
+	 * create a polygon by the vertex
+	 * @param _vertices the vertex of the polygon
+	 */
 	public Polygon(List<Point3D> _vertices) {
 		if (_vertices.size() < 3)
 			throw new IllegalArgumentException("A polygon can't have less than 3 vertices");
@@ -135,7 +138,12 @@ public class Polygon extends Geometry {
 				throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
 		}
 	}
-
+	
+	/**
+	 * get the normal at point
+	 * @param point the point to get the normal
+	 * @return the noraml at p
+	 */
 	@Override
 	public Vector getNormal(Point3D point) {
 		return plane.getNormal();
@@ -201,12 +209,22 @@ public class Polygon extends Geometry {
 		intersectionList.get(0).geometry=this;
 		return intersectionList;
 	}
-
+	
+	/**
+	 * determine if a point is on the plane
+	 * @param p the point
+	 * @return true if on plane
+	 */
 	public boolean onPlane(Point3D p)
 	{
 		return plane.onPlane(p);
 	}
-
+	
+	/**
+	 * rotate the point around a vector
+	 * @param u the vector to rotate
+	 * @param a the degree in radians
+	 */
 	public void rotateAroundVector(Vector u, double a)
 	{
 		List<Point3D> ap = new LinkedList<>();
@@ -217,7 +235,12 @@ public class Polygon extends Geometry {
 		vertices = ap;
 		plane = new Plane(vertices.get(0),vertices.get(1),vertices.get(2));
 	}
-
+	
+	/**
+	 * rotate the point around a ray
+	 * @param r the ray to rotate
+	 * @param a the degree in radians
+	 */
 	public void rotateAroundRay(Ray r, double a)
 	{
 		List<Point3D> ap = new LinkedList<>();

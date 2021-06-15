@@ -6,7 +6,10 @@ import java.util.Objects;
  * a class of 3D Vector in the 3D dimensional for graphic scenes
  */
 public class Vector {
-
+    
+    /**
+     * the head point of the vector
+     */
     Point3D head;
 
     /**
@@ -183,7 +186,7 @@ public class Vector {
 
     /**
      * to string for debug use only
-     * @return
+     * @return the data for debug only
      */
     @Override
     public String toString() {

@@ -10,10 +10,29 @@ import java.util.*;
  * full pdo object that represents a scene with geometries in the 3D world
  */
 public class Scene {
+	/**
+	 * the scene name
+	 */
 	public String name;
+	
+	/**
+	 * the scene background color
+	 */
 	public Color background;
+	
+	/**
+	 * the scene ambient light
+	 */
 	public AmbientLight ambientLight;
+	
+	/**
+	 * the scene geometries list
+	 */
 	public Geometries geometries;
+	
+	/**
+	 * the scene lights list
+	 */
 	public List<LightSource> lights;
 
 	/**
@@ -31,9 +50,9 @@ public class Scene {
 
 	//region Chain Setters
 	/**
-	 *
-	 * @param background
-	 * @return
+	 * setter for the background color of the scene
+	 * @param background the new
+	 * @return the same instance for chaining method
 	 */
 	public Scene setBackground(Color background) {
 		this.background = background;
@@ -42,9 +61,9 @@ public class Scene {
 	}
 
 	/**
-	 *
-	 * @param ambientLight
-	 * @return
+	 * setter for the ambient light of the scene
+	 * @param ambientLight  the new ambient light of the scene
+	 * @return the same instance for chaining method
 	 */
 	public Scene setAmbientLight(AmbientLight ambientLight) {
 		this.ambientLight = ambientLight;
@@ -53,9 +72,9 @@ public class Scene {
 	}
 
 	/**
-	 *
-	 * @param geometries
-	 * @return
+	 * setter for the geometries of the scene
+	 * @param geometries the new geometries of the scene
+	 * @return the same instance for chaining method
 	 */
 	public Scene setGeometries(Geometries geometries) {
 		this.geometries = geometries;
@@ -64,9 +83,9 @@ public class Scene {
 	}
 
 	/**
-	 *
-	 * @param lights
-	 * @return
+	 * setter for the lights of the scene
+	 * @param lights the new lights of the scene
+	 * @return the same instance for chaining method
 	 */
 	public Scene setLights(List<LightSource> lights) {
 		this.lights = lights;

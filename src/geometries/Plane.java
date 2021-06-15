@@ -13,8 +13,15 @@ import static primitives.Util.isZero;
  * a class of Plane for a 3D graphic model
  */
 public class Plane extends Geometry{
-
+    
+    /**
+     * the normal to the plane
+     */
     Vector normal;
+    
+    /**
+     * the point on the plane
+     */
     Point3D planePoint;
 
     /**
@@ -54,13 +61,13 @@ public class Plane extends Geometry{
 
     /**
      * getter for the normal field
-     * @return
+     * @return the normal
      */
     public  Vector getNormal(){return normal ;}
 
     /**
      * to string for debug use only
-     * @return
+     * @return the string for debug
      */
     @Override
     public String toString() {
@@ -107,8 +114,12 @@ public class Plane extends Geometry{
 
         return List.of(new GeoPoint(this,point));
     }
-
-
+    
+    /**
+     * check if the point is on the plane
+     * @param p the point p to check
+     * @return true if on plane
+     */
     public boolean onPlane(Point3D p)
     {
         if (p.equals(planePoint)) return true;

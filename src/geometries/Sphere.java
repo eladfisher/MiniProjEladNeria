@@ -18,7 +18,9 @@ public class Sphere extends Geometry {
  	 */
 	final Point3D p0;
 	
-	//the radius of the sphere
+	/**
+	 * the radius of the sphere
+	 */
 	final double radius;
 
 	/**
@@ -44,7 +46,7 @@ public class Sphere extends Geometry {
 	/**
 	 * getter for the radius of the sphere
 	 *
-	 * @return
+	 * @return the radious
 	 */
 	public double getRadius() {
 		return radius;
@@ -53,7 +55,7 @@ public class Sphere extends Geometry {
 	/**
 	 * to string for a debug use only
 	 *
-	 * @return
+	 * @return the string
 	 */
 	@Override
 	public String toString() {

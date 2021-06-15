@@ -34,7 +34,10 @@ class PlaneTest {
         assertTrue(planeNormal.equals(normal)||planeNormal.equals(rNormal), "ERROR: plane doesn't return the right normal");
 
     }
-
+    
+    /**
+     * test of the find intersection of a plane
+     */
     @Test
     void findIntersections() {
         Point3D p = new Point3D(1.526468642633,1.116078754799,1.000000000000);

@@ -12,9 +12,20 @@ import java.util.MissingResourceException;
  * renderer class that gets a scene and ray tracing object and the camera and render a image and write this to a file
  */
 public class Render {
+	
+	/**
+	 * the image writer of this renderer
+	 */
 	ImageWriter _imageWriter;
 	
+	/**
+	 * the camera to render the scene with
+	 */
 	Camera _camera;
+	
+	/**
+	 * the ray tracer that we use to render this scene
+	 */
 	RayTracerBase _rayTracerBase;
 	
 	//region Setters & Getters

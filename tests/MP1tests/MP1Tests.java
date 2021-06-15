@@ -416,12 +416,12 @@ public class MP1Tests {
 	}
 	
 	/**
-	 * TODO
-	 * @param head
-	 * @param lu
-	 * @param emission
-	 * @param material
-	 * @return
+	 *  create a pyramid
+	 * @param head the head
+	 * @param lu the left up corner
+	 * @param emission the emission
+	 * @param material the material
+	 * @return the pyramid
 	 */
 	public static Geometries PyramidMaker(Point3D head,Point3D lu, Color emission, Material material){
 		Point3D centerG = new Point3D(head.getX(),lu.getY(),head.getZ());

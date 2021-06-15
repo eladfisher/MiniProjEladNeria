@@ -16,13 +16,19 @@ import static primitives.Util.alignZero;
 public class RayTracerBasic extends RayTracerBase {
 
 	//region Constants
-	//
+	/**
+	 * the amount of times that we calc the global effect depth of the recursion
+	 */
 	private static final int MAX_CALC_COLOR_LEVEL = 10;
-
-	//
+	
+	/**
+	 * the initial discount factor for global effects
+	 */
 	private static final double INITIAL_K = 1.0;
-
-	//
+	
+	/**
+	 * the min discount factor value to add the color
+	 */
 	private static final double MIN_CALC_COLOR_K = 0.001;
 
 	//endregion
@@ -287,6 +293,7 @@ public class RayTracerBasic extends RayTracerBase {
 	 *
 	 * @param v the vector to the point
 	 * @param p the point to create
+	 * @param n the normal vector at the point
 	 * @return a refraction ray
 	 */
 	private Ray constructRefractedRay(Point3D p, Vector v, Vector n) {

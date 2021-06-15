@@ -12,6 +12,10 @@ import scene.Scene;
  * @author Dan
  */
 public class RenderTest {
+	
+	/**
+	 * the camera for tests of this class
+	 */
 	private Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)) //
 			.setVpDistance(100) //
 			.setVpSize(500, 500);

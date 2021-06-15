@@ -9,7 +9,10 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test class for ImageWriter
  */
 class ImageWriterTest {
-
+    
+    /**
+     * test to check that write to image is ok and several images create by the lecturer demands
+     */
     @Test
     void writeToImage() {
         ImageWriter iw = new ImageWriter("Pumba",800,500);

@@ -5,13 +5,26 @@ package primitives;
  ******************************************************************************/
 
 final public class Matrix {
-    private final int M;             // number of rows
-    private final int N;             // number of columns
-    private final double[][] data;   // M-by-N array
+    /**
+     * the rows of the matrix
+     */
+    private final int M;
+    
+    /**
+     * the columns of the matrix
+     */
+    private final int N;
+    
+    /**
+     *  // M-by-N array of the data
+     */
+    private final double[][] data;
     
     //region ctors
     /**
      * create M-by-N matrix of 0's
+     * @param M the rows of the matrix
+     * @param N the columns of the matrix
      */
     public Matrix(int M, int N) {
         this.M = M;

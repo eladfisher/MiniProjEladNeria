@@ -18,14 +18,34 @@ import java.util.logging.Logger;
  * @author Dan
  */
 public class ImageWriter {
+    /**
+     * the number of pixels in the X axis
+     */
     private int nX;
+    
+    /**
+     * the number of pixels in the Y axis
+     */
     private int nY;
-
+    
+    /**
+     * the path of the image folder
+     */
     private static final String FOLDER_PATH = System.getProperty("user.dir") + "/images";
-
+    
+    /**
+     * the buffed image
+     */
     private BufferedImage image;
+    
+    /**
+     * the image name
+     */
     private String imageName;
-
+    
+    /**
+     * logger for the image writer
+     */
     private Logger logger = Logger.getLogger("ImageWriter");
 
     // ***************** Constructors ********************** //

@@ -54,8 +54,11 @@ public class Tube extends Geometry {
         return radius;
     }
     //endregion
-
-
+    
+    /**
+     * debug method
+     * @return debug method
+     */
     @Override
     public String toString() {
         return "Tube{" +
@@ -63,7 +66,12 @@ public class Tube extends Geometry {
                 ", radius=" + radius +
                 '}';
     }
-
+    
+    /**
+     * get the normal
+     * @param point3D point on the geometry.
+     * @return the normal at p
+     */
     @Override
     public Vector getNormal(Point3D point3D) {
         double t = direction.getDirection().dotProduct(point3D.subtract(direction.getHead()));
@@ -76,9 +84,9 @@ public class Tube extends Geometry {
     }
 
     /**
-     *
-     * @param ray
-     * @return
+     * get the intersection of the tube and the ray
+     * @param ray that intersect
+     * @return list with the intersections
      */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
@@ -86,9 +94,9 @@ public class Tube extends Geometry {
     }
 
     /**
-     *
-     * @param ray
-     * @return
+     * get the intersection of the tube and the ray
+     * @param ray that intersect
+     * @return list with the intersections
      */
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
@@ -102,7 +110,7 @@ public class Tube extends Geometry {
      * from there.
      * @param ray the intersected ray
      * @param maxDistance the max distance
-     * @return
+     * @return the list of intersections
      */
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {

@@ -11,11 +11,20 @@ import static primitives.Util.isZero;
  * a class of 3D Ray in the 3D dimensional for graphic scenes
  */
 public class Ray {
-
+    
+    /**
+     * the head of the ray
+     */
     Point3D head;
+    
+    /**
+     * the direction of the ray
+     */
     Vector direction;
-
-    //the delta to move the head of the ray for shadowing
+    
+    /**
+     * the delta to move the head of the ray for shadowing
+     */
     private static final double DELTA = 0.1;
 
     /**
@@ -78,7 +87,7 @@ public class Ray {
     /**
      * to string function for debug use only
      *
-     * @return
+     * @return the string
      */
     @Override
     public String toString() {

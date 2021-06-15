@@ -9,9 +9,16 @@ import java.util.List;
  * a class that collect geometries
  */
 public class Geometries implements Intersectable {
-
+	
+	/**
+	 * list of the geometries
+	 */
 	List<Intersectable> geometries;
-
+	
+	/**
+	 * ctor that gets geometries for th collection
+	 * @param geometries the geometries of the collection
+	 */
 	public Geometries(Intersectable... geometries) {
 		this.geometries = new ArrayList<Intersectable>();
 
@@ -20,7 +27,11 @@ public class Geometries implements Intersectable {
 			this.geometries.add(geo);
 		}
 	}
-
+	
+	/**
+	 * add geometries to the collection
+	 * @param geometries the geometries to add
+	 */
 	public void add(Intersectable... geometries) {
 		for (Intersectable geo : geometries)
 		{

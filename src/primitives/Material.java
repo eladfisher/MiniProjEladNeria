@@ -8,26 +8,47 @@ package primitives;
  * -the transparency and reflection of the light
  */
 public class Material {
-    public double Kd, Ks;
-
-    public double kT,kR;
-
+    
+    /**
+     * the kd discount factor
+     */
+    public double Kd ;
+    
+    /**
+     * the ks discount factor
+     */
+    public double    Ks;
+    
+    /**
+     * the kt discount factor
+     */
+    public double kT ;
+    
+    /**
+     * the kr discount factor
+     */
+    public double   kR;
+    
+    /**
+     * the shaininess level of the material
+     */
     public int nShininess;
 
     /**
      *a ctor that initialized the fields of the material
      */
     public Material() {
-        Kd = 0; Ks = 0;
+    
+        
+        Kd = 0;
+    
+        
+        Ks = 0;
 
-        /**
-         *
-         */
+       
         kT=0;
 
-        /**
-         *
-         */
+        
         kR=0;
 
 
@@ -55,9 +76,9 @@ public class Material {
     }
 
     /**
-     *
-     * @param kd
-     * @return
+     * setter for the Kd discount factor
+     * @param kd the new Kd discount factor
+     * @return the same instance for chaining method
      */
     public Material setKd(double kd) {
         Kd = kd;
@@ -65,9 +86,9 @@ public class Material {
     }
 
     /**
-     *
-     * @param ks
-     * @return
+     * setter for the Ks discount factor
+     * @param ks the new Ks discount factor
+     * @return the same instance for chaining method
      */
     public Material setKs(double ks) {
         Ks = ks;
@@ -75,9 +96,9 @@ public class Material {
     }
 
     /**
-     *
-     * @param nShininess
-     * @return
+     * setter of the shininess value
+     * @param nShininess the new shininess value
+     * @return the same instance for chaining method
      */
     public Material setShininess(int nShininess) {
         this.nShininess = nShininess;

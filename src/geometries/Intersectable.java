@@ -13,16 +13,23 @@ import java.util.stream.Collectors;
 public interface Intersectable {
 
     /**
-     *
+     * full PDO of geo point:
+     * bind point and geometry
      */
     public static class GeoPoint {
+        /**
+         * the geometry of point
+         */
         public Geometry geometry;
+        /**
+         * the point on the geomtry
+         */
         public Point3D point;
 
         /**
-         *
-         * @param geometry
-         * @param point
+         *get a geo point if geometry
+         * @param geometry the geometry
+         * @param point the point
          */
         public GeoPoint(Geometry geometry, Point3D point) {
             this.geometry = geometry;
@@ -30,9 +37,9 @@ public interface Intersectable {
         }
 
         /**
-         *
-         * @param o
-         * @return
+         * check if the object are equals
+         * @param o the other object to compare
+         * @return true if equals
          */
         @Override
         public boolean equals(Object o) {

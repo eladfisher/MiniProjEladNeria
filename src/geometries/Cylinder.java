@@ -14,9 +14,19 @@ import static primitives.Util.alignZero;
  * a class of 3D Cylinder for a 3D graphic model
  */
 public class Cylinder extends Tube {
+    /**
+     * the height of the tube
+     */
     double height;
 
     // region Constructors
+    
+    /**
+     * ctor that make a cylinder
+     * @param direction of the cylinder
+     * @param radius of the cylinder
+     * @param height of the cylinder
+     */
     public Cylinder(Ray direction, double radius, double height) {
         super(direction, radius);
 
@@ -26,19 +36,35 @@ public class Cylinder extends Tube {
         }
         this.height = height;
     }
-
+    
+    /**
+     * make a cylinder by tube
+     * @param tube the base tube
+     * @param height of the cylinder
+     */
     public Cylinder(Tube tube, double height) {
         super(tube.direction, tube.radius);
         this.height = height;
     }
     //endregion
-
-
+    
+    
+    /**
+     * return the geo intersections of the cylinder
+     * @param ray to intersect
+     * @return the geo intersections of the cylinder
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         return super.findIntersections(ray);
     }
-
+    
+    /**
+     * return the geo intersections of the cylinder
+     * @param ray to intersect
+     * @param maxDistance to get the intersect point
+     * @return the geo intersections of the cylinder
+     */
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         List<GeoPoint> intersections = super.findGeoIntersections(ray, maxDistance);
@@ -98,11 +124,19 @@ public class Cylinder extends Tube {
 
         return intersections;
     }
-
+    
+    /**
+     * return the height of the cylinder
+     * @return  the height of the cylinder
+     */
     public double getHeight() {
         return height;
     }
-
+    
+    /**
+     * debug method
+     * @return debug method
+     */
     @Override
     public String toString() {
         return "Cylinder{" +
@@ -111,7 +145,12 @@ public class Cylinder extends Tube {
                 ", radius=" + radius +
                 '}';
     }
-
+    
+    /**
+     * get the noraml of the cylinder
+     * @param point3D the point to get the norma lof
+     * @return the noraml at p
+     */
     @Override
     public Vector getNormal(Point3D point3D) {
         //calc the 2 central points of the flat sides

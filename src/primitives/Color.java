@@ -14,9 +14,20 @@ public class Color {
      * whatever...
      */
     private double r = 0.0;
+    
+    /**
+     * the green value
+     */
     private double g = 0.0;
+    
+    /**
+     * the blue value
+     */
     private double b = 0.0;
-
+    
+    /**
+     * the black color
+     */
     public static final Color BLACK = new Color();
 
     /**
