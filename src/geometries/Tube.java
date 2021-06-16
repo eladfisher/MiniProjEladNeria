@@ -108,6 +108,9 @@ public class Tube extends Geometry {
      * http://hugi.scene.org/online/hugi24/coding%20graphics%20chris%20dragan%20raytracing%20shapes.htm
      *
      * from there.
+     *
+     * copied from Noam Drezner & Refael Goldstien
+     *
      * @param ray the intersected ray
      * @param maxDistance the max distance
      * @return the list of intersections
