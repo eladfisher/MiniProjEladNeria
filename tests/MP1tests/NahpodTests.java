@@ -24,7 +24,7 @@ public class NahpodTests {
      * @return boat
      */
     Geometries boatMaker(Point3D p, double a, double scale) {
-        Color c = new Color(java.awt.Color.WHITE).scale(0.6);
+        Color c = new Color(java.awt.Color.WHITE).scale(0.65);
         Material m = new Material().setKd(1).setKs(0);
         Ray up = new Ray(p, new Vector(0, 1, 0));
         Point3D head = p.add(new Vector(0, 12, 0).scale(scale)).rotated_AroundRay(up, a)
@@ -113,18 +113,84 @@ public class NahpodTests {
 
 
     /**
+     * lightBugMaker
+     * @param p place
+     * @param d direction
+     * @param scale scale
+     * @param f_wing front wing degrees
+     * @param b_wing back wing degrees
+     * @return light bug
+     */
+    Geometries lightBugMaker(Point3D p, Vector d, double scale, double f_wing, double b_wing)
+    {
+        Material bodyM = new Material().setKs(0.5).setKd(1).setShininess(70).setKr(0.05);
+        Color bodyC = Color.BLACK;
+        Material tailM = new Material().setKs(0.5).setKd(1).setKt(0.5);
+        Color tailC = new Color(java.awt.Color.YELLOW);
+        Material wingM = new Material().setKs(0.2).setKd(1).setKt(0.7);
+        Color wingC = new Color(java.awt.Color.PINK).scale(0.75);
+
+
+        d.normalize();
+        Vector hv = new Vector(1,0,0);
+        Vector x = d.crossProduct(hv);
+        Ray up = new Ray(p,x);
+        double cos_a = hv.dotProduct(d);
+        double a = -Math.acos(cos_a);
+        Point3D bodyP = p.add(new Vector(1.5,0,0).scale(scale)).rotated_AroundRay(up, a)
+                ,headP = p.add(new Vector(2.7,0,0).scale(scale)).rotated_AroundRay(up, a)
+                ,wcccl = p.add(new Vector(1.2,0,0).scale(scale)).rotated_AroundRay(up, a)
+                ,wcccr = p.add(new Vector(1.7,0,0).scale(scale)).rotated_AroundRay(up, a)
+
+                ,wfcll = p.add(new Vector(0.4,0,2.2).scale(scale)).rotated_AroundRay(up, a)
+                ,wfclr = p.add(new Vector(1.75,0,2.2).scale(scale)).rotated_AroundRay(up, a)
+                ,wffl  = p.add(new Vector(1,0,4).scale(scale)).rotated_AroundRay(up, a)
+
+                ,wfcrl = p.add(new Vector(1.35,0,2.1).scale(scale)).rotated_AroundRay(up, a)
+                ,wfcrr = p.add(new Vector(2.85,0,2).scale(scale)).rotated_AroundRay(up, a)
+                ,wffr  = p.add(new Vector(2,0,4.1).scale(scale)).rotated_AroundRay(up, a)
+
+                ,wbcll = p.add(new Vector(0.4,0,-2.2).scale(scale)).rotated_AroundRay(up, a)
+                ,wbclr = p.add(new Vector(1.75,0,-2.2).scale(scale)).rotated_AroundRay(up, a)
+                ,wbbl  = p.add(new Vector(1,0,-4).scale(scale)).rotated_AroundRay(up, a)
+
+                ,wbcrl = p.add(new Vector(1.35,0,-2.1).scale(scale)).rotated_AroundRay(up, a)
+                ,wbcrr = p.add(new Vector(2.85,0,-2).scale(scale)).rotated_AroundRay(up, a)
+                ,wbbr  = p.add(new Vector(2,0,-4.1).scale(scale)).rotated_AroundRay(up, a);
+
+        Sphere tail = (Sphere) new Sphere(1*scale,p).setEmission(tailC).setMaterial(tailM)
+                ,body = (Sphere) new Sphere(0.85*scale,bodyP).setEmission(bodyC).setMaterial(bodyM)
+                ,head = (Sphere) new Sphere(0.6*scale,headP).setEmission(bodyC).setMaterial(bodyM);
+        Polygon flWing = (Polygon) new Polygon(wcccl, wfcll, wffl, wfclr).setEmission(wingC).setMaterial(wingM)
+                ,frWing = (Polygon) new Polygon(wcccr, wfcrl, wffr, wfcrr).setEmission(wingC).setMaterial(wingM)
+                ,blWing = (Polygon) new Polygon(wcccl, wbcll, wbbl, wbclr).setEmission(wingC).setMaterial(wingM)
+                ,brWing = (Polygon) new Polygon(wcccr, wbcrl, wbbr, wbcrr).setEmission(wingC).setMaterial(wingM);
+
+        Ray axis = new Ray(p, d);
+        flWing.rotateAroundRay(axis,b_wing);
+        frWing.rotateAroundRay(axis,f_wing);
+        blWing.rotateAroundRay(axis,-b_wing);
+        brWing.rotateAroundRay(axis,-f_wing);
+
+        Geometries bug = new Geometries(tail, body,head,flWing,frWing,blWing,brWing);
+        return bug;
+    }
+
+
+    /**
      * boring
      */
     @Test
     public void maybeTest() {
         Scene scene = new Scene("test");
         Point3D centerPoint = Point3D.ZERO;
-        Point3D cameraP = centerPoint.add(new Vector(24, 5, 24).scale(1.3));
+        Point3D cameraP = centerPoint.add(new Vector(0,1,0).scale(55));
+        //Point3D cameraP = centerPoint.add(new Vector(24, 5.7, 24).scale(1.3));
         Vector up = new Vector(0, 1, 0);
         Camera coolCamera = new Camera(cameraP, new Vector(0, 0, 1), new Vector(0, 1, 0));
-        coolCamera.setVpDistance(10).setVpSize(13, 13);
-        //coolCamera.lookAt(centerPoint, new Vector(0,0,1));
-        coolCamera.lookAt(centerPoint.add(new Vector(24, 3, 24)), up);
+        coolCamera.setVpDistance(5).setVpSize(6.5, 6.5);
+        coolCamera.lookAt(centerPoint, new Vector(1,0,0));
+        //coolCamera.lookAt(centerPoint.add(new Vector(24, 3, 24)), up);
         scene.setAmbientLight(new AmbientLight(new Color(255, 255, 255), 0.1));
 
         //------------------------------> start here <------------------------------
@@ -141,7 +207,7 @@ public class NahpodTests {
         //region lake
         Material waterM = new Material().setKd(1).setKs(0.6).setKt(0.1).setKr(0.3);
         Color waterC = new Color(java.awt.Color.BLUE);
-        double Wd = 0.3;
+        double Wd = 0.05;
         Geometries lake = new Geometries(
                 new Cylinder(new Ray(centerPoint, up), 30, Wd).setEmission(waterC).setMaterial(waterM)
                 , new Cylinder(new Ray(centerPoint.add(new Vector(24, 0, -24)), up), 18, Wd).setEmission(waterC).setMaterial(waterM)
@@ -154,29 +220,38 @@ public class NahpodTests {
         //region stuff
         Point3D boatP = centerPoint.add(new Vector(24,0,24));
         Geometries boat = boatMaker(boatP,Math.PI/5,0.2);
+
         Geometries ducks = new Geometries(
                  duckMaker(centerPoint.add(new Vector(-4,1,6)),     0           ,3)
                 ,duckMaker(centerPoint.add(new Vector(-24,1,-24)),  -Math.PI/4   ,3)
                 ,duckMaker(centerPoint.add(new Vector(0,1,-18)),    -Math.PI/2   ,3)
                 ,duckMaker(centerPoint.add(new Vector(24,1,-24)),   -Math.PI/(4.0/3)   ,3));
+
+        Point3D[] bugsP = new Point3D[10];
+        bugsP[0] = boatP.add(new Vector(1,3,1));
+
+        Geometries bugs = new Geometries(
+                lightBugMaker(bugsP[0],new Vector(1,0,1),0.3,Math.PI/18,-Math.PI/18)
+        );
         //endregion
 
-        scene.geometries.add( ducks
+        scene.geometries.add(bugs
+                //,ducks
                 ,boat
                 ,lake
-                , sand
+                //, sand
         );
         scene.lights.add(
                 new DirectionalLight(new Color(java.awt.Color.WHITE).scale(0.3), new Vector(1, -1, -1))
         );
         //------------------------------> done here  <------------------------------
 
-        coolCamera.setFocalPlaneDist(cameraP.distance(boatP)-coolCamera.getDistance());
-        coolCamera.setApertureSize(0.4);
-        coolCamera.setSamplingDepth(16);
-        coolCamera.setRaysSampling(16);
+        //coolCamera.setFocalPlaneDist(cameraP.distance(boatP)-coolCamera.getDistance());
+        //coolCamera.setApertureSize(0.3);
+        //coolCamera.setSamplingDepth(16);
+        //coolCamera.setRaysSampling(16);
 
-        ImageWriter imageWriter = new ImageWriter("interesting", 600, 600);
+        ImageWriter imageWriter = new ImageWriter("interesting_bug", 600, 600);
 
         Render render = new Render()
                 .setImageWriter(imageWriter)
@@ -184,7 +259,7 @@ public class NahpodTests {
                 .setRayTracer(new RayTracerBasic(scene));
 
         render.renderImage();
-        //render.printGrid(30,new Color(java.awt.Color.RED));
+        render.printGrid(30,new Color(java.awt.Color.RED));
         render.writeToImage();
     }
 }
