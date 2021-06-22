@@ -364,7 +364,7 @@ public class MP1Tests {
 				.setCamera(coolCamera) //
 				.setRayTracer(new RayTracerBasic(scene));
 		
-		//render.setMultithreading(3).setDebugPrint();
+		render.setMultithreading(4).setDebugPrint();
 		render.renderImage();
 		render.writeToImage();
 		

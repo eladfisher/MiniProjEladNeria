@@ -157,7 +157,7 @@ public class Geometries extends Intersectable {
 		
 		int half = geometries.size()/2;
 		smaller.geometries.addAll(geometries.subList(0,half));
-		bigger.geometries.addAll(geometries.subList(half+1, geometries.size()));
+		bigger.geometries.addAll(geometries.subList(half, geometries.size()));
 		
 		if(bigger.geometries.size()==0||smaller.geometries.size()==0)
 		{
@@ -167,7 +167,8 @@ public class Geometries extends Intersectable {
 		bigger.BuildBoundingBoxHierarchy();
 		smaller.BuildBoundingBoxHierarchy();
 
-		
+		this.geometries = new LinkedList<>();
+		this.add(smaller,bigger);
 	
 	}
 	
