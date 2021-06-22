@@ -115,6 +115,16 @@ public class Plane extends Geometry{
         return List.of(new GeoPoint(this,point));
     }
     
+    @Override
+    public Point3D getMinPoint() {
+        return null;
+    }
+    
+    @Override
+    public Point3D getMaxPoint() {
+        return null;
+    }
+    
     /**
      * check if the point is on the plane
      * @param p the point p to check

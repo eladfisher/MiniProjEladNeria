@@ -1,6 +1,7 @@
 package geometries;
 
 
+import primitives.AABBBox;
 import primitives.Point3D;
 import primitives.Ray;
 
@@ -8,10 +9,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * a interface for a 3D graphic model that finds the intersection points between a shape to a ray
+ * a class for a 3D graphic model that finds the intersection points between a shape to a ray
  */
-public interface Intersectable {
-
+public abstract class Intersectable {
+    
+    
+    
+    /**
+     * the bounding box of the geometry
+     */
+    private  AABBBox boundaryBox;
+    
     /**
      * full PDO of geo point:
      * bind point and geometry
@@ -57,7 +65,7 @@ public interface Intersectable {
      * @param ray the intersect ray
      * @return a list with al the intersection points
      */
-    default List<Point3D> findIntersections(Ray ray) {
+    public List<Point3D> findIntersections(Ray ray) {
         var geoList = findGeoIntersections(ray);
         return geoList == null ? null
                 : geoList.stream().map(gp -> gp.point).collect(Collectors.toList());
@@ -68,7 +76,7 @@ public interface Intersectable {
      * @param ray the intersect ray
      * @return the list with the intersection geo point
      */
-    default List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
         return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
     }
 
@@ -78,7 +86,32 @@ public interface Intersectable {
      * @param maxDistance the max distance
      * @return a list with the intersected points
      */
-    List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
-
-
+    public abstract  List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
+    
+    /**
+     * getter for the min point of the boundary box
+     * @return the min point of the boundary box
+     */
+    public abstract Point3D getMinPoint();
+    
+    /**
+     * getter for the max point of the boundary box
+     * @return the max point of the boundary box
+     */
+    public abstract Point3D getMaxPoint();
+    
+    /**
+     * setter that build a boundary box around the geometry
+     */
+    public void setBoundingBox(){
+        boundaryBox = new AABBBox(getMinPoint(),getMaxPoint());
+    }
+    
+    /**
+     * getter for the bounding box
+     * @return the bounding box
+     */
+    public AABBBox getAABBBox(){
+        return boundaryBox;
+    }
 }

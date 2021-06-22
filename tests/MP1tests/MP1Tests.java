@@ -369,30 +369,30 @@ public class MP1Tests {
 		
 		coolCamera.setRaysSampling(19*19);
 
-		imageWriter = new ImageWriter("final image with ray sampling", 600, 600);
-		render = new Render() //
-				.setImageWriter(imageWriter) //
-				.setCamera(coolCamera) //
-				.setRayTracer(new RayTracerBasic(scene));
-
-		render.renderImage();
-		render.writeToImage();
-
-
-		Camera DOFCamera = new Camera(new Point3D(1000, 130, 1000), new Vector(-1000, -100, -1000), new Vector(-1, 20, -1));
-
-		DOFCamera.MoveCamera(new Point3D(1000, 160, 1000), new Point3D(-15,50,0),0); //
-		DOFCamera.setVpSize(28, 28).setVpDistance(100);
-		DOFCamera.setSamplingDepth(19*19).setFocalPlaneDist(new Point3D(1000, 130, 1000).distance(Point3D.ZERO)).setApertureSize(13);
-
-		imageWriter = new ImageWriter("final image with DOF", 600, 600);
-		render = new Render() //
-				.setImageWriter(imageWriter) //
-				.setCamera(DOFCamera) //
-				.setRayTracer(new RayTracerBasic(scene));
-
-		render.renderImage();
-		render.writeToImage();
+//		imageWriter = new ImageWriter("final image with ray sampling", 600, 600);
+//		render = new Render() //
+//				.setImageWriter(imageWriter) //
+//				.setCamera(coolCamera) //
+//				.setRayTracer(new RayTracerBasic(scene));
+//
+//		render.renderImage();
+//		render.writeToImage();
+//
+//
+//		Camera DOFCamera = new Camera(new Point3D(1000, 130, 1000), new Vector(-1000, -100, -1000), new Vector(-1, 20, -1));
+//
+//		DOFCamera.MoveCamera(new Point3D(1000, 160, 1000), new Point3D(-15,50,0),0); //
+//		DOFCamera.setVpSize(28, 28).setVpDistance(100);
+//		DOFCamera.setSamplingDepth(19*19).setFocalPlaneDist(new Point3D(1000, 130, 1000).distance(Point3D.ZERO)).setApertureSize(13);
+//
+//		imageWriter = new ImageWriter("final image with DOF", 600, 600);
+//		render = new Render() //
+//				.setImageWriter(imageWriter) //
+//				.setCamera(DOFCamera) //
+//				.setRayTracer(new RayTracerBasic(scene));
+//
+//		render.renderImage();
+//		render.writeToImage();
 	}
 	
 	/**
