@@ -345,7 +345,6 @@ public class MP1Tests {
 				r_wall,
 				l_wall,
 				b_wall,
-				f_wall,
 				door,
 				r_roof, l_roof,
 			ground
@@ -365,7 +364,7 @@ public class MP1Tests {
 				.setCamera(coolCamera) //
 				.setRayTracer(new RayTracerBasic(scene));
 		
-		render.setMultithreading(3).setDebugPrint();
+		//render.setMultithreading(3).setDebugPrint();
 		render.renderImage();
 		render.writeToImage();
 		

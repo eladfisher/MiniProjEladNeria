@@ -123,8 +123,7 @@ public class Geometries extends Intersectable {
 	@Override
 	public void setBoundingBox(){
 		
-		if (geometries.size()<=2)
-			return;
+		super.setBoundingBox();
 		
 		for (Intersectable g: geometries) {
 			g.setBoundingBox();
@@ -140,45 +139,25 @@ public class Geometries extends Intersectable {
 		
 		super.setBoundingBox();
 		
-		if (geometries.size()<=2)
+		if (geometries.size()<=4)
 			return;
 		
 		Geometries bigger = new Geometries();
 		Geometries smaller = new Geometries();
 		Vector axis = boundaryBox.getLongestAxis();
 		double middlePoint = boundaryBox.getMiddleAxisPoint();
-		double minDistance = Double.POSITIVE_INFINITY;
-		Intersectable closestGeometry = null;
 		
-		//make the partition of the geometries
-		for (Intersectable g: geometries) {
-			
-			double disToMid =g.boundaryBox.getMiddlePoint().subtract(Point3D.ZERO).dotProduct(axis);
-			
-			
-			
-			if(disToMid<minDistance)
-				minDistance = disToMid;
-			
-			if(disToMid > middlePoint)
-			{
-				bigger.add(g);
-			}
-			
-			else if (disToMid < middlePoint){
-				smaller.add(g);
-			}
-			
-			else{
-				if (smaller.geometries.size()==0)
-					smaller.geometries.add(g);
-					else
-						bigger.geometries.add(g);
-			}
+		geometries.sort((Intersectable g1, Intersectable g2) -> {//sorts the points according to the biggest axis
+			double sizea = g1.boundaryBox.getMiddlePoint().subtract(Point3D.ZERO).dotProduct(axis),
+					sizeb = g2.boundaryBox.getMiddlePoint().subtract(Point3D.ZERO).dotProduct(axis);
+			return Double.compare(sizea, sizeb);
+		});
 		
-			
-			
-		}
+		//double disToMid =g.boundaryBox.getMiddlePoint().subtract(Point3D.ZERO).dotProduct(axis);
+		
+		int half = geometries.size()/2;
+		smaller.geometries.addAll(geometries.subList(0,half));
+		bigger.geometries.addAll(geometries.subList(half+1, geometries.size()));
 		
 		if(bigger.geometries.size()==0||smaller.geometries.size()==0)
 		{
