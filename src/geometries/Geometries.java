@@ -4,6 +4,8 @@ import primitives.Point3D;
 import primitives.Ray;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -34,10 +36,7 @@ public class Geometries extends Intersectable {
 	 * @param geometries the geometries to add
 	 */
 	public void add(Intersectable... geometries) {
-		for (Intersectable geo : geometries)
-		{
-			this.geometries.add(geo);
-		}
+		this.geometries.addAll(Arrays.asList(geometries));
 	}
 
 
@@ -67,11 +66,58 @@ public class Geometries extends Intersectable {
 	
 	@Override
 	public Point3D getMinPoint() {
-		return null;
+		List<Point3D> minPs = new LinkedList<>();
+		for (Intersectable g :
+				geometries) {
+			minPs.add(g.getMinPoint());
+		}
+
+
+		double   x = Double.POSITIVE_INFINITY
+				,y = Double.POSITIVE_INFINITY
+				,z = Double.POSITIVE_INFINITY;
+		for (Point3D p :
+				minPs) {
+			if(p.getX()<x)
+				x=p.getX();
+			if(p.getY()<y)
+				y=p.getY();
+			if(p.getZ()<z)
+				z=p.getZ();
+		}
+
+		return new Point3D(x,y,z);
 	}
 	
 	@Override
 	public Point3D getMaxPoint() {
-		return null;
+		List<Point3D> maxPs = new LinkedList<>();
+		for (Intersectable g :
+				geometries) {
+			maxPs.add(g.getMaxPoint());
+		}
+
+
+		double   x = Double.NEGATIVE_INFINITY
+				,y = Double.NEGATIVE_INFINITY
+				,z = Double.NEGATIVE_INFINITY;
+		for (Point3D p :
+				maxPs) {
+			if(p.getX()>x)
+				x=p.getX();
+			if(p.getY()>y)
+				y=p.getY();
+			if(p.getZ()>z)
+				z=p.getZ();
+		}
+
+		return new Point3D(x,y,z);
+	}
+
+	@Override
+	public void setBoundingBox(){
+		for (Intersectable g: geometries) {
+			g.setBoundingBox();
+		}
 	}
 }

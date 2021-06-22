@@ -130,13 +130,38 @@ public class Box extends Geometry  {
     
     @Override
     public Point3D getMinPoint() {
-        return null;
+        double   x = Double.POSITIVE_INFINITY
+                ,y = Double.POSITIVE_INFINITY
+                ,z = Double.POSITIVE_INFINITY;
+        for (Point3D p :
+                getPoints()) {
+            if(p.getX()<x)
+                x=p.getX();
+            if(p.getY()<y)
+                y=p.getY();
+            if(p.getZ()<z)
+                z=p.getZ();
+        }
+
+        return new Point3D(x,y,z);
     }
     
     @Override
     public Point3D getMaxPoint() {
-        return null;
-    }
+        double x = Double.NEGATIVE_INFINITY
+                ,y = Double.NEGATIVE_INFINITY
+                ,z = Double.NEGATIVE_INFINITY;
+        for (Point3D p :
+                getPoints()) {
+            if(p.getX()>x)
+                x=p.getX();
+            if(p.getY()>y)
+                y=p.getY();
+            if(p.getZ()>z)
+                z=p.getZ();
+        }
+
+        return new Point3D(x,y,z);    }
     
     /**
      * the getter for the material field
@@ -207,5 +232,24 @@ public class Box extends Geometry  {
                 corners) {
             p.rotateAroundRay(r,a);
         }
+    }
+
+    /**
+     * func, mainly for boundary box.
+     * @return list of the corner points.
+     */
+    public List<Point3D> getPoints()
+    {
+        List<Point3D> l = new ArrayList<Point3D>(8);
+        l.add(p);
+        l.add(p.add(vw));
+        l.add(p.add(vd));
+        l.add(p.add(vh));
+        l.add(p.add(vw).add(vd));
+        l.add(p.add(vd).add(vh));
+        l.add(p.add(vh).add(vw));
+        l.add(p.add(vh).add(vw).add(vd));
+
+        return l;
     }
 }

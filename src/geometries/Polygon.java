@@ -149,8 +149,6 @@ public class Polygon extends Geometry {
 		return plane.getNormal();
 	}
 
-
-
 	/**
 	 * find the intersection geo point
 	 * @param ray the intersected ray
@@ -212,12 +210,38 @@ public class Polygon extends Geometry {
 	
 	@Override
 	public Point3D getMinPoint() {
-		return null;
+		double 	 x = Double.POSITIVE_INFINITY
+				,y = Double.POSITIVE_INFINITY
+				,z = Double.POSITIVE_INFINITY;
+		for (Point3D p :
+				vertices) {
+			if(p.getX()<x)
+				x=p.getX();
+			if(p.getY()<y)
+				y=p.getY();
+			if(p.getZ()<z)
+				z=p.getZ();
+		}
+
+		return new Point3D(x,y,z);
 	}
 	
 	@Override
 	public Point3D getMaxPoint() {
-		return null;
+		double x = Double.NEGATIVE_INFINITY
+				,y = Double.NEGATIVE_INFINITY
+				,z = Double.NEGATIVE_INFINITY;
+		for (Point3D p :
+				vertices) {
+			if(p.getX()>x)
+				x=p.getX();
+			if(p.getY()>y)
+				y=p.getY();
+			if(p.getZ()>z)
+				z=p.getZ();
+		}
+
+		return new Point3D(x,y,z);
 	}
 	
 	/**

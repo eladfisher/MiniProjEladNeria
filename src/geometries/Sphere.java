@@ -161,11 +161,11 @@ public class Sphere extends Geometry {
 	
 	@Override
 	public Point3D getMinPoint() {
-		return null;
+		return new Point3D(p0.getX()-radius,p0.getY()-radius, p0.getZ()-radius);
 	}
 	
 	@Override
 	public Point3D getMaxPoint() {
-		return null;
+		return new Point3D(p0.getX()+radius,p0.getY()+radius, p0.getZ()+radius);
 	}
 }

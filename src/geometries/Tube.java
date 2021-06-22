@@ -37,7 +37,6 @@ public class Tube extends Geometry {
     }
 
     //region Getters
-
     /**
      * getter for the direction.
      * @return the direction.
@@ -102,7 +101,6 @@ public class Tube extends Geometry {
     public List<GeoPoint> findGeoIntersections(Ray ray) {
         return null;
     }
-
 
     /**
      * http://hugi.scene.org/online/hugi24/coding%20graphics%20chris%20dragan%20raytracing%20shapes.htm

@@ -179,4 +179,27 @@ public class Cylinder extends Tube {
 
         return super.getNormal(point3D);
     }
+
+    @Override
+    public Point3D getMinPoint() {
+        Point3D h = super.direction.getHead()
+                ,t = super.direction.getHead().add(super.direction.getDirection().scale(height));
+        double r = super.radius;
+        double   x = Math.min((h.getX() - r), (t.getX() - r))
+                ,y = Math.min((h.getY() - r), (t.getY() - r))
+                ,z = Math.min((h.getZ() - r), (t.getZ() - r));
+
+        return new Point3D(x,y,z);
+    }
+
+    @Override
+    public Point3D getMaxPoint() {
+        Point3D h = super.direction.getHead()
+                ,t = super.direction.getHead().add(super.direction.getDirection().scale(height));
+        double r = super.radius;
+        double   x = Math.max((h.getX() + r), (t.getX() + r))
+                ,y = Math.max((h.getY() + r), (t.getY() + r))
+                ,z = Math.max((h.getZ() + r), (t.getZ() + r));
+
+        return new Point3D(x,y,z);    }
 }
