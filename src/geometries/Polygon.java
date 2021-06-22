@@ -210,6 +210,16 @@ public class Polygon extends Geometry {
 		return intersectionList;
 	}
 	
+	@Override
+	public Point3D getMinPoint() {
+		return null;
+	}
+	
+	@Override
+	public Point3D getMaxPoint() {
+		return null;
+	}
+	
 	/**
 	 * determine if a point is on the plane
 	 * @param p the point

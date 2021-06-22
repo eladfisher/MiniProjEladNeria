@@ -1,14 +1,11 @@
 package geometries;
 
-import primitives.Color;
-import primitives.Material;
-import primitives.Point3D;
-import primitives.Vector;
+import primitives.*;
 
 /**
  * a interface of Geometry for a 3D graphic model
  */
-public abstract class Geometry implements Intersectable {
+public abstract class Geometry extends Intersectable {
 	/**
 	 * every geometry in the universe have a color, called emission.
 	 * in the test we get we saw that they called it emmission so we did that too:)
@@ -18,7 +15,8 @@ public abstract class Geometry implements Intersectable {
 	 * the material that tell us how the Geometry Color depend on external light sources and other geometries.
 	 */
 	private Material material;
-
+	
+	
 	/**
 	 * Constructor for every geometry that set the color to be black and the material to the default.
 	 */
@@ -44,6 +42,7 @@ public abstract class Geometry implements Intersectable {
 		this.material = material;
 		return this;
 	}
+	
 
 	/**
 	 * getter for the emission light
@@ -71,4 +70,6 @@ public abstract class Geometry implements Intersectable {
 	 * @return the normal to the geometry in this point.
 	 */
 	public abstract Vector getNormal(Point3D point3D);
+	
+	
 }

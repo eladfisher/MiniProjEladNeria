@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.Point3D;
 import primitives.Ray;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.List;
 /**
  * a class that collect geometries
  */
-public class Geometries implements Intersectable {
+public class Geometries extends Intersectable {
 	
 	/**
 	 * list of the geometries
@@ -62,5 +63,15 @@ public class Geometries implements Intersectable {
 		}
 
 		return res;
+	}
+	
+	@Override
+	public Point3D getMinPoint() {
+		return null;
+	}
+	
+	@Override
+	public Point3D getMaxPoint() {
+		return null;
 	}
 }

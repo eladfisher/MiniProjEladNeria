@@ -127,7 +127,17 @@ public class Box extends Geometry  {
 
         return res;
     }
-
+    
+    @Override
+    public Point3D getMinPoint() {
+        return null;
+    }
+    
+    @Override
+    public Point3D getMaxPoint() {
+        return null;
+    }
+    
     /**
      * the getter for the material field
      * @return the material field

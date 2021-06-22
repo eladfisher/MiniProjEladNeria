@@ -158,4 +158,14 @@ public class Sphere extends Geometry {
 
 		return null;
 	}
+	
+	@Override
+	public Point3D getMinPoint() {
+		return null;
+	}
+	
+	@Override
+	public Point3D getMaxPoint() {
+		return null;
+	}
 }
