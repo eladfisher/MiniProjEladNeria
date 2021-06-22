@@ -4,6 +4,7 @@ import primitives.*;
 import primitives.Ray;
 import scene.Scene;
 
+
 /**
  * an abstract class for the ray tracer that support with the action(s) of:
  * a.trace ray
