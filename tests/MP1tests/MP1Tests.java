@@ -184,7 +184,7 @@ public class MP1Tests {
 		).setEmission(wall_c)
 				.setMaterial(wall_f);
 		
-		f_wall.add(f_wallLeft,f_wallUp,f_wallRight);
+		scene.geometries.add(f_wallLeft,f_wallUp,f_wallRight);
 		
 		
 		//endregion
@@ -216,17 +216,17 @@ public class MP1Tests {
 				setEmission(new Color(java.awt.Color.DARK_GRAY)).
 				setMaterial(new Material().setKr(0.2).setKd(1).setKs(0.7));
 		
-		Geometries smoke = new Geometries();
+		
 		
 		for (int i = 0; i < 10; ++i)
 		{
-			smoke.add(
+			scene.geometries.add(
 					new Sphere(6+3.5*i,
 							   new Point3D(24,124,-20).add(new Vector(i*i*4,0.01+i*15,0))).setMaterial(new Material().setKt(0.7).setKs(0))
 			);
 		}
 		
-		scene.geometries.add(chimney,smoke);
+		scene.geometries.add(chimney);
 		scene.lights.add(new PointLight(new Color(700,400,250),new Point3D(0,100,0)).setKl(0.0001).setKc(1).setKq(0.0002));
 		//endregion
 		
@@ -255,13 +255,12 @@ public class MP1Tests {
 		Point3D pyramid1Head = new Point3D(-120,150,90);
 		
 		Material pyramidMaterial = new Material().setKd(0.5).setKs(0.001).setShininess(30).setKt(0.6);
-		Geometries pyramid1 = PyramidMaker(pyramid1Head,new Point3D(-50,0,20),new Color(255,215,0).scale(0.5),pyramidMaterial);
+		PyramidMaker(pyramid1Head,new Point3D(-50,0,20),new Color(255,215,0).scale(0.5),pyramidMaterial,scene.geometries);
 		
 		Sphere sphereInPyramid1 = (Sphere) new Sphere(20, pyramid1Head.add(new Vector(0,-50,0))) //
 				.setEmission(new Color(java.awt.Color.CYAN)) //
 				.setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(40).setKt(0.65));
 		
-		scene.geometries.add(pyramid1) ;
 		scene.geometries.add(sphereInPyramid1);
 		scene.lights.add(new PointLight(new Color(700, 400, 400).scale(1),pyramid1Head.add(new Vector(0,-20,0))).setKl(4E-5).setKq(0.00001));
 //		//scene.lights.add(new SpotLight(new Color(700, 400, 400).scale(1),pyramid1Head.add(new Vector(0,-30,0)),new Vector(0,-1,0)).setKl(4E-5).setKq(2E-7));
@@ -352,6 +351,8 @@ public class MP1Tests {
 			ground
 		);
 		
+		scene.geometries.setBoundingBox();
+		
 		scene.lights.add(new DirectionalLight(
 				new Color(java.awt.Color.WHITE).scale(0.10),
 				new Vector(1, -1, -1)
@@ -364,6 +365,7 @@ public class MP1Tests {
 				.setCamera(coolCamera) //
 				.setRayTracer(new RayTracerBasic(scene));
 		
+		render.setMultithreading(3).setDebugPrint();
 		render.renderImage();
 		render.writeToImage();
 		
@@ -423,7 +425,7 @@ public class MP1Tests {
 	 * @param material the material
 	 * @return the pyramid
 	 */
-	public static Geometries PyramidMaker(Point3D head,Point3D lu, Color emission, Material material){
+	public static void PyramidMaker(Point3D head,Point3D lu, Color emission, Material material,Geometries geometriesList){
 		Point3D centerG = new Point3D(head.getX(),lu.getY(),head.getZ());
 		Vector rd_v = centerG.subtract(lu);
 		Point3D rd = centerG.add(rd_v);
@@ -431,11 +433,11 @@ public class MP1Tests {
 		Point3D ru = new Point3D(rd.getX(),centerG.getY(),lu.getZ());
 		
 		
-		Geometries res = new Geometries(new Triangle(head,lu,ld).setEmission(emission).setMaterial(material),
+		geometriesList.add(new Triangle(head,lu,ld).setEmission(emission).setMaterial(material),
 										new Triangle(head,ld,rd).setEmission(emission).setMaterial(material),
 										new Triangle(rd,ru,head).setEmission(emission).setMaterial(material),
 										new Triangle(ru,lu,head).setEmission(emission).setMaterial(material));
 		
-		return res;
+		
 	}
 }

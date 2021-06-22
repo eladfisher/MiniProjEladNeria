@@ -98,6 +98,11 @@ public class Sphere extends Geometry {
 	 */
 	@Override
 	public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+		
+		if(boundaryBox!=null)
+			if(!boundaryBox.isIntersect(ray))
+				return null;
+		
 		Point3D p0 = ray.getHead();
 		Vector v = ray.getDirection();
 		Point3D o = this.p0;

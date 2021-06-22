@@ -156,6 +156,11 @@ public class Polygon extends Geometry {
 	 */
 	@Override
 	public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+		
+		if(boundaryBox!=null)
+			if(!boundaryBox.isIntersect(ray))
+				return null;
+		
 		//the intersection points will be get by the super function.
 		List<GeoPoint> intersectionList = plane.findGeoIntersections(ray,maxDistance);
 

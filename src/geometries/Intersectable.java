@@ -18,7 +18,7 @@ public abstract class Intersectable {
     /**
      * the bounding box of the geometry
      */
-    private  AABBBox boundaryBox;
+    protected AABBBox boundaryBox;
     
     /**
      * full PDO of geo point:

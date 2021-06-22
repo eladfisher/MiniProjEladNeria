@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.Point3D;
 import primitives.Ray;
+import primitives.Vector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,6 +49,11 @@ public class Geometries extends Intersectable {
 	 */
 	@Override
 	public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+		
+		if(boundaryBox!=null)
+			if(!boundaryBox.isIntersect(ray))
+				return null;
+		
 		List<GeoPoint> res = null;
 
 		for (Intersectable i : geometries)
@@ -116,8 +122,74 @@ public class Geometries extends Intersectable {
 
 	@Override
 	public void setBoundingBox(){
+		
+		if (geometries.size()<=2)
+			return;
+		
 		for (Intersectable g: geometries) {
 			g.setBoundingBox();
 		}
+		
+		BuildBoundingBoxHierarchy();
 	}
+	
+	/**
+	 * build the bounding box tree hierarchy
+	 */
+	public void BuildBoundingBoxHierarchy(){
+		
+		super.setBoundingBox();
+		
+		if (geometries.size()<=2)
+			return;
+		
+		Geometries bigger = new Geometries();
+		Geometries smaller = new Geometries();
+		Vector axis = boundaryBox.getLongestAxis();
+		double middlePoint = boundaryBox.getMiddleAxisPoint();
+		double minDistance = Double.POSITIVE_INFINITY;
+		Intersectable closestGeometry = null;
+		
+		//make the partition of the geometries
+		for (Intersectable g: geometries) {
+			
+			double disToMid =g.boundaryBox.getMiddlePoint().subtract(Point3D.ZERO).dotProduct(axis);
+			
+			
+			
+			if(disToMid<minDistance)
+				minDistance = disToMid;
+			
+			if(disToMid > middlePoint)
+			{
+				bigger.add(g);
+			}
+			
+			else if (disToMid < middlePoint){
+				smaller.add(g);
+			}
+			
+			else{
+				if (smaller.geometries.size()==0)
+					smaller.geometries.add(g);
+					else
+						bigger.geometries.add(g);
+			}
+		
+			
+			
+		}
+		
+		if(bigger.geometries.size()==0||smaller.geometries.size()==0)
+		{
+			System.out.println("bigger or smaller is 0");
+		}
+		
+		bigger.BuildBoundingBoxHierarchy();
+		smaller.BuildBoundingBoxHierarchy();
+
+		
+	
+	}
+	
 }

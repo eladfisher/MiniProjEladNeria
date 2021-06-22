@@ -67,6 +67,11 @@ public class Cylinder extends Tube {
      */
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+    
+        if(boundaryBox!=null)
+            if(!boundaryBox.isIntersect(ray))
+                return null;
+        
         List<GeoPoint> intersections = super.findGeoIntersections(ray, maxDistance);
 
         Point3D p0 = direction.getHead();

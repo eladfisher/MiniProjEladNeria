@@ -115,6 +115,10 @@ public class Tube extends Geometry {
      */
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+        if(boundaryBox!=null)
+            if(!boundaryBox.isIntersect(ray))
+                return null;
+        
         Vector d = ray.getDirection();
         Vector v = direction.getDirection();
         double dv = d.dotProduct(v);
@@ -174,13 +178,14 @@ public class Tube extends Geometry {
         return intersections;
     }
     
+    
     @Override
     public Point3D getMinPoint() {
-        return null;
+        return new Point3D(Double.NEGATIVE_INFINITY,Double.NEGATIVE_INFINITY,Double.NEGATIVE_INFINITY);
     }
     
     @Override
     public Point3D getMaxPoint() {
-        return null;
+        return new Point3D(Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY);
     }
 }

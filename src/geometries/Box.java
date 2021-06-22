@@ -77,7 +77,6 @@ public class Box extends Geometry  {
         corners[5] = (Polygon) new Polygon(h, h.add(_vd), h.add(_vd).add(_vh), h.add(_vh)).setEmission(new Color(java.awt.Color.white)).setMaterial(new Material().setKd(1));
     }
 
-
     /**
      * getter for the Center of the box.
      *

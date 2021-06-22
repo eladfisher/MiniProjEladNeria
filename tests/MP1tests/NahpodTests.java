@@ -236,10 +236,10 @@ public class NahpodTests {
         //endregion
 
         scene.geometries.add(bugs
-                //,ducks
+                ,ducks
                 ,boat
                 ,lake
-                //, sand
+                , sand
         );
         scene.lights.add(
                 new DirectionalLight(new Color(java.awt.Color.WHITE).scale(0.3), new Vector(1, -1, -1))
@@ -252,7 +252,7 @@ public class NahpodTests {
         //coolCamera.setRaysSampling(16);
 
         ImageWriter imageWriter = new ImageWriter("interesting_bug", 600, 600);
-
+        scene.geometries.setBoundingBox();
         Render render = new Render()
                 .setImageWriter(imageWriter)
                 .setCamera(coolCamera) //
