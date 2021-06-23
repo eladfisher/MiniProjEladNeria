@@ -86,7 +86,7 @@ public class Plane extends Geometry{
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         
         Point3D p0 = ray.getHead();
-        Vector v = ray.getDirection();
+        Vector v =  ray.getDirection();
 
         Vector n = normal;
 
