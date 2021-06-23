@@ -28,15 +28,44 @@ public class Render {
 	 */
 	RayTracerBase _rayTracerBase;
 	
-	
+	/**
+	 * the amount of threads to render the image
+	 */
 	private int threadsCount = 1;
-	private final int SPARE_THREADS = 2; // Spare threads if trying to use all the cores
-	private boolean print = false; // printing progress percentage
 	
+	/**
+	 * Spare threads if trying to use all the cores
+	 */
+	private final int SPARE_THREADS = 2;
+	
+	/**
+	 * printing progress percentage
+	 */
+	private boolean print = false;
+	
+	/**
+	 * the resource error in case of missing resource
+	 */
 	private static final String RESOURCE_ERROR = "Renderer resource not set";
+	
+	/**
+	 * the resource class in case of missing resource
+	 */
 	private static final String RENDER_CLASS = "Render";
+	
+	/**
+	 * the image writer component
+	 */
 	private static final String IMAGE_WRITER_COMPONENT = "Image writer";
+	
+	/**
+	 * the camera component
+	 */
 	private static final String CAMERA_COMPONENT = "Camera";
+	
+	/**
+	 * the ray tracer
+	 */
 	private static final String RAY_TRACER_COMPONENT = "Ray tracer";
 	
 	/**
@@ -76,13 +105,45 @@ public class Render {
 	 *
 	 */
 	private class Pixel {
+		
+		/**
+		 * the amount of pixel rows
+		 */
 		private long maxRows = 0;
+		
+		/**
+		 *	the amount of pixel columns
+		 */
 		private long maxCols = 0;
+		
+		/**
+		 * the amount of pixels in the VB
+		 */
 		private long pixels = 0;
+		
+		/**
+		 * the row of the asked pixel
+		 */
 		public volatile int row = 0;
+		
+		/**
+		 * the col of the asked pixel
+		 */
 		public volatile int col = -1;
+		
+		/**
+		 * of all the pixels
+		 */
 		private long counter = 0;
+		
+		/**
+		 * the percents of complete
+		 */
 		private int percents = 0;
+		
+		/**
+		 * the amount of pixels that have to be given to get another 1% of complete
+		 */
 		private long nextCounter = 0;
 		
 		/**

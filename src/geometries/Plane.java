@@ -85,10 +85,6 @@ public class Plane extends Geometry{
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         
-        if(boundaryBox!=null)
-            if(!boundaryBox.isIntersect(ray))
-            return null;
-        
         Point3D p0 = ray.getHead();
         Vector v = ray.getDirection();
 
@@ -120,11 +116,19 @@ public class Plane extends Geometry{
         return List.of(new GeoPoint(this,point));
     }
     
+    /**
+     * getter for the min point of the boundary box
+     * @return the min point of the boundary box
+     */
     @Override
     public Point3D getMinPoint() {
         return new Point3D(Double.NEGATIVE_INFINITY,Double.NEGATIVE_INFINITY,Double.NEGATIVE_INFINITY);
     }
     
+    /**
+     * getter for the max point of the boundary box
+     * @return the max point of the boundary box
+     */
     @Override
     public Point3D getMaxPoint() {
         return new Point3D(Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY);

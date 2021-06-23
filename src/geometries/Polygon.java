@@ -213,6 +213,10 @@ public class Polygon extends Geometry {
 		return intersectionList;
 	}
 	
+	/**
+	 * getter for the min point of the boundary box
+	 * @return the min point of the boundary box
+	 */
 	@Override
 	public Point3D getMinPoint() {
 		double 	 x = Double.POSITIVE_INFINITY
@@ -231,6 +235,10 @@ public class Polygon extends Geometry {
 		return new Point3D(x,y,z);
 	}
 	
+	/**
+	 * getter for the max point of the boundary box
+	 * @return the max point of the boundary box
+	 */
 	@Override
 	public Point3D getMaxPoint() {
 		double x = Double.NEGATIVE_INFINITY

@@ -32,40 +32,53 @@ public class AABBBox {
 	 */
 	public boolean isIntersect(Ray r){
 		
-		// Smits’ method
+		// the algorithm is smith' method
+		
+		
 		double tmin, tmax, tymin, tymax, tzmin, tzmax;
 		
 		
 		
-		if (r.direction.head.x.coord >= 0) {
+		//if the x coordinate of the head is bigger than 0 so the min point actually closer to the ray head
+		if (r.direction.head.getX() >= 0) {
 			tmin = (minPoint.getX() - r.head.getX()) / r.direction.head.getX();
 			tmax = (maxPoint.getX() - r.head.getX()) / r.direction.head.getX();
 		}
+		//else, if the x coordinate of the ray direction is negative the smaller t value will be the value of the max point because
+		// divide by negative number will switch between the big and the small values
+		//for ex: 4/3 is bigger than 2/3, but 4/-3 is smaller than 2/-3
 			else {
 				tmin = (maxPoint.getX() - r.head.getX()) / r.direction.head.getX();
 				tmax = (minPoint.getX() - r.head.getX()) / r.direction.head.getX();
 			}
-			
-			if (r.direction.head.y.coord >= 0) {
+		
+		//if the y coordinate of the head is bigger than 0 so the min point actually closer to the ray head
+			if (r.direction.head.getY() >= 0) {
 				tymin = (minPoint.getY() - r.head.getY()) / r.direction.head.getY();
 				tymax = (maxPoint.getY() - r.head.getY()) / r.direction.head.getY();
 			}
 			
+			//else, if the y coordinate of the ray direction is negative the smaller t value will be the value of the max point because
+			// divide by negative number will switch between the big and the small values
+			//for ex: 4/3 is bigger than 2/3, but 4/-3 is smaller than 2/-3
 			else {
 				tymin = (maxPoint.getY() - r.head.getY()) / r.direction.head.getY();
 				tymax = (minPoint.getY() - r.head.getY()) / r.direction.head.getY();
 			}
 			
+			//check if the ty is not in the same values as tmin and tmax
 			if ( (tmin > tymax) || (tymin > tmax) )
 				return false;
 			
+			//if they Overlap find the new values of the tmin and tmax
 			if (tymin > tmin)
 				tmin = tymin;
 			
 			if (tymax < tmax)
 				tmax = tymax;
 			
-			if (r.direction.head.z.coord >= 0) {
+			//does the same with the Z coordinate as x,y
+			if (r.direction.head.getZ() >= 0) {
 				tzmin = (minPoint.getZ() - r.head.z.coord) / r.direction.head.getZ();
 				tzmax = (maxPoint.getZ() - r.head.z.coord) / r.direction.head.getZ();
 			}
@@ -75,12 +88,10 @@ public class AABBBox {
 				tzmax = (minPoint.getZ() - r.head.getZ()) / r.direction.head.getZ();
 			}
 			
+			
+			//check if tz is overlap with the common part of tx and ty
 			if ( (tmin > tzmax) || (tzmin > tmax) )
 				return false;
-		
-		
-		if ( (tymin > tzmax) || (tzmin > tymax) )
-			return false;
 			
 			return true;
 		
@@ -108,9 +119,11 @@ public class AABBBox {
 		double y = maxPoint.getY()-minPoint.getY();
 		double z = maxPoint.getZ()-minPoint.getZ();
 		
+		//find the max length axis
 		double max = Math.max(x,y);
 		max = Math.max(max,z);
 		
+		//return the vector of this axis
 		if(max == x)
 			return new Vector(1,0,0);
 		
@@ -125,7 +138,9 @@ public class AABBBox {
 	 * @return the middle point of the longest axis
 	 */
 	public double getMiddleAxisPoint(){
-		//TODO
+		//return the middle point of the longest axis
+		//the vector of direction is normalized so it has 1 in the coordinate of the
+		// longest axis and this make the dot product left only the value of the longest axis
 		return getMiddlePoint().subtract(Point3D.ZERO).dotProduct(getLongestAxis());
 	}
 }

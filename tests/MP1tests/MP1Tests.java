@@ -363,21 +363,25 @@ public class MP1Tests {
 				.setImageWriter(imageWriter) //
 				.setCamera(coolCamera) //
 				.setRayTracer(new RayTracerBasic(scene));
-		
-		render.setMultithreading(4).setDebugPrint();
-		render.renderImage();
-		render.writeToImage();
-		
-		coolCamera.setRaysSampling(19*19);
-
-//		imageWriter = new ImageWriter("final image with ray sampling", 600, 600);
-//		render = new Render() //
-//				.setImageWriter(imageWriter) //
-//				.setCamera(coolCamera) //
-//				.setRayTracer(new RayTracerBasic(scene));
 //
+//		render.setMultithreading(3).setDebugPrint();
 //		render.renderImage();
 //		render.writeToImage();
+//
+		
+		coolCamera.setRaysSampling(19*19);
+		imageWriter = new ImageWriter("final image with ray sampling and time improvements", 600, 600);
+		render = new Render() //
+				.setImageWriter(imageWriter) //
+				.setCamera(coolCamera) //
+				.setRayTracer(new RayTracerBasic(scene));
+		
+		
+		scene.geometries.setBoundingBox();
+		render.setMultithreading(3).setDebugPrint();
+
+		render.renderImage();
+		render.writeToImage();
 //
 //
 //		Camera DOFCamera = new Camera(new Point3D(1000, 130, 1000), new Vector(-1000, -100, -1000), new Vector(-1, 20, -1));
@@ -422,7 +426,7 @@ public class MP1Tests {
 	 * @param lu the left up corner
 	 * @param emission the emission
 	 * @param material the material
-	 * @return the pyramid
+	 * @param geometriesList the geometries list that the walls should be added to
 	 */
 	public static void PyramidMaker(Point3D head,Point3D lu, Color emission, Material material,Geometries geometriesList){
 		Point3D centerG = new Point3D(head.getX(),lu.getY(),head.getZ());

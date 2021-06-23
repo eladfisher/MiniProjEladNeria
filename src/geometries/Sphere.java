@@ -46,7 +46,7 @@ public class Sphere extends Geometry {
 	/**
 	 * getter for the radius of the sphere
 	 *
-	 * @return the radious
+	 * @return the radius
 	 */
 	public double getRadius() {
 		return radius;
@@ -164,13 +164,21 @@ public class Sphere extends Geometry {
 		return null;
 	}
 	
+	/**
+	 * find the min point
+	 * @return the min point of the sphere
+	 */
 	@Override
 	public Point3D getMinPoint() {
-		return new Point3D(p0.getX()-radius,p0.getY()-radius, p0.getZ()-radius);
+		return p0.add(new Vector(-radius,-radius,-radius));
 	}
 	
+	/**
+	 * find the max point
+	 * @return the max point of the sphere
+	 */
 	@Override
 	public Point3D getMaxPoint() {
-		return new Point3D(p0.getX()+radius,p0.getY()+radius, p0.getZ()+radius);
+		return p0.add(new Vector(radius,radius,radius));
 	}
 }
