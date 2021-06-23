@@ -107,7 +107,7 @@ public class Tube extends Geometry {
      *
      * from there.
      *
-     * copied from Noam Drezner & Refael Goldstien
+     * copied from Noam Drezner and Refael Goldstien
      *
      * @param ray the intersected ray
      * @param maxDistance the max distance

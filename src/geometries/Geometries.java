@@ -181,15 +181,13 @@ public class Geometries extends Intersectable {
 		
 		//double disToMid =g.boundaryBox.getMiddlePoint().subtract(Point3D.ZERO).dotProduct(axis);
 		
+		//the partition of the geometries
 		int half = geometries.size() / 2;
 		smaller.geometries.addAll(geometries.subList(0, half));
 		bigger.geometries.addAll(geometries.subList(half, geometries.size()));
 		
-		if (bigger.geometries.size() == 0 || smaller.geometries.size() == 0)
-		{
-			System.out.println("bigger or smaller is 0");
-		}
 		
+		//the recursive call for each part
 		bigger.BuildBoundingBoxHierarchy();
 		smaller.BuildBoundingBoxHierarchy();
 		

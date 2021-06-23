@@ -19,7 +19,7 @@ public abstract class Util {
     /**
      * double store format (bit level): seee eeee eeee (1.)mmmm � mmmm
      *     // 1 bit sign, 11 bits exponent, 53 bits (52 stored) normalized mantissa
-     *     // the number is m+2^e where 1<=m<2
+     *     // the number is m+2^e where 1 less or equal m less 2
      *     // NB: exponent is stored "normalized" (i.e. always positive by adding 1023)
      * @param num  the  number to get the exp of
      * @return doubleToRawLongBits: "convert" the stored number to set of bits
