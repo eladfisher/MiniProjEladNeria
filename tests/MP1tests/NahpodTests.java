@@ -7,13 +7,20 @@ import primitives.*;
 import primitives.Vector;
 import renderer.*;
 import scene.Scene;
-
 import java.util.*;
 
 /**
  * MY TEST. Don't touch it fisher.
  */
 public class NahpodTests {
+    class Pair<K,V>{
+        public K Key;
+        public V Val;
+        public Pair(K k, V v) {
+            Key = k;
+            Val = v;
+        }
+    }
 
     /**
      * helpful
@@ -65,8 +72,7 @@ public class NahpodTests {
      * @param scale scale
      * @return duck
      */
-    Geometries duckMaker(Point3D p, double a, double scale)
-    {
+    Geometries duckMaker(Point3D p, double a, double scale) {
         Color bodyC = new Color(java.awt.Color.WHITE).scale(0.6);
         Material bodyM = new Material().setKd(1).setKs(0);
         Color noseC = new Color(255,69,0);
@@ -121,12 +127,12 @@ public class NahpodTests {
      * @param b_wing back wing degrees
      * @return light bug
      */
-    Geometries lightBugMaker(Point3D p, Vector d, double scale, double f_wing, double b_wing)
-    {
+    Pair<Geometries, LightSource> lightBugMaker(Point3D p, Vector d, double scale, double f_wing, double b_wing) {
         Material bodyM = new Material().setKs(0.5).setKd(1).setShininess(70).setKr(0.05);
         Color bodyC = Color.BLACK;
         Material tailM = new Material().setKs(0.5).setKd(1).setKt(0.5);
         Color tailC = new Color(java.awt.Color.YELLOW);
+        Color tail_lC = new Color(java.awt.Color.WHITE).scale(0.3);
         Material wingM = new Material().setKs(0.2).setKd(1).setKt(0.7);
         Color wingC = new Color(java.awt.Color.PINK).scale(0.75);
 
@@ -173,7 +179,8 @@ public class NahpodTests {
         brWing.rotateAroundRay(axis,-f_wing);
 
         Geometries bug = new Geometries(tail, body,head,flWing,frWing,blWing,brWing);
-        return bug;
+        LightSource tail_l = new PointLight(tail_lC, p);
+        return new Pair<>(bug, tail_l);
     }
 
 
@@ -184,13 +191,13 @@ public class NahpodTests {
     public void maybeTest() {
         Scene scene = new Scene("test");
         Point3D centerPoint = Point3D.ZERO;
-        Point3D cameraP = centerPoint.add(new Vector(0,1,0).scale(55));
-        //Point3D cameraP = centerPoint.add(new Vector(24, 5.7, 24).scale(1.3));
+        //Point3D cameraP = centerPoint.add(new Vector(0,1,0).scale(55));
+        Point3D cameraP = centerPoint.add(new Vector(24, 5.7, 24).scale(1.3));
         Vector up = new Vector(0, 1, 0);
         Camera coolCamera = new Camera(cameraP, new Vector(0, 0, 1), new Vector(0, 1, 0));
         coolCamera.setVpDistance(5).setVpSize(6.5, 6.5);
-        coolCamera.lookAt(centerPoint, new Vector(1,0,0));
-        //coolCamera.lookAt(centerPoint.add(new Vector(24, 3, 24)), up);
+        //coolCamera.lookAt(centerPoint, new Vector(1,0,0));
+        coolCamera.lookAt(centerPoint.add(new Vector(24, 3, 24)), up);
         scene.setAmbientLight(new AmbientLight(new Color(255, 255, 255), 0.1));
 
         //------------------------------> start here <------------------------------
@@ -222,44 +229,60 @@ public class NahpodTests {
         Geometries boat = boatMaker(boatP,Math.PI/5,0.2);
 
         Geometries ducks = new Geometries(
-                 duckMaker(centerPoint.add(new Vector(-4,1,6)),     0           ,3)
+                 duckMaker(centerPoint.add(new Vector(10,1,20)),     0           ,3)
                 ,duckMaker(centerPoint.add(new Vector(-24,1,-24)),  -Math.PI/4   ,3)
                 ,duckMaker(centerPoint.add(new Vector(0,1,-18)),    -Math.PI/2   ,3)
                 ,duckMaker(centerPoint.add(new Vector(24,1,-24)),   -Math.PI/(4.0/3)   ,3));
 
-        Point3D[] bugsP = new Point3D[10];
-        bugsP[0] = boatP.add(new Vector(1,3,1));
+        List<Point3D> bugsP = new ArrayList<>();
+        bugsP.add(centerPoint.add(new Vector(-20,3,5)));
+        bugsP.add(centerPoint.add(new Vector(-2,7,-10)));
+        bugsP.add(centerPoint.add(new Vector(3,5,6)));
+        bugsP.add(centerPoint.add(new Vector(20,2,-20)));
+        bugsP.add(centerPoint.add(new Vector(28,5,26)));
 
-        Geometries bugs = new Geometries(
-                lightBugMaker(bugsP[0],new Vector(1,0,1),0.3,Math.PI/18,-Math.PI/18)
-        );
+        List<Pair<Geometries, LightSource>> bugs = new ArrayList<>();
+        for (Point3D p : bugsP) {
+            bugs.add(lightBugMaker(p, new Vector(1, 0, 1), 0.2, Math.PI / 18, -Math.PI / 18));
+        }
+
+        Geometries bugsG = new Geometries();
+        for (Pair<Geometries, LightSource> b:bugs)
+        {
+            bugsG.add(b.Key);
+        }
         //endregion
 
-        scene.geometries.add(bugs
+        scene.geometries.add(bugsG
                 ,ducks
                 ,boat
                 ,lake
-                , sand
+                ,sand
         );
-        scene.lights.add(
-                new DirectionalLight(new Color(java.awt.Color.WHITE).scale(0.3), new Vector(1, -1, -1))
-        );
+        // scene.lights.add(new DirectionalLight(new Color(java.awt.Color.WHITE).scale(0.1), new Vector(1, -1, -1)));
+        for (Pair<Geometries, LightSource> b:bugs)
+        {
+            scene.lights.add(b.Val);
+        }
+
         //------------------------------> done here  <------------------------------
 
-        //coolCamera.setFocalPlaneDist(cameraP.distance(boatP)-coolCamera.getDistance());
-        //coolCamera.setApertureSize(0.3);
-        //coolCamera.setSamplingDepth(16);
-        //coolCamera.setRaysSampling(16);
+        coolCamera.setFocalPlaneDist(cameraP.distance(boatP)-coolCamera.getDistance());
+        coolCamera.setApertureSize(0.2);
+        coolCamera.setSamplingDepth(16);
+        coolCamera.setRaysSampling(16);
 
-        ImageWriter imageWriter = new ImageWriter("interesting_bug", 600, 600);
+        ImageWriter imageWriter = new ImageWriter("very_interesting_bug", 600, 600);
         scene.geometries.setBoundingBox();
         Render render = new Render()
                 .setImageWriter(imageWriter)
                 .setCamera(coolCamera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new RayTracerBasic(scene))
+                .setMultithreading(4)
+                .setDebugPrint();
 
         render.renderImage();
-        render.printGrid(30,new Color(java.awt.Color.RED));
+        //render.printGrid(30,new Color(java.awt.Color.RED));
         render.writeToImage();
     }
 }
