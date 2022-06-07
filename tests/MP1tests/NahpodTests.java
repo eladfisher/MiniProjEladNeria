@@ -21,6 +21,76 @@ public class NahpodTests {
             Val = v;
         }
     }
+    
+    /**
+* --------------------------------------> for benaya. <----------------------------------
+    */
+    Geometries superCoolSnowmanMaker(Point3D p, double a, double scale) {
+        Color cbody = new Color(243,246,251).scale(0.99);
+        Material mbody = new Material().setKd(1).setKs(0);
+        Color cnose = new Color(93,57,13).scale(0.98);
+        Material mnose = new Material().setKd(1).setKs(0);
+        Color ceye = Color.Black;
+        Material meye = new Material().setKd(1).setKs(1).setShininess(70).setKr(0.3);
+
+        Ray up = new Ray(p, new Vector(0, 1, 0));
+        Point3D middleP = p.add(new Vector(0, 5.77, 0).scale(scale)).rotated_AroundRay(up, a)
+                , headP = p.add(new Vector(0, 9.43, 0).scale(scale)).rotated_AroundRay(up, a)
+                , urnose = p.add(new Vector(0.3,  9.63, -1.45).scale(scale)).rotated_AroundRay(up, a)
+                , ulnose = p.add(new Vector(-0.3, 9.63, -1.45).scale(scale)).rotated_AroundRay(up, a)
+                , drnose = p.add(new Vector(0.6,  9,    -1.3).scale(scale)).rotated_AroundRay(up, a)
+                , dlnose = p.add(new Vector(-0.6, 9,    -1.3).scale(scale)).rotated_AroundRay(up, a)
+                , pnose = p.add(new Vector(0, 9.25, -3.4).scale(scale)).rotated_AroundRay(up, a)
+                , reye = p.add(new Vector(0.6,  10.05, -1.22).scale(scale)).rotated_AroundRay(up, a)
+                , leye = p.add(new Vector(-0.6, 10.05, -1.22).scale(scale)).rotated_AroundRay(up, a);
+
+        Triangle  lnose = (Triangle) new Triangle(ulnose, dlnose, pnose).setMaterial(mnose).setEmission(cnose)
+                , rnose = (Triangle) new Triangle(urnose, denose, pnose).setMaterial(mnose).setEmission(cnose)
+                , unose = (Triangle) new Triangle(urnose, ulnose, pnose).setMaterial(mnose).setEmission(cnose)
+                , dnose = (Triangle) new Triangle(drnose, dlnose, pnose).setMaterial(mnose).setEmission(cnose);
+        
+         Sphere body =   (Sphere) new Sphere(4*  scale, p      ).setEmission(cbody).setMaterial(mbody)
+               ,middle = (Sphere) new Sphere(2.5*scale, middleP).setEmission(cbody).setMaterial(mbody)
+               ,head =   (Sphere) new Sphere(1.5*scale, headP  ).setEmission(cbody).setMaterial(mbody)
+               ,leye = (Sphere) new Sphere(0.3*scale,leye).setEmission(ceye).setMaterial(meye)
+               ,reye = (Sphere) new Sphere(0.3*scale,reye).setEmission(ceye).setMaterial(meye);
+
+        /**
+         * snowman
+         */
+        Geometries snowman = new Geometries(lnose, rnose, unose, dnose, body, middle, head, leye, reye);
+        return snowman;
+    }
+    Geometries superCoolSnowmanOnIce(Point3D p, double a, double scale) {
+        /**
+        * for start:
+        {
+            Scene scene = new Scene("Btest");
+            Point3D centerPoint = Point3D.ZERO;
+            Point3D cameraP = centerPoint.add(new Vector(24, 10, 24).scale(1.3));
+            Vector up = new Vector(0, 1, 0);
+            Camera coolCamera = new Camera(cameraP, new Vector(0, 0, 1), new Vector(0, 1, 0));
+            coolCamera.setVpDistance(5).setVpSize(6.5, 6.5);
+            coolCamera.lookAt(centerPoint), up);
+            scene.setAmbientLight(new AmbientLight(new Color(255, 255, 255), 0.1));
+            
+            Geometries pic = superCoolSnowmanOnIce(centerPoint, 0, 1);
+            scene.geometries.add(pic);
+        }
+        */
+        Color cice = new Color(200,233,233).scale(0.99);
+        Material mice = new Material().setKd(1).setKs(0.6).setKt(0.1).setKr(0.3)
+        // = new Material().setKd(1).setKs(1).setShininess(70).setKr(0.3);
+        Geometries snowman = superCoolSnowmanMaker(p.add(new Vector(0,3,0).scale(scale)), a, scale);
+        Plane ice = (Plane) new Plane(new Vector(0,1,0), p).setMaterial(mice).setEmission(cice);
+        
+        /**
+         * snowman on ice
+         */
+        Geometries snowmanOnIce = new Geometries(snowman, Ice);
+        return snowmanOnIce;
+    }
+ // ----------------------------------------> until here <----------------------------------
 
     /**
      * helpful
