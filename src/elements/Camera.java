@@ -1,14 +1,15 @@
 package elements;
 
-import com.sun.source.tree.NewClassTree;
 import geometries.Plane;
-import primitives.*;
+import geometries.Rectangle;
+import primitives.Point3D;
+import primitives.Ray;
+import primitives.Vector;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import static primitives.Util.*;
+import static primitives.Util.isZero;
 
 /**
  * the camera class that represents the camera of a scene.
@@ -289,7 +290,21 @@ public class Camera {
 		
 		set_vTo_vUp(to, up);
 	}
-	
+
+	public void lookAt(Rectangle rec){
+		Point3D c = rec.getCenter();
+		System.out.println("p3d before: " + point3D.toString());
+		MoveCamera(c.add(rec.getNormal(c).scale(20)), c, 0);
+		lookAt(c,Vector.UP);
+		System.out.println("p3d after: " + point3D.toString());
+		setVpDistance(c.distance(point3D)-1);
+		setVpSize(rec.getWidth(), rec.getHeight());
+		System.out.println("Ch:" + height + "\tCw:" + width);
+		System.out.println("recN: " + rec.normalRec());
+		System.out.println("recC: " + c.toString());
+		System.out.println("vpd: " + distance);
+	}
+
 	/**
 	 * rotate the  camera around the to vector
 	 *

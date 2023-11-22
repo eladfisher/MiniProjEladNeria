@@ -8,7 +8,7 @@ package primitives;
  * -the transparency and reflection of the light
  */
 public class Material {
-    
+    public static Material BASIC = new Material().setKd(1);
     /**
      * the kd discount factor
      */

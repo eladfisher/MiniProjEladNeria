@@ -128,8 +128,8 @@ public class Projector extends PointLight {
 		this.nX = this.img.getWidth();
 		this.height = this.nY;
 		this.width = this.nX;
-		this.rationH = this.height/this.nY;
-		this.rationW = this.width/this.nX;
+		this.rationH = this.height/(double) this.nY;
+		this.rationW = this.width/(double) this.nX;
 		update_imgPolygon();
 	}
 	
@@ -142,8 +142,13 @@ public class Projector extends PointLight {
 	}
 	
 	public void scaleImage(double scl){
+		System.out.println("h before:" + this.height);
 		this.height = this.height * scl;
 		this.width = this.width * scl;
+		System.out.println("h after:" + this.height);
+		this.rationH = this.height/(double) this.nY;
+		this.rationW = this.width/(double) this.nX;
+		System.out.println("");
 		update_imgPolygon();
 	}
 	

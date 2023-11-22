@@ -1,8 +1,6 @@
 package geometries;
 
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,7 +74,11 @@ public class Geometries extends Intersectable {
 		
 		return res;
 	}
-	
+
+	public Intersectable get(int i){
+		return geometries.get(i);
+	}
+
 	/**
 	 * find the min point
 	 *
@@ -195,5 +197,22 @@ public class Geometries extends Intersectable {
 		this.add(smaller, bigger);
 		
 	}
-	
+
+	public Geometries setMaterial(Material m){
+		for (Intersectable i :
+				geometries) {
+			if (i instanceof Geometry)
+				((Geometry) i).setMaterial(m);
+		}
+		return this;
+	}
+
+	public Geometries setEmmission(Color c){
+		for (Intersectable i :
+				geometries) {
+			if (i instanceof Geometry)
+				((Geometry) i).setEmission(c);
+		}
+		return this;
+	}
 }

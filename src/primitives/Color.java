@@ -82,10 +82,20 @@ public class Color {
      * @param RGBint java.awt.Color's source object
      */
     public Color(int RGBint) {
+        java.awt.Color c = new java.awt.Color(RGBint);
+        r = c.getRed();
+        g = c.getGreen();
+        b = c.getBlue();
+ /*
+        r = 0;
+        g = 0;
+        b = 0;
+
         b = RGBint & 0xff;
         g = (RGBint & 0xff00) >> 8;
         r = (RGBint & 0xff0000) >> 16;
         //int alpha = (RGBint & 0xff000000) >>> 24;
+        */
     }
 
     /**

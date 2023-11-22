@@ -1,8 +1,9 @@
 package MP1tests;
 
-import elements.AmbientLight;
 import elements.Camera;
-import geometries.Polygon;
+import elements.Projector;
+import geometries.Geometries;
+import geometries.Rectangle;
 import org.junit.jupiter.api.Test;
 import primitives.Color;
 import primitives.Material;
@@ -43,28 +44,34 @@ public class ProjectorTests {
         Scene scene = new Scene("test");
         Point3D centerPoint = Point3D.ZERO;
         //Point3D cameraP = centerPoint.add(new Vector(0,1,0).scale(55));
-        Point3D cameraP = centerPoint.add(new Vector(24, 5.7, 24).scale(1.3));
-		Point3D lookAtP = centerPoint;//.add(new Vector(24, 3, 24));
+        Point3D cameraP = centerPoint.add(new Vector(600,180,600));
+		Point3D lookAtP = centerPoint.add(new Vector(0,180,0));//.add(new Vector(24, 3, 24));
         Vector up = Vector.UP;
         Camera coolCamera = new Camera(cameraP, new Vector(0, 0, 1), new Vector(0, 1, 0));
         coolCamera.setVpDistance(5).setVpSize(6.5, 6.5);
         //coolCamera.lookAt(centerPoint, new Vector(1,0,0));
         coolCamera.lookAt(lookAtP, up);
-        scene.setAmbientLight(new AmbientLight(Color.WHITE, 0.1));
+        //scene.setAmbientLight(new AmbientLight(Color.WHITE, 0.1));
 		
 		// String photoPath = "D:\\Users\\mahpo\\Documents\\MyProjects\\MiniProjEladNeria-main\\images\\interesting_very.png";
-		String photoPath = "C:\\Users\\Nerya\\IdeaProjects\\MiniProjEladNeria\\images\\very_interesting_bug.png";
+		String photoPath = "F:\\users\\Nerya\\Downloads\\testRotateAfterImage.png";
+        //String photoPath = "C:\\Users\\Nerya\\IdeaProjects\\MiniProjEladNeria\\images\\with4AntiAliasing.png";
 
-		Color bc = Color.WHITE;
-		Material bm = new Material().setKd(1).setKs(0).setKt(0).setKr(0);
+		Color bc = Color.BLACK;//new Color(100,4,150);//Color.WHITE;
+		Material bm = Material.BASIC;
 		
-		Polygon wall = (Polygon) new Polygon(
-			    centerPoint
-                , new Point3D(0, 5, 0)
-                , new Point3D(10, 5, 0)
-                , new Point3D(10, 0, 0)
-		).setEmission(bc).setMaterial(bm);
-		
+		Geometries wall = Rectangle.wallMaker(499,
+                new Point3D(400,0,-500),
+                new Point3D(400,0,200),
+                new Point3D(-500,0,200)).setEmmission(bc).setMaterial(bm);
+		//coolCamera.lookAt((Rectangle) wall.get(0));
+
+		Projector p = new Projector(cameraP,coolCamera.getvTo(),coolCamera.getvUp(),photoPath);
+		p.scaleImage(0.005);
+		p.lookAt(lookAtP,up);
+		scene.lights.add(p);
+        scene.geometries.add(wall);
+
         //------------------------------> start here <------------------------------
 		/*
         //region ground
@@ -142,7 +149,6 @@ public class ProjectorTests {
         coolCamera.setRaysSampling(16);
 		*/
 
-        scene.geometries.add(wall);
 
         ImageWriter imageWriter = new ImageWriter("Grafity", 600, 600);
         scene.geometries.setBoundingBox();
