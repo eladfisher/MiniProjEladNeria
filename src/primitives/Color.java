@@ -29,6 +29,8 @@ public class Color {
      * the black color
      */
     public static final Color BLACK = new Color();
+    public static final Color WHITE = new Color(255, 255, 255);
+
 
     /**
      * Default constructor - to generate Black Color (privately)
@@ -72,6 +74,18 @@ public class Color {
         r = other.getRed();
         g = other.getGreen();
         b = other.getBlue();
+    }
+
+    /**
+     * Constructor on base of java.awt.Color object
+     *
+     * @param RGBint java.awt.Color's source object
+     */
+    public Color(int RGBint) {
+        b = RGBint & 0xff;
+        g = (RGBint & 0xff00) >> 8;
+        r = (RGBint & 0xff0000) >> 16;
+        //int alpha = (RGBint & 0xff000000) >>> 24;
     }
 
     /**

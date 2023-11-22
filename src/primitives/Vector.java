@@ -1,7 +1,5 @@
 package primitives;
 
-import java.util.Objects;
-
 /**
  * a class of 3D Vector in the 3D dimensional for graphic scenes
  */
@@ -11,6 +9,9 @@ public class Vector {
      * the head point of the vector
      */
     Point3D head;
+
+    public static Vector UP = new Vector(0,1,0);
+    public static Vector RIGHT = new Vector(1,0,0);
 
     /**
      * the ctor that get the head point

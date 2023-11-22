@@ -1,7 +1,5 @@
 package primitives;
 
-import java.util.Objects;
-
 import static java.lang.Math.sqrt;
 
 /**
@@ -246,5 +244,16 @@ public class Point3D {
 		Point3D p = new Point3D(x, y, z);
 		return p.rotateAroundRay(r, a);
 	}
-	
+
+
+
+	public double distance(Ray r){
+		//||AP*d||/||d||
+		// Point3D P = this;
+		Point3D A = r.getHead();
+		Vector AP = subtract(A);
+		Vector d = r.getDirection();
+		Vector APd = AP.crossProduct(d);
+		return APd.length()/d.length();
+	}
 }

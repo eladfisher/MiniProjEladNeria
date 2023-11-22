@@ -23,7 +23,7 @@ public class PointLight extends Light implements LightSource {
 	/**
 	 * position: the postion of the point in the space.
 	 */
-	private Point3D position;
+	protected Point3D position;
 	/**
 	 * PointColor(according to pointLight only)  = intensity/(Kc+Kl*d+Kq*d^2)
 	 * intensity: color of this PointLight.

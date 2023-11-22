@@ -13,7 +13,7 @@ import java.util.*;
  * MY TEST. Don't touch it fisher.
  */
 public class NahpodTests {
-    class Pair<K,V>{
+    static class Pair<K,V>{
         public K Key;
         public V Val;
         public Pair(K k, V v) {
@@ -21,7 +21,8 @@ public class NahpodTests {
             Val = v;
         }
     }
-    
+
+    //region snowman
     /**
 * --------------------------------------> for benaya. <----------------------------------
     */
@@ -30,7 +31,7 @@ public class NahpodTests {
         Material mbody = new Material().setKd(1).setKs(0);
         Color cnose = new Color(93,57,13).scale(0.98);
         Material mnose = new Material().setKd(1).setKs(0);
-        Color ceye = Color.Black;
+        Color ceye = Color.BLACK;
         Material meye = new Material().setKd(1).setKs(1).setShininess(70).setKr(0.3);
 
         Ray up = new Ray(p, new Vector(0, 1, 0));
@@ -41,19 +42,19 @@ public class NahpodTests {
                 , drnose = p.add(new Vector(0.6,  9,    -1.3).scale(scale)).rotated_AroundRay(up, a)
                 , dlnose = p.add(new Vector(-0.6, 9,    -1.3).scale(scale)).rotated_AroundRay(up, a)
                 , pnose = p.add(new Vector(0, 9.25, -3.4).scale(scale)).rotated_AroundRay(up, a)
-                , reye = p.add(new Vector(0.6,  10.05, -1.22).scale(scale)).rotated_AroundRay(up, a)
-                , leye = p.add(new Vector(-0.6, 10.05, -1.22).scale(scale)).rotated_AroundRay(up, a);
+                , preye = p.add(new Vector(0.6,  10.05, -1.22).scale(scale)).rotated_AroundRay(up, a)
+                , pleye = p.add(new Vector(-0.6, 10.05, -1.22).scale(scale)).rotated_AroundRay(up, a);
 
         Triangle  lnose = (Triangle) new Triangle(ulnose, dlnose, pnose).setMaterial(mnose).setEmission(cnose)
-                , rnose = (Triangle) new Triangle(urnose, denose, pnose).setMaterial(mnose).setEmission(cnose)
+                , rnose = (Triangle) new Triangle(urnose, drnose, pnose).setMaterial(mnose).setEmission(cnose)
                 , unose = (Triangle) new Triangle(urnose, ulnose, pnose).setMaterial(mnose).setEmission(cnose)
                 , dnose = (Triangle) new Triangle(drnose, dlnose, pnose).setMaterial(mnose).setEmission(cnose);
         
          Sphere body =   (Sphere) new Sphere(4*  scale, p      ).setEmission(cbody).setMaterial(mbody)
                ,middle = (Sphere) new Sphere(2.5*scale, middleP).setEmission(cbody).setMaterial(mbody)
                ,head =   (Sphere) new Sphere(1.5*scale, headP  ).setEmission(cbody).setMaterial(mbody)
-               ,leye = (Sphere) new Sphere(0.3*scale,leye).setEmission(ceye).setMaterial(meye)
-               ,reye = (Sphere) new Sphere(0.3*scale,reye).setEmission(ceye).setMaterial(meye);
+               ,leye = (Sphere) new Sphere(0.3*scale,pleye).setEmission(ceye).setMaterial(meye)
+               ,reye = (Sphere) new Sphere(0.3*scale,preye).setEmission(ceye).setMaterial(meye);
 
         /**
          * snowman
@@ -61,6 +62,7 @@ public class NahpodTests {
         Geometries snowman = new Geometries(lnose, rnose, unose, dnose, body, middle, head, leye, reye);
         return snowman;
     }
+
     Geometries superCoolSnowmanOnIce(Point3D p, double a, double scale) {
         /**
         * for start:
@@ -79,7 +81,7 @@ public class NahpodTests {
         }
         */
         Color cice = new Color(200,233,233).scale(0.99);
-        Material mice = new Material().setKd(1).setKs(0.6).setKt(0.1).setKr(0.3)
+        Material mice = new Material().setKd(1).setKs(0.6).setKt(0.1).setKr(0.3);
         // = new Material().setKd(1).setKs(1).setShininess(70).setKr(0.3);
         Geometries snowman = superCoolSnowmanMaker(p.add(new Vector(0,3,0).scale(scale)), a, scale);
         Plane ice = (Plane) new Plane(new Vector(0,1,0), p).setMaterial(mice).setEmission(cice);
@@ -87,10 +89,56 @@ public class NahpodTests {
         /**
          * snowman on ice
          */
-        Geometries snowmanOnIce = new Geometries(snowman, Ice);
+        Geometries snowmanOnIce = new Geometries(snowman, ice);
         return snowmanOnIce;
     }
- // ----------------------------------------> until here <----------------------------------
+
+
+    /**
+     * boring
+     */
+    @Test
+    public void snowmanTest() {
+        Scene scene = new Scene("test");
+        Point3D centerPoint = Point3D.ZERO;
+        //Point3D cameraP = centerPoint.add(new Vector(0,1,0).scale(55));
+        Point3D cameraP = centerPoint.add(new Vector(24, 5.7, 24).scale(1.3));
+        Vector up = new Vector(0, 1, 0);
+        Camera coolCamera = new Camera(cameraP, new Vector(0, 0, 1), new Vector(0, 1, 0));
+        coolCamera.setVpDistance(5).setVpSize(6.5, 6.5);
+        //coolCamera.lookAt(centerPoint, new Vector(1,0,0));
+        coolCamera.lookAt(centerPoint.add(new Vector(24, 3, 24)), up);
+        scene.setAmbientLight(new AmbientLight(new Color(255, 255, 255), 0.2));
+
+        //------------------------------> start here <------------------------------
+
+        scene.geometries.add(superCoolSnowmanOnIce(centerPoint, 0, 1));
+
+        //------------------------------> done here  <------------------------------
+
+        coolCamera.setFocalPlaneDist(cameraP.distance(centerPoint)-coolCamera.getDistance());
+        coolCamera.setApertureSize(0.2);
+        coolCamera.setSamplingDepth(16);
+        coolCamera.setRaysSampling(16);
+
+        ImageWriter imageWriter = new ImageWriter("cool_snowman", 600, 600);
+        scene.geometries.setBoundingBox();
+        Render render = new Render()
+                .setImageWriter(imageWriter)
+                .setCamera(coolCamera) //
+                .setRayTracer(new RayTracerBasic(scene))
+                .setMultithreading(4)
+                .setDebugPrint();
+
+        render.renderImage();
+        //render.printGrid(30,new Color(java.awt.Color.RED));
+        render.writeToImage();
+    }
+
+    // ----------------------------------------> until here <----------------------------------
+    //endregion
+
+    //region paper boat
 
     /**
      * helpful
@@ -355,4 +403,6 @@ public class NahpodTests {
         //render.printGrid(30,new Color(java.awt.Color.RED));
         render.writeToImage();
     }
+
+    //endregion
 }
