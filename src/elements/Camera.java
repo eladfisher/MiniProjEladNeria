@@ -291,13 +291,13 @@ public class Camera {
 		set_vTo_vUp(to, up);
 	}
 
-	public void lookAt(Rectangle rec){
+	public void lookAt(Rectangle rec, double norm){
 		Point3D c = rec.getCenter();
 		System.out.println("p3d before: " + point3D.toString());
-		MoveCamera(c.add(rec.getNormal(c).scale(20)), c, 0);
+		MoveCamera(c.add(rec.getNormal(c).scale(norm)), c, 0);
 		lookAt(c,Vector.UP);
 		System.out.println("p3d after: " + point3D.toString());
-		setVpDistance(c.distance(point3D)-1);
+		setVpDistance(c.distance(point3D));
 		setVpSize(rec.getWidth(), rec.getHeight());
 		System.out.println("Ch:" + height + "\tCw:" + width);
 		System.out.println("recN: " + rec.normalRec());

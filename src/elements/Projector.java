@@ -47,7 +47,7 @@ public class Projector extends PointLight {
 	 */private double width;
 	/**
 	 * distance: the distance between the camera (point3D) and the view plane
-	 */private double distance = 1;
+	 */private double distance = 2;
 	 
 	private Point3D luPoint;
 	
@@ -123,17 +123,21 @@ public class Projector extends PointLight {
 		this.rDown = new Ray(luPoint, vDown);
 	}
 	
-	public void update_height_width(){
+	public void update_height_width(double scale){
 		this.nY = this.img.getHeight();
 		this.nX = this.img.getWidth();
-		this.height = this.nY;
-		this.width = this.nX;
+		this.height = this.nY*scale;
+		this.width = this.nX*scale;
 		this.rationH = this.height/(double) this.nY;
 		this.rationW = this.width/(double) this.nX;
 		update_imgPolygon();
 	}
-	
-	public void update_imgPolygon(){
+
+	public void update_height_width() {
+		update_height_width(1);
+	}
+
+		public void update_imgPolygon(){
 		update_luPoint();
 		imgPolygon = new Polygon(luPoint,
 			luPoint.add(vRight.scale(width)),
@@ -141,16 +145,16 @@ public class Projector extends PointLight {
 			luPoint.add(vDown.scale(height)));
 	}
 	
-	public void scaleImage(double scl){
-		System.out.println("h before:" + this.height);
-		this.height = this.height * scl;
-		this.width = this.width * scl;
-		System.out.println("h after:" + this.height);
-		this.rationH = this.height/(double) this.nY;
-		this.rationW = this.width/(double) this.nX;
-		System.out.println("");
-		update_imgPolygon();
-	}
+	//public void scaleImage(double scl){
+	//	System.out.println("h before:" + this.height);
+	//	this.height = this.height * scl;
+	//	this.width = this.width * scl;
+	//	System.out.println("h after:" + this.height);
+	//	this.rationH = this.height/(double) this.nY;
+	//	this.rationW = this.width/(double) this.nX;
+	//	System.out.println("");
+	//	update_imgPolygon();
+	//}
 	
 	
 	
@@ -211,6 +215,6 @@ public class Projector extends PointLight {
 		int ixp = (int)(xp/rationW);
 		int iyp = (int)(yp/rationH);
 		
-		return new Color(img.getRGB(iyp, ixp));
+		return new Color(img.getRGB(ixp, iyp));
 	}
 }
